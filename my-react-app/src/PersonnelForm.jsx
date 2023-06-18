@@ -22,6 +22,7 @@ function PersonnelForm({ setPersonnelss }) {
         id: newid,
       });
     }
+
     function handleNomChange(event) {
       const newnom = event.target.value;
       setPersonnels({
@@ -29,6 +30,7 @@ function PersonnelForm({ setPersonnelss }) {
         nom: newnom,
       });
     }
+
     function handlePrenomChange(event) {
       const newprenom = event.target.value;
       setPersonnels({
@@ -44,6 +46,7 @@ function PersonnelForm({ setPersonnelss }) {
         naissance: newnaissance,
       });
     }
+
     function handleNationaliteChange(event) {
       const newnationalite = event.target.value;
       setPersonnels({
@@ -51,6 +54,7 @@ function PersonnelForm({ setPersonnelss }) {
         nationalite: newnationalite,
       });
     }
+
     function handleSexeChange(event)      {
       const newsexe = event.target.value;
       setPersonnels({
@@ -58,6 +62,7 @@ function PersonnelForm({ setPersonnelss }) {
         sexe: newsexe,
       });
     }
+    
     function handleAdresse(event)         {
       const newadresse = event.target.value
       setPersonnels({
