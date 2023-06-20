@@ -5,23 +5,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function PersonnelForm({ setPersonnelss }) {
     const [personnelss, setPersonnels] = useState({
-      id: '',
       nom: '',
       prenom: '',
       naissance: '',
       nationalite: '',
       sexe: '',
       adresse: '',
+      statut: '',
     });
-  
-    function handlidChange(event) {
-      const newid = event.target.value;
-  
-      setPersonnels({
-        ...personnelss,
-        id: newid,
-      });
-    }
 
     function handleNomChange(event) {
       const newnom = event.target.value;
@@ -70,10 +61,26 @@ function PersonnelForm({ setPersonnelss }) {
          adresse: newadresse,
       });
     }
-      function handleForsubmit(event) {
+
+    function handleStatut(event)         {
+      const newstatut = event.target.value
+      setPersonnels({
+         ...personnelss,
+         statut: newstatut,
+      });
+    }
+
+    async  function handleForsubmit(event) {
       event.preventDefault();
+
+     await fetch('/add/personnes',{
+        headers: {
+            'Content-type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify( personnelss)
+    });
       if (
-        !personnelss.numero.trim() ||
         !personnelss.nom.trim() ||
         !personnelss.prenom.trim() ||
         !personnelss.naissance.trim() ||
@@ -87,16 +94,7 @@ function PersonnelForm({ setPersonnelss }) {
     }
     return (
       <Form onSubmit={handleForsubmit}>
-        <div className="form-group">
-          <label htmlFor="id">id:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="id"
-            value={personnelss.id}
-            onChange={handlidChange}
-          />
-        </div>
+        
   
         <div className="form-group">
           <label htmlFor="nom">Nom:</label>
@@ -115,7 +113,7 @@ function PersonnelForm({ setPersonnelss }) {
   
         <div className="form-group">
           <label htmlFor="nationalite">nationalite:</label>
-          <input type="text" className="form-control" id="mail" value={personnelss.nationalite} onChange={handleNationaliteChange} />
+          <input type="text" className="form-control" id="nationalite" value={personnelss.nationalite} onChange={handleNationaliteChange} />
         </div>
         <div className="form-group">
           <label htmlFor="sexe">sexe:</label>
@@ -125,6 +123,11 @@ function PersonnelForm({ setPersonnelss }) {
         <div className="form-group">
           <label htmlFor="adresse">adresse:</label>
           <input type="text" className="form-control" id="adresse" value={personnelss.adresse} onChange={handleAdresse} />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="statut">statut:</label>
+          <input type="text" className="form-control" id="statut" value={personnelss.adresse} onChange={handleStatut} />
         </div>
 
         <p>

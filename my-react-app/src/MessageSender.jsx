@@ -9,7 +9,7 @@ function MessageSender() {
 
     function handleSubmit(event){
         event.preventDefault();
-        fetch('http://localhost:8080/logmessage',{
+        fetch('http://localhost:5173/logmessage',{
             headers: {
                 'Content-type': 'application/json'
             },

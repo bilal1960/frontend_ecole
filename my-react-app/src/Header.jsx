@@ -15,6 +15,7 @@ function Header({ activeMenu, onMenuChange }) {
             <Nav.Link eventKey="Accueil">Accueil</Nav.Link>
             <Nav.Link eventKey="Personne">Personne</Nav.Link>
             <Nav.Link eventKey="Inscription">Inscription</Nav.Link>
+            <Nav.Link eventKey="Matière">Matière</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
