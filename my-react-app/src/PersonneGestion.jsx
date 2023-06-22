@@ -7,7 +7,7 @@ function PersonneGestion() {
 
   return (
     <>
-      <h2>ajouter un employé ici svp</h2>
+      <h2>ajouter une personne svp</h2>
       <PersonnelForm setPersonnelss={setPersonnelss} />
     </>
   );

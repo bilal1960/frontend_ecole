@@ -15,17 +15,16 @@ import { useAuth0 } from '@auth0/auth0-react';
         Authorization: `Bearer ${accessToken}`,
       } 
 
-    }).then((r) => r.jSON())
+    }).then((r) => r.json())
   };
   const { data, isLoading, error } = useSWR('/add/personnes', fetcher);
-  if(personnels === undefined || personnels ===null) return <p>encore aucune personne à la liste!</p>;
+  console.log(data);
 
   if (isLoading) return <p>Chargement...</p>;
+  if(data.length===0) return <p>pas de donnée</p>;
   if (error) return <p>Erreur lors du chargement des données.</p>;
+  if(data.length>0) return <p>personne ajouté</p>;
   
-
-
-
     return (
         <ul>
           {personnels.map((item) => (
@@ -40,8 +39,10 @@ import { useAuth0 } from '@auth0/auth0-react';
               <span>statut: {item.statut}          </span>
             </li>
           ))}
+
         </ul>
       );
+
           }
 
      export default ListPersonnel;

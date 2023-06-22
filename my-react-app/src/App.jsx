@@ -2,7 +2,6 @@ import './App.css'
 import Header from './Header'
 import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import PersonnelForm from './PersonnelForm';
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
@@ -16,6 +15,7 @@ import PersonneGestion from './PersonneGestion';
 function App() {
   const [activeMenu, setActiveMenu] = useState('');
   const { user, isAuthenticated, isLoading } = useAuth0();
+  const [personnels, setPersonnelss] = useState('' || []);
 
   if(isLoading){
     return <div>en chargement....</div>;
@@ -26,7 +26,7 @@ function App() {
     {isAuthenticated ? (
       <>
       <p>bonjour {user.name} <LogoutButton/></p>
-      <ListPersonnel/>
+      <ListPersonnel personnels={personnels}/>
         
        <Header activeMenu={activeMenu} onMenuChange={setActiveMenu}/>
 
@@ -35,9 +35,6 @@ function App() {
         {activeMenu === 'Personne' && <PersonneGestion/>}
         {activeMenu === 'Inscription' && <InscriptionForm/>}
         {activeMenu === 'Matière' && <MatiereForm/>}
-
-
-        
       </Container>
     
     </>
