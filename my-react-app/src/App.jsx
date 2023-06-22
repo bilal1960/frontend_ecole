@@ -10,6 +10,7 @@ import ListPersonnel from './ListPersonnel';
 import useSWR from "swr"
 import InscriptionForm from './InscriptionForm';
 import MatiereForm from './MatiereForm';
+import PersonneGestion from './PersonneGestion';
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
 
        <Container>
         {activeMenu === 'accueil' && <h2>accueil</h2>}
-        {activeMenu === 'Personne' && <PersonnelForm/>}
+        {activeMenu === 'Personne' && <PersonneGestion/>}
         {activeMenu === 'Inscription' && <InscriptionForm/>}
         {activeMenu === 'Matière' && <MatiereForm/>}
 
