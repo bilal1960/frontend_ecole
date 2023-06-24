@@ -63,9 +63,7 @@ function MatieresEtudiant() {
             Authorization: `Bearer ${accessToken}`, 
           },
         });
-
         const data = await response.json();
-        console.log(data);
         setMatieres(data);
       } catch (error) {
         console.log(error);
