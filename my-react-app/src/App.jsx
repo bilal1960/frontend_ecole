@@ -10,6 +10,7 @@ import InscriptionForm from './InscriptionForm';
 import PersonneGestion from './PersonneGestion';
 import MatiereGestion from './MAtiereGestion';
 import MatieresEtudiant from './MatieresEtudiant';
+import PermissionGuard from './PermissionGuard';
 function App() {
   const [activeMenu, setActiveMenu] = useState('');
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -29,7 +30,7 @@ function App() {
         {activeMenu === 'Personne' && <PersonneGestion/>}
         {activeMenu === 'Inscription' && <InscriptionForm/>}
         {activeMenu === 'Matière' && <MatiereGestion/>}
-        {activeMenu === 'ListMatiere' && <MatieresEtudiant/>}
+        {activeMenu === 'ListMatiere' &&  <MatieresEtudiant/>}
       </Container>
     </>
     ):(

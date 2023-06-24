@@ -48,6 +48,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PermissionGuard from './PermissionGuard';
 
 function MatieresEtudiant() {
   const { user, getAccessTokenSilently } = useAuth0();
@@ -76,6 +77,9 @@ function MatieresEtudiant() {
   return (
     <div>
       <h1>Matières</h1>
+      <PermissionGuard permission={'read:all-matiere'} >
+
+
       <div className="row">
         {matieres.map((matiere) => (
           <div key={matiere.id} className="col-lg-6 col-md-6 mb-4">
@@ -89,6 +93,8 @@ function MatieresEtudiant() {
           </div>
         ))}
       </div>
+      </PermissionGuard>
+
     </div>
   );
 }
