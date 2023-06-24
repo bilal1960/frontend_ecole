@@ -18,7 +18,7 @@ import { useAuth0 } from '@auth0/auth0-react';
     }).then((r) => r.json())
   };
   const { data, isLoading, error } = useSWR('/add/personnes', fetcher);
-  console.log(data);
+  
 
   if (isLoading) return <p>Chargement...</p>;
   if(data.length===0) return <p>pas de donnée</p>;

@@ -13,4 +13,4 @@ function PersonneGestion() {
   );
 }
 
-export default PersonneGestion ;
+export default PersonneGestion;

@@ -2,6 +2,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import React from 'react';
+import LogoutButton from './LogoutButton';
 
 function Header({ activeMenu, onMenuChange }) {
 
@@ -16,6 +17,10 @@ function Header({ activeMenu, onMenuChange }) {
             <Nav.Link eventKey="Personne">Personne</Nav.Link>
             <Nav.Link eventKey="Inscription">Inscription</Nav.Link>
             <Nav.Link eventKey="Matière">Matière</Nav.Link>
+            <Nav.Link eventKey="ListMatiere">Listmatiere</Nav.Link>
+            <LogoutButton/>
+
+
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import style from './PersonnelForm.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 function MatiereForm({ setmatieres }) {
+    const { getAccessTokenSilently } = useAuth0();
+
     const [matieres, setmatieress] = useState({
       nom: '',
       debut: '',
@@ -37,9 +41,10 @@ function MatiereForm({ setmatieres }) {
     async  function handleForsubmit(event) {
         event.preventDefault();
 
+        const accessToken = await getAccessTokenSilently();
+
         if (
             !matieres.nom.trim() ||
-            !inscrits.prenom.trim() ||
             !matieres.debut.trim()||
             !matieres.fin.trim()
             
@@ -47,6 +52,29 @@ function MatiereForm({ setmatieres }) {
             // eslint-disable-next-line no-alert
             return alert('tous les champs doivent être complété!');
           }
+
+          const response = await fetch('/add/matieres', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              'Content-type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify(matieres),
+          });
+
+          if (response.ok) {
+            setmatieres((matiere) => [...matiere, matieres]);
+      
+            setmatieress({
+              nom: '',
+              debut: '',
+              fin: '',
+            });
+          } else {
+            return 'error';
+          }
+          return '';
+      
 
     }
 
