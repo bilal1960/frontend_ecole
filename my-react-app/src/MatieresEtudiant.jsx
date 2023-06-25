@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function MatieresEtudiant() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -7,6 +8,8 @@ function MatieresEtudiant() {
   const itemsPerPage = 1; // Remplacez cette valeur par le nombre d'éléments à afficher par page
   const [totalItems, setTotalItems] = useState(0);
   const [data, setData] = useState([]);
+  const { user, getAccessTokenSilently } = useAuth0();
+
 
   useEffect(() => {
     // Mettez à jour le nombre total de pages lorsque le nombre total d'éléments change
@@ -23,10 +26,11 @@ function MatieresEtudiant() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const accessToken = await getAccessTokenSilently(); 
+
         const response = await fetch('/add/matieres', {
           headers: {
-            Authorization: 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InlUZXVfaktnaWdaQ1Y5Uk55Q19OWCJ9.eyJpc3MiOiJodHRwczovL2JpbGFsLXByb2ppbnQtMjIyMy5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjQ4ZWRmZmMzY2VkZjlmM2FkYzdiZmY0IiwiYXVkIjpbImh0dHBzOi8vZWNvbGUvYXBpIiwiaHR0cHM6Ly9iaWxhbC1wcm9qaW50LTIyMjMuZXUuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTY4NzcwNzg3NCwiZXhwIjoxNjg3Nzk0Mjc0LCJhenAiOiIydTF4SFl6bWZSQ0hpMjhyMDEyR09PbWNXRjA0dTVwcCIsInNjb3BlIjoib3BlbmlkIHdyaXRlOm1hdGllcmUgcmVhZDphbGwtbWF0aWVyZSBvZmZsaW5lX2FjY2VzcyJ9.BN_AGj_VSrZ_yqJkMuK4yX9URuH99lMlWqlS34ZdkjQW77iNvmT3gMyIPrcrbr1VcSX0-iqCxbpYWY83vM25qjL135b-96CtXJavzLc4lv7BWkhC9a7o9eiXqPo1d7PySdomL7C4BIQyWNHNGTteX1tbAIlyqSgvnBBkrUb3Ydl75YdAquxeUrsGFTg8KIvIvNu4O3E5Fc5aI6ymeo2gLdlDzdDNtcFAYEBzZZHnMniXefJzAwV2GIcjJmWFzRWZ43s9oztMCjibl6FlEi8v2zxO1bd6Ojfiq8pLHOfIcGGnsmSy8gBqPE0dBmYQIwEDrUyNqNMCk338KirIauYlWg'
-
+            Authorization: `Bearer ${accessToken}`, 
           },
         });
 
@@ -43,7 +47,7 @@ function MatieresEtudiant() {
     };
 
     fetchData();
-  }, [currentPage]);
+  }, [currentPage],[getAccessTokenSilently]);
 
   // Calculez les indices de début et de fin des éléments à afficher en fonction de la page actuelle
   const startIndex = (currentPage - 1) * itemsPerPage;
