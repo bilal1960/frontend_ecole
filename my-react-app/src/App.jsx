@@ -11,6 +11,7 @@ import PersonneGestion from './PersonneGestion';
 import MatiereGestion from './MAtiereGestion';
 import MatieresEtudiant from './MatieresEtudiant';
 import PermissionGuard from './PermissionGuard';
+import { Pagination } from 'react-bootstrap';
 function App() {
   const [activeMenu, setActiveMenu] = useState('');
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -24,14 +25,20 @@ function App() {
     <>
     {isAuthenticated ? (
       <>
+      <div>
        <Header activeMenu={activeMenu} onMenuChange={setActiveMenu}/>
        <Container>
         {activeMenu === 'accueil' && <h2>accueil</h2>}
         {activeMenu === 'Personne' && <PersonneGestion/>}
         {activeMenu === 'Inscription' && <InscriptionForm/>}
         {activeMenu === 'Matière' && <MatiereGestion/>}
-        {activeMenu === 'ListMatiere' &&  <MatieresEtudiant/>}
+        {activeMenu === 'ListMatiere'     && <MatieresEtudiant />}
+
+
+
+        
       </Container>
+      </div>
     </>
     ):(
       <LoginButton/> 

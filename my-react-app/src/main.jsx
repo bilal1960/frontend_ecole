@@ -15,7 +15,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       scope: 'read:matiere write:matiere read:all-matiere',
     }}
   >
-
   <React.StrictMode>
     <App />
   </React.StrictMode>,
