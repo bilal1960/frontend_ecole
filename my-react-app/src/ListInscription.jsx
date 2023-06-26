@@ -13,6 +13,8 @@ function ListInscription({inscrit}){
                   <span>nationalite: {item.nationalite}</span>
                   <span>sexe:        {item.sexe}       </span>
                   <span>commune:     {item.commune}    </span>
+                  <span>adresse:     {item.adresse}   </span>
+                  <span>minerval:    {item.minerval}  </span>
                 </li>
             ))}
       </ul>

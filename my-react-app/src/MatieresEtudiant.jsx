@@ -5,79 +5,60 @@ import { useAuth0 } from '@auth0/auth0-react';
 function MatieresEtudiant() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 1; // Remplacez cette valeur par le nombre d'éléments à afficher par page
-  const [totalItems, setTotalItems] = useState(0);
+  const itemsPerPage = 1; // Afficher un élément par page
   const [data, setData] = useState([]);
-  const { user, getAccessTokenSilently } = useAuth0();
-
-
-  useEffect(() => {
-    // Mettez à jour le nombre total de pages lorsque le nombre total d'éléments change
-    const calculatedTotalPages = Math.ceil(totalItems / itemsPerPage);
-    setTotalPages(calculatedTotalPages);
-  }, [totalItems, itemsPerPage]);
-
-  const handlePageChange = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
-  };
+  const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const accessToken = await getAccessTokenSilently(); 
+        const accessToken = await getAccessTokenSilently();
 
-        const response = await fetch('/add/matieres', {
+        const response = await fetch(`add/matieres/api?page=${currentPage}&size=${itemsPerPage}`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`, 
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json', // Ajout du header Content-Type
           },
         });
 
         if (!response.ok) {
-          throw new Error('Une erreur s\'est produite lors de la récupération des données.');
+          throw new Error('Une erreur s\'est produite lors de la tentative de récupération des données.');
         }
 
-        const data = await response.json();
-        setData(data);
-        setTotalItems(data.length);
+        const responseData = await response.json();
+        console.log(responseData);
+
+        setData(responseData.matieres ? responseData.matieres : []);
+        setTotalPages(responseData.totalPages);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchData();
-  }, [currentPage],[getAccessTokenSilently]);
+  }, [currentPage, getAccessTokenSilently]);
 
-  // Calculez les indices de début et de fin des éléments à afficher en fonction de la page actuelle
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  // Filtrer les éléments à afficher en fonction des indices calculés
-  const displayedItems = data.slice(startIndex, endIndex);
-
-  
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="row">
-      {/* Afficher les éléments correspondant à la page actuelle */}
-      {displayedItems.map((item) => (
+      {data.map((item) => (
         <div key={item.id} className="col-lg-6 col-md-6 mb-4">
           <div className="card">
             <div className="card-body">
               <h5 className="card-title">{item.nom}</h5>
-              <p className="card-text">Début : {item.debut}</p>
-              <p className="card-text">Fin : {item.fin}</p>
-              
+              <p className="card-text">Début: {item.debut}</p>
+              <p className="card-text">Fin: {item.fin}</p>
             </div>
           </div>
         </div>
       ))}
 
-      {/* Pagination */}
       <nav>
         <ul className="pagination">
-          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+          <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
             <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
               Précédent
             </button>
@@ -85,19 +66,19 @@ function MatieresEtudiant() {
 
           {Array.from({ length: totalPages }, (_, index) => (
             <li
-              key={index + 1}
-              className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}
+              key={index}
+              className={`page-item ${currentPage === index ? 'active' : ''}`}
             >
               <button
                 className="page-link"
-                onClick={() => handlePageChange(index + 1)}
+                onClick={() => handlePageChange(index)}
               >
                 {index + 1}
               </button>
             </li>
           ))}
 
-          <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+          <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
             <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
               Suivant
             </button>

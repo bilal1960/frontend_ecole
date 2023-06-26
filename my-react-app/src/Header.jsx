@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import React from 'react';
 import LogoutButton from './LogoutButton';
+import PermissionGuard from './PermissionGuard';
 
 function Header({ activeMenu, onMenuChange }) {
 
@@ -16,7 +17,9 @@ function Header({ activeMenu, onMenuChange }) {
             <Nav.Link eventKey="Accueil">Accueil</Nav.Link>
             <Nav.Link eventKey="Personne">Personne</Nav.Link>
             <Nav.Link eventKey="Inscription">Inscription</Nav.Link>
+            <PermissionGuard permission={'write:matiere'}>
             <Nav.Link eventKey="Matière">Matière</Nav.Link>
+            </PermissionGuard>
             <Nav.Link eventKey="ListMatiere">Listmatiere</Nav.Link>
             <LogoutButton/>
 

@@ -29,11 +29,9 @@ function MatiereGestion(){
     
     return (
         <>
-        <PermissionGuard permission={'write:matiere'}>
           <h2>ajouter une matière  svp</h2>
 
           <MatiereForm setmatieres={setmatieres} />
-          </ PermissionGuard >
           
         </>
       );
