@@ -26,7 +26,7 @@ function MatieresEtudiant() {
         }
 
         const responseData = await response.json();
-        console.log(responseData);
+        
 
         setData(responseData.matieres ? responseData.matieres : []);
         setTotalPages(responseData.totalPages);
@@ -77,7 +77,6 @@ function MatieresEtudiant() {
               </button>
             </li>
           ))}
-
           <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
             <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
               Suivant
@@ -88,5 +87,4 @@ function MatieresEtudiant() {
     </div>
   );
 }
-
 export default MatieresEtudiant;

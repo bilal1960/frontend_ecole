@@ -4,12 +4,11 @@ import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from './LoginButton';
-import useSWR from "swr"
-import InscriptionForm from './InscriptionForm';
 import PersonneGestion from './PersonneGestion';
 import MatiereGestion from './MAtiereGestion';
 import MatieresEtudiant from './MatieresEtudiant';
-import PermissionGuard from './PermissionGuard';
+import InscriptionGestion from './InscriptionGestion';
+import InscriptionEtudiant from './InscriptionEtudiant';
 function App() {
   const [activeMenu, setActiveMenu] = useState('');
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -28,12 +27,12 @@ function App() {
        <Container>
         {activeMenu === 'accueil' && <h2>accueil</h2>}
         {activeMenu === 'Personne' && <PersonneGestion/>}
-        {activeMenu === 'Inscription' && <InscriptionForm/>}
+        {activeMenu === 'Inscription' && <InscriptionGestion/>}
         {activeMenu === 'Matière' && <MatiereGestion/>}
-        {activeMenu === 'ListMatiere'     && <MatieresEtudiant />}
+        {activeMenu === 'ListMatiere'&& <MatieresEtudiant />}
+        {activeMenu === 'Listinscription' && <InscriptionEtudiant/>}
 
-
-
+        
         
       </Container>
       </div>
