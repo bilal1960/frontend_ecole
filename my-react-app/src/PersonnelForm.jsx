@@ -74,7 +74,6 @@ function PersonnelForm({ setPersonnelss }) {
 
   async function handleForsubmit(event) {
     event.preventDefault();
-
     const accessToken = await getAccessTokenSilently();
 
     if (
@@ -87,7 +86,7 @@ function PersonnelForm({ setPersonnelss }) {
       return alert('Tous les champs doivent être complétés !');
     }
 
-    const response = await fetch('/add/personnes', {
+    const response = await fetch('/add/perso/pagi', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-type': 'application/json',

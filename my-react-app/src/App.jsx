@@ -9,10 +9,11 @@ import MatiereGestion from './MAtiereGestion';
 import MatieresEtudiant from './MatieresEtudiant';
 import InscriptionGestion from './InscriptionGestion';
 import InscriptionEtudiant from './InscriptionEtudiant';
+import PersonneAffichage from './PersonneAffichage';
+import ListPersonnel from './ListPersonnel';
 function App() {
   const [activeMenu, setActiveMenu] = useState('');
   const { user, isAuthenticated, isLoading } = useAuth0();
-  const [personnels, setPersonnelss] = useState('' || []);
 
   if(isLoading){
     return <div>en chargement....</div>;
@@ -31,9 +32,7 @@ function App() {
         {activeMenu === 'Matière' && <MatiereGestion/>}
         {activeMenu === 'ListMatiere'&& <MatieresEtudiant />}
         {activeMenu === 'Listinscription' && <InscriptionEtudiant/>}
-
-        
-        
+        {activeMenu === 'ListPersonne' && <PersonneAffichage/>}
       </Container>
       </div>
     </>

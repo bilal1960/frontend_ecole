@@ -28,9 +28,8 @@ function Header({ activeMenu, onMenuChange }) {
             <PermissionGuard permission={"read:inscrit"}>
             <Nav.Link eventKey="Listinscription">ListInscription</Nav.Link>
             </PermissionGuard>
+            <Nav.Link eventKey="ListPersonne">ListPersonne</Nav.Link>
             <LogoutButton/>
-
-
           </Nav>
         </Navbar.Collapse>
       </Container>
