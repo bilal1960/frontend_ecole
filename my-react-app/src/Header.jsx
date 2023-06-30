@@ -15,7 +15,9 @@ function Header({ activeMenu, onMenuChange }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav activeKey={activeMenu} className="me-auto" onSelect={onMenuChange}>
             <Nav.Link eventKey="Accueil">Accueil</Nav.Link>
+            <PermissionGuard permission={"write:personne"}>
             <Nav.Link eventKey="Personne">Personne</Nav.Link>
+            </PermissionGuard>
             <PermissionGuard permission={'write:inscrit'}>
             <Nav.Link eventKey="Inscription">Inscription</Nav.Link>
             </PermissionGuard>
@@ -28,7 +30,9 @@ function Header({ activeMenu, onMenuChange }) {
             <PermissionGuard permission={"read:inscrit"}>
             <Nav.Link eventKey="Listinscription">ListInscription</Nav.Link>
             </PermissionGuard>
+            <PermissionGuard permission={"read:personne"}>
             <Nav.Link eventKey="ListPersonne">ListPersonne</Nav.Link>
+            </PermissionGuard>
             <LogoutButton/>
           </Nav>
         </Navbar.Collapse>

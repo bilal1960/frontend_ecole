@@ -1,6 +1,5 @@
 import React, { useEffect,useState } from 'react';
 import MatiereForm from "./MatiereForm";
-import PermissionGuard from './PermissionGuard';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function MatiereGestion(){
