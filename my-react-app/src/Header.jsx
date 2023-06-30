@@ -33,6 +33,7 @@ function Header({ activeMenu, onMenuChange }) {
             <PermissionGuard permission={"read:personne"}>
             <Nav.Link eventKey="ListPersonne">ListPersonne</Nav.Link>
             </PermissionGuard>
+
             <LogoutButton/>
           </Nav>
         </Navbar.Collapse>

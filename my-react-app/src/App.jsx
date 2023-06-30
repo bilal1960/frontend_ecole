@@ -32,6 +32,8 @@ function App() {
         {activeMenu === 'ListMatiere'&& <MatieresEtudiant />}
         {activeMenu === 'Listinscription' && <InscriptionEtudiant/>}
         {activeMenu === 'ListPersonne' && <PersonneAffichage/>}
+
+
       </Container>
       </div>
     </>
