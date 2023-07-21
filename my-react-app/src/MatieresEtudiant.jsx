@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
+import { Pagination } from 'react-bootstrap';
 
 function MatieresEtudiant() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 1; 
+  const itemsPerPage = 1;
   const [data, setData] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
 
@@ -14,10 +15,10 @@ function MatieresEtudiant() {
       try {
         const accessToken = await getAccessTokenSilently();
 
-        const response = await fetch(`add/matieres/api?page=${currentPage}&size=${itemsPerPage}`, {
+        const response = await fetch(`/add/matieres/api?page=${currentPage - 1}&size=${itemsPerPage}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json', // Ajout du header Content-Type
+            'Content-Type': 'application/json', 
           },
         });
 
@@ -26,9 +27,7 @@ function MatieresEtudiant() {
         }
 
         const responseData = await response.json();
-        
-
-        setData(responseData.matieres ? responseData.matieres : []);
+        setData(responseData.content ? responseData.content : []);
         setTotalPages(responseData.totalPages);
       } catch (error) {
         console.error(error);
@@ -56,35 +55,27 @@ function MatieresEtudiant() {
         </div>
       ))}
 
-      <nav>
-        <ul className="pagination">
-          <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
-            <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
-              Précédent
-            </button>
-          </li>
-
-          {Array.from({ length: totalPages }, (_, index) => (
-            <li
-              key={index}
-              className={`page-item ${currentPage === index ? 'active' : ''}`}
-            >
-              <button
-                className="page-link"
-                onClick={() => handlePageChange(index)}
-              >
-                {index + 1}
-              </button>
-            </li>
-          ))}
-          <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
-            <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>
-              Suivant
-            </button>
-          </li>
-        </ul>
-      </nav>
+      <Pagination>
+        <Pagination.Prev
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        />
+        {Array.from({ length: totalPages }, (_, index) => (
+          <Pagination.Item
+            key={index + 1}
+            active={index + 1 === currentPage}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </Pagination.Item>
+        ))}
+        <Pagination.Next
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        />
+      </Pagination>
     </div>
   );
 }
+
 export default MatieresEtudiant;

@@ -1,180 +1,100 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import style from './PersonnelForm.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function InscriptionForm({ setinscrits }) {
-    const { getAccessTokenSilently } = useAuth0();
+  const [personnelss, setPersonnes] = useState([]);
+  const { getAccessTokenSilently } = useAuth0();
 
-    const [inscrits, setinscritss] = useState({
-      nom: '',
-      prenom: '',
-      naissance: '',
-      nationalite: '',
-      sexe: '',
-      commune: '',
-      adresse: '',
-      minerval: '',
+  useEffect(() => {
+    const fetchPersonnesDisponibles = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently();
+        const response = await fetch('/add/perso/api', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const data = await response.json();
+        setPersonnes(data);
+      } catch (error) {
+        console.error('Une erreur s\'est produite lors de la récupération des personnes disponibles.', error);
+      }
+    };
+
+    fetchPersonnesDisponibles();
+  }, []);
+
+  const initialState = {
+    commune: '',
+    minerval: '',
+    personne: '',
+  };
+
+  const [inscrits, setinscritss] = useState(initialState);
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setinscritss({
+      ...inscrits,
+      [name]: value,
+    });
+  }
+
+  async function handleForsubmit(event) {
+    event.preventDefault();
+    const accessToken = await getAccessTokenSilently();
+    const response = await fetch('/add/inscriptions', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify(inscrits),
     });
 
-    function handleNomChange(event) {
-      const newnom = event.target.value;
-      setinscritss({
-        ...inscrits,
-        nom: newnom,
-      });
+    if (response.ok) {
+      setinscrits((inscrit) => [...inscrit, inscrits]);
+      setinscritss(initialState);
+    } else {
+      return 'error';
     }
+    return '';
+  }
 
-    function handlePrenomChange(event) {
-      const newprenom = event.target.value;
-      setinscritss({
-        ...inscrits,
-        prenom: newprenom,
-      });
-    }
-  
-    function handleNaissanceChange(event) {
-      const newnaissance = event.target.value;
-      setinscritss({
-        ...inscrits,
-        naissance: newnaissance,
-      });
-    }
+  return (
+    <Form onSubmit={handleForsubmit}>
+      <div className="form-group">
+        <label htmlFor="personne">Personne:</label>
+        <select className="form-control" id="personne" name="personne" value={inscrits.personne} onChange={handleChange}>
+          <option value="">Sélectionner une personne</option>
+          {personnelss.map((personnel) => (
+            <option key={personnel.id} value={personnel.id}>
+              {personnel.nom} {personnel.prenom}
+            </option>
+          ))}
+        </select>
+      </div>
 
-    function handleNationaliteChange(event) {
-      const newnationalite = event.target.value;
-      setinscritss({
-        ...inscrits,
-        nationalite: newnationalite,
-      });
-    }
+      <div className="form-group">
+        <label htmlFor="commune">commune:</label>
+        <input type="text" className="form-control" id="commune" name="commune" value={inscrits.commune} onChange={handleChange} />
+      </div>
 
-    function handleSexeChange(event)      {
-      const newsexe = event.target.value;
-      setinscritss({
-        ...inscrits,
-        sexe: newsexe,
-      });
-    }
-    
-    function handlecommune(event)         {
-      const newcommune = event.target.value
-      setinscritss({
-         ...inscrits,
-         commune: newcommune,
-      });
-    }
+      <div className="form-group">
+        <label htmlFor="minerval">minerval:</label>
+        <input type="text" className="form-control" id="minerval" name="minerval" value={inscrits.minerval} onChange={handleChange} />
+      </div>
 
-    function handleadresse(event){
-      const newadresse = event.target.value
-      setinscritss({
-        ...inscrits,
-        adresse: newadresse,
-      }) 
-    }
-
-    function handleminerval(event){
-      const newminerval = event.target.value
-      setinscritss({
-        ...inscrits,
-        minerval: newminerval,
-      })
-    }
-    async  function handleForsubmit(event) {
-        event.preventDefault();
-        const accessToken = await getAccessTokenSilently();
-
-        if (
-            !inscrits.nom.trim() ||
-            !inscrits.prenom.trim() ||
-            !inscrits.naissance.trim()||
-            !inscrits.commune.trim()||
-            !inscrits.sexe.trim()||
-            !inscrits.nationalite.trim()
-          ) {
-            // eslint-disable-next-line no-alert
-            return alert('tous les champs doivent être complété!');
-          }
-
-          const response = await fetch('/add/inscriptions', {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              'Content-type': 'application/json',
-            },
-            method: 'POST',
-            body: JSON.stringify(inscrits),
-          });
-
-          if (response.ok) {
-            setinscrits((inscrit) => [...inscrit, inscrits]);
-      
-            setinscritss({
-              nom: '',
-              prenom: '',
-              naissance: '',
-              nationalite: '',
-              sexe: '',
-              commune: '',
-              adresse: '',
-              minerval: '',
-            });
-          } else {
-            return 'error';
-          }
-          return '';
-    }
-
-    return (
-        <Form onSubmit={handleForsubmit}>
-          
-    
-          <div className="form-group">
-            <label htmlFor="nom">Nom:</label>
-            <input type="text" className="form-control" id="nom" value={inscrits.nom} onChange={handleNomChange} />
-          </div>
-    
-          <div className="form-group">
-            <label htmlFor="prenom">prénom:</label>
-            <input type="text" className="form-control" id="prenom" value={inscrits.prenom} onChange={handlePrenomChange} />
-          </div>
-    
-          <div className="form-group">
-            <label htmlFor="naissance">naissance:</label>
-            <input type="text" className="form-control" id="naissance" value={inscrits.naissance} onChange={handleNaissanceChange} />
-          </div>
-    
-          <div className="form-group">
-            <label htmlFor="nationalite">nationalite:</label>
-            <input type="text" className="form-control" id="nationalite" value={inscrits.nationalite} onChange={handleNationaliteChange} />
-          </div>
-          <div className="form-group">
-            <label htmlFor="sexe">sexe:</label>
-            <input type="text" className="form-control" id="sexe" value={inscrits.sexe} onChange={handleSexeChange} />
-          </div>
-          
-          <div className="form-group">
-            <label htmlFor="adresse">commune:</label>
-            <input type="text" className="form-control" id="commune" value={inscrits.commune} onChange={handlecommune} />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="adresse">adresse:</label>
-            <input type="text" className="form-control" id="adresse" value={inscrits.adresse} onChange={handleadresse} />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="adresse">minerval:</label>
-            <input type="text" className="form-control" id="minerval" value={inscrits.minerval} onChange={handleminerval} />
-          </div>
-  
-          <p>
-            <Button className={`btn btn-primary ${style.menu}`} type="submit">
-              <i className="bi bi-save" /> inscrire étudiant
-            </Button>
-          </p>
-        </Form>
-      );
+      <p>
+        <Button className={`btn btn-primary ${style.menu}`} type="submit">
+          <i className="bi bi-save" /> inscrire étudiant
+        </Button>
+      </p>
+    </Form>
+  );
 }
 
-    export default InscriptionForm;
+export default InscriptionForm;

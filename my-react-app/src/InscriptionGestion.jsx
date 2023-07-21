@@ -28,13 +28,8 @@ function InscriptionGestion(){
     return (
         <>
           <h2>ajouter une inscription svp  svp</h2>
-
           <InscriptionForm setinscrits={setinscrit} />
-          
         </>
       );
-
-
 }
-
 export default InscriptionGestion;

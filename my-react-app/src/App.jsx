@@ -33,7 +33,6 @@ function App() {
         {activeMenu === 'Listinscription' && <InscriptionEtudiant/>}
         {activeMenu === 'ListPersonne' && <PersonneAffichage/>}
 
-
       </Container>
       </div>
     </>
