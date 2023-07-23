@@ -3,9 +3,8 @@ import MatiereForm from "./MatiereForm";
 import { useAuth0 } from '@auth0/auth0-react';
 
 function MatiereGestion(){
-    const [matiere, setmatieres] = useState('' || []);
-    const { user, getAccessTokenSilently } = useAuth0();
-  const [matieres, setMatieres] = useState([]);
+  const { user, getAccessTokenSilently } = useAuth0();
+  const [matiere, setmatieres] = useState([]);
 
   useEffect(() => {
     const fetchMatieres = async () => {
@@ -17,7 +16,7 @@ function MatiereGestion(){
           },
         });
         const data = await response.json();
-        setMatieres(data);
+        setmatieres(data);
       } catch (error) {
         console.log(error);
       }

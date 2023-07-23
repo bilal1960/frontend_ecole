@@ -1,109 +1,123 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import style from './PersonnelForm.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 
-
 function MatiereForm({ setmatieres }) {
-    const { getAccessTokenSilently } = useAuth0();
+  const [personnelss, setPersonnes] = useState([]);
+  const { getAccessTokenSilently } = useAuth0();
 
-    const [matieres, setmatieress] = useState({
-      nom: '',
-      debut: '',
-      fin: '',
+  useEffect(() => {
+    const fetchPersonnesDisponibles = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently();
+        const response = await fetch('/add/perso/api', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const data = await response.json();
+        setPersonnes(data);
+      } catch (error) {
+        console.error('Une erreur s\'est produite lors de la récupération des personnes disponibles.', error);
+      }
+    };
+
+    fetchPersonnesDisponibles();
+  }, []);
+
+  const initialState = {
+    nom: '',
+    debut: '',
+    fin: '',
+    debutime: '',
+    fintime: '',
+    personne: '',
+  };
+
+  const [matieres, setmatieress] = useState(initialState);
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setmatieress({
+      ...matieres,
+      [name]: value,
+    });
+  }
+
+  async function handleForsubmit(event) {
+    event.preventDefault();
+    if (matieres.personne === "" || personnelss.find((personnel) => personnel.id === matieres.personne)?.statut !== "professeur") {
+      console.log("Le statut de la personne doit être 'professeur'.");
+      return;
+    }
+
+    const accessToken = await getAccessTokenSilently();
+    const response = await fetch('/add/matieres', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify(matieres),
     });
 
-    function handleNomChange(event) {
-      const newnom = event.target.value;
-      setmatieress({
-        ...matieres,
-        nom: newnom,
-      });
+    if (response.ok) {
+      setmatieres((matiere) => [...matiere, matieres]);
+      setmatieress(initialState);
+    } else {
+      return 'error';
     }
+    return '';
+  }
 
-    function handleDebutChange(event) {
-      const newdebut = event.target.value;
-      setmatieress({
-        ...matieres,
-        debut: newdebut,
-      });
-    }
-  
-    function handleFinChange(event) {
-      const newfin = event.target.value;
-      setmatieress({
-        ...matieres,
-        fin: newfin,
-      });
-    }
+  return (
+    <Form onSubmit={handleForsubmit}>
+      <div className="form-group">
+        <label htmlFor="personne">Personne:</label>
+        <select className="form-control" id="personne" name="personne" value={matieres.personne} onChange={handleChange}>
+          <option value="">Sélectionner une personne</option>
+          {personnelss.map((personnel) => (
+            <option key={personnel.id} value={personnel.id}>
+              {personnel.nom} {personnel.prenom} {personnel.statut}
+            </option>
+          ))}
+        </select>
+      </div>
 
-    async  function handleForsubmit(event) {
-        event.preventDefault();
+      <div className="form-group">
+        <label htmlFor="nom">Nom:</label>
+        <input type="text" className="form-control" id="nom" name="nom" value={matieres.nom} onChange={handleChange} />
+      </div>
 
-        const accessToken = await getAccessTokenSilently();
+      <div className="form-group">
+        <label htmlFor="debut">Début:</label>
+        <input type="text" className="form-control" id="debut" name="debut" value={matieres.debut} onChange={handleChange} />
+      </div>
 
-        if (
-            !matieres.nom.trim() ||
-            !matieres.debut.trim()||
-            !matieres.fin.trim()
-            
-          ) {
-            // eslint-disable-next-line no-alert
-            return alert('tous les champs doivent être complété!');
-          }
+      <div className="form-group">
+        <label htmlFor="fin">Fin:</label>
+        <input type="text" className="form-control" id="fin" name="fin" value={matieres.fin} onChange={handleChange} />
+      </div>
 
-          const response = await fetch('/add/matieres', {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              'Content-type': 'application/json',
-            },
-            method: 'POST',
-            body: JSON.stringify(matieres),
-          });
+      <div className="form-group">
+        <label htmlFor="debutime">Debutime (HH:mm):</label>
+        <input type="time" className="form-control" id="debutime" name="debutime" value={matieres.debutime} onChange={handleChange} />
+      </div>
 
-          if (response.ok) {
-            setmatieres((matiere) => [...matiere, matieres]);
-      
-            setmatieress({
-              nom: '',
-              debut: '',
-              fin: '',
-            });
-          } else {
-            return 'error';
-          }
-          return '';
-      
+      <div className="form-group">
+        <label htmlFor="fintime">Fintime (HH:mm):</label>
+        <input type="time" className="form-control" id="fintime" name="fintime" value={matieres.fintime} onChange={handleChange} />
+      </div>
 
-    }
-
-    return (
-
-        <Form onSubmit={handleForsubmit}>
-    
-          <div className="form-group">
-            <label htmlFor="nom">Nom:</label>
-            <input type="text" className="form-control" id="nom" value={matieres.nom} onChange={handleNomChange} />
-          </div>
-    
-          <div className="form-group">
-            <label htmlFor="debut">debut:</label>
-            <input type="text" className="form-control" id="debut" value={matieres.debut} onChange={handleDebutChange} />
-          </div>
-    
-          <div className="form-group">
-            <label htmlFor="fin">fin:</label>
-            <input type="text" className="form-control" id="fin" value={matieres.fin} onChange={handleFinChange} />
-          </div>
-  
-          <p>
-            <Button className={`btn btn-primary ${style.menu}`} type="submit">
-              <i className="bi bi-save" /> ajoute matière
-            </Button>
-          </p>
-        </Form>
-      );
+      <p>
+        <Button className={`btn btn-primary ${style.menu}`} type="submit">
+          <i className="bi bi-save" /> Ajouter matière
+        </Button>
+      </p>
+    </Form>
+  );
 }
 
-    export default MatiereForm;
+export default MatiereForm;

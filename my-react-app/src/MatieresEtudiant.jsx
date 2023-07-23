@@ -9,26 +9,40 @@ function MatieresEtudiant() {
   const itemsPerPage = 1;
   const [data, setData] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
+  const [personnes, setPersonnes] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
-
-        const response = await fetch(`/add/matieres/api?page=${currentPage - 1}&size=${itemsPerPage}`, {
+        const matieresResponse = await fetch(`/add/matieres/api?page=${currentPage - 1}&size=${itemsPerPage}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'application/json', 
+            'Content-Type': 'application/json',
           },
         });
 
-        if (!response.ok) {
-          throw new Error('Une erreur s\'est produite lors de la tentative de récupération des données.');
+        if (!matieresResponse.ok) {
+          throw new Error("Une erreur s'est produite lors de la tentative de récupération des données.");
         }
 
-        const responseData = await response.json();
-        setData(responseData.content ? responseData.content : []);
-        setTotalPages(responseData.totalPages);
+        const matieresData = await matieresResponse.json();
+        setData(matieresData.content ? matieresData.content : []);
+        setTotalPages(matieresData.totalPages);
+
+        const personnesResponse = await fetch(`/add/perso/api`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!personnesResponse.ok) {
+          throw new Error("Une erreur s'est produite lors de la tentative de récupération des données des personnes.");
+        }
+
+        const personnesData = await personnesResponse.json();
+        setPersonnes(personnesData);
       } catch (error) {
         console.error(error);
       }
@@ -43,18 +57,30 @@ function MatieresEtudiant() {
 
   return (
     <div className="row">
-      {data.map((item) => (
-        <div key={item.id} className="col-lg-6 col-md-6 mb-4">
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title">{item.nom}</h5>
-              <p className="card-text">Début: {item.debut}</p>
-              <p className="card-text">Fin: {item.fin}</p>
+      {data.map((item) => {
+        const personneAssociee = personnes.find((personne) => personne.id === item.personne.id);
+
+        return (
+          <div key={item.id} className="col-lg-6 col-md-6 mb-4">
+            <div className="card">
+              <div className="card-body">
+                {personneAssociee && (
+                  <div>
+                    <p className="card-text">Professeur: {personneAssociee.nom} {personneAssociee.prenom}</p>
+                    <p className="card-text">Matière: {item.nom}</p>
+                    <p className="card-text">Début: {item.debut}</p>
+                    <p className="card-text">Fin: {item.fin}</p>
+                    <p className="card-text">DébutTime: {item.debutime}</p>
+                    <p className="card-text">FinTime: {item.fintime}</p>
+
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-
+        );
+      })}
+      
       <Pagination>
         <Pagination.Prev
           onClick={() => handlePageChange(currentPage - 1)}
@@ -79,3 +105,4 @@ function MatieresEtudiant() {
 }
 
 export default MatieresEtudiant;
+

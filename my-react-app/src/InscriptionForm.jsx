@@ -7,6 +7,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 function InscriptionForm({ setinscrits }) {
   const [personnelss, setPersonnes] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
+  const [matieres, setMatieres] = useState([]);
+
 
   useEffect(() => {
     const fetchPersonnesDisponibles = async () => {
@@ -23,7 +25,24 @@ function InscriptionForm({ setinscrits }) {
         console.error('Une erreur s\'est produite lors de la récupération des personnes disponibles.', error);
       }
     };
+    
+    const fetchMatieresDisponibles = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently();
+        const response = await fetch('/add/matieres', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const data = await response.json();
+        setMatieres(data);
+      } catch (error) {
+        console.error('Une erreur s\'est produite lors de la récupération des matières disponibles.', error);
+      }
+    
+    };
 
+    fetchMatieresDisponibles();
     fetchPersonnesDisponibles();
   }, []);
 
@@ -31,6 +50,7 @@ function InscriptionForm({ setinscrits }) {
     commune: '',
     minerval: '',
     personne: '',
+    matiere: '',
   };
 
   const [inscrits, setinscritss] = useState(initialState);
@@ -73,6 +93,18 @@ function InscriptionForm({ setinscrits }) {
           {personnelss.map((personnel) => (
             <option key={personnel.id} value={personnel.id}>
               {personnel.nom} {personnel.prenom}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="matiere">Matière:</label>
+        <select className="form-control" id="matiere" name="matiere" value={inscrits.matiere} onChange={handleChange}>
+          <option value="">Sélectionner une matière</option>
+          {matieres.map((matieress) => (
+            <option key={matieress.id} value={matieress.id}>
+              {matieress.nom}
             </option>
           ))}
         </select>
