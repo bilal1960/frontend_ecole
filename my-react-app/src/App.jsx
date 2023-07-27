@@ -11,7 +11,6 @@ import InscriptionGestion from './InscriptionGestion';
 import InscriptionEtudiant from './InscriptionEtudiant';
 import PersonneAffichage from './PersonneAffichage';
 import EcoleAffichage from './EcoleAffichage';
-import TestUpdate from './TestUpdate';
 
 function App() {
   const [activeMenu, setActiveMenu] = useState('');
