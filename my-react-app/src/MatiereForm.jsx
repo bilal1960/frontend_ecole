@@ -8,11 +8,23 @@ function MatiereForm({ setmatieres }) {
   const [personnelss, setPersonnes] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
 
+  const matieresList = [
+    { value: 'mathématiques', label: 'Mathématiques' },
+    { value: 'physique', label: 'physique' },
+    { value: 'français', label: 'français' },
+    { value: 'chimie', label: 'chimie' },
+    { value: 'histoire', label: 'histoire' },
+    { value: 'informatique', label: 'informatique' },
+    { value: 'biologie', label: 'biologie' },
+
+  ];
+  
+
   useEffect(() => {
     const fetchPersonnesDisponibles = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
-        const response = await fetch('/add/perso/api', {
+        const response = await fetch('/add/perso/professeurs/api', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -40,21 +52,21 @@ function MatiereForm({ setmatieres }) {
 
   function handleChange(event) {
     const { name, value } = event.target;
+    
+
     setmatieress({
       ...matieres,
       [name]: value,
     });
   }
 
+
   async function handleForsubmit(event) {
     event.preventDefault();
-    if (matieres.personne === "" || personnelss.find((personnel) => personnel.id === matieres.personne)?.statut !== "professeur") {
-      console.log("Le statut de la personne doit être 'professeur'.");
-      return;
-    }
-
+    
     const accessToken = await getAccessTokenSilently();
-    const response = await fetch('/add/matieres', {
+    
+    const response = await fetch('/add/matiere/matieress', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-type': 'application/json',
@@ -67,8 +79,11 @@ function MatiereForm({ setmatieres }) {
       setmatieres((matiere) => [...matiere, matieres]);
       setmatieress(initialState);
     } else {
-      return 'error';
+      const data = await response.json();
+      
+
     }
+  
     return '';
   }
 
@@ -76,7 +91,7 @@ function MatiereForm({ setmatieres }) {
     <Form onSubmit={handleForsubmit}>
       <div className="form-group">
         <label htmlFor="personne">Personne:</label>
-        <select className="form-control" id="personne" name="personne" value={matieres.personne} onChange={handleChange}>
+        <select className="form-control" id="personne" name="personne" value={matieres.personne} onChange={handleChange} >
           <option value="">Sélectionner une personne</option>
           {personnelss.map((personnel) => (
             <option key={personnel.id} value={personnel.id}>
@@ -86,14 +101,28 @@ function MatiereForm({ setmatieres }) {
         </select>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="nom">Nom:</label>
-        <input type="text" className="form-control" id="nom" name="nom" value={matieres.nom} onChange={handleChange} />
-      </div>
+<div className="form-group">
+  <label htmlFor="nom">Matière:</label>
+  <select
+    className="form-control"
+    id="nom"
+    name="nom"
+    value={matieres.nom}
+    onChange={handleChange}
+  >
+    <option value="">Sélectionner une matière</option>
+    {matieresList.map((matiere) => (
+      <option key={matiere.value} value={matiere.value}>
+        {matiere.label}
+      </option>
+    ))}
+  </select>
+</div>
+
 
       <div className="form-group">
         <label htmlFor="debut">Début:</label>
-        <input type="text" className="form-control" id="debut" name="debut" value={matieres.debut} onChange={handleChange} />
+        <input type="text" className="form-control" id="debut" name="debut" value={matieres.debut} onChange={handleChange}  />
       </div>
 
       <div className="form-group">
@@ -116,6 +145,7 @@ function MatiereForm({ setmatieres }) {
           <i className="bi bi-save" /> Ajouter matière
         </Button>
       </p>
+
     </Form>
   );
 }

@@ -76,16 +76,7 @@ function PersonnelForm({ setPersonnelss }) {
     event.preventDefault();
     const accessToken = await getAccessTokenSilently();
 
-    if (
-      !personnelss.nom.trim() ||
-      !personnelss.prenom.trim() ||
-      !personnelss.naissance.trim() ||
-      !personnelss.adresse.trim()
-    ) {
-      // eslint-disable-next-line no-alert
-      return alert('Tous les champs doivent être complétés !');
-    }
-
+   
     const response = await fetch('/add/perso/pagi', {
       headers: {
         Authorization: `Bearer ${accessToken}`,

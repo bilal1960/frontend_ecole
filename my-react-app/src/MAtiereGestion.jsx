@@ -10,7 +10,7 @@ function MatiereGestion(){
     const fetchMatieres = async () => {
       try {
         const accessToken = await getAccessTokenSilently(); 
-        const response = await fetch("add/matieres", {
+        const response = await fetch("add/matiere/matieres", {
           headers: {
             Authorization: `Bearer ${accessToken}`, 
           },

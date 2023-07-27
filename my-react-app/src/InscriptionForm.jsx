@@ -5,9 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function InscriptionForm({ setinscrits }) {
-  const [personnelss, setPersonnes] = useState([]);
+  const [personnels, setPersonnes] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
-  const [matieres, setMatieres] = useState([]);
+
+
+
 
 
   useEffect(() => {
@@ -26,46 +28,50 @@ function InscriptionForm({ setinscrits }) {
       }
     };
     
-    const fetchMatieresDisponibles = async () => {
-      try {
-        const accessToken = await getAccessTokenSilently();
-        const response = await fetch('/add/matieres', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-        const data = await response.json();
-        setMatieres(data);
-      } catch (error) {
-        console.error('Une erreur s\'est produite lors de la récupération des matières disponibles.', error);
-      }
     
-    };
+  
 
-    fetchMatieresDisponibles();
     fetchPersonnesDisponibles();
-  }, []);
+  },[]);
+
+  
 
   const initialState = {
     commune: '',
     minerval: '',
     personne: '',
-    matiere: '',
+    
   };
+
+ 
+
 
   const [inscrits, setinscritss] = useState(initialState);
 
   function handleChange(event) {
-    const { name, value } = event.target;
+    const { name, value, } = event.target;
+    console.log("Valeur sélectionnée:", value); // Ajoutez cette ligne pour vérifier la valeur de "inscrits.matiere"
+  
     setinscritss({
       ...inscrits,
       [name]: value,
     });
   }
 
+  
+
   async function handleForsubmit(event) {
     event.preventDefault();
     const accessToken = await getAccessTokenSilently();
+
+    const personneAssociee = personnels.find((personnel) => personnel.id === inscrits.personne);
+  if ( personneAssociee.statut === "professeur") {
+    
+  }
+
+
+    
+   
     const response = await fetch('/add/inscriptions', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -86,29 +92,27 @@ function InscriptionForm({ setinscrits }) {
 
   return (
     <Form onSubmit={handleForsubmit}>
-      <div className="form-group">
+      { <div className="form-group">
         <label htmlFor="personne">Personne:</label>
         <select className="form-control" id="personne" name="personne" value={inscrits.personne} onChange={handleChange}>
           <option value="">Sélectionner une personne</option>
-          {personnelss.map((personnel) => (
-            <option key={personnel.id} value={personnel.id}>
-              {personnel.nom} {personnel.prenom}
-            </option>
-          ))}
-        </select>
-      </div>
+          {personnels.map((personnel) => (
 
-      <div className="form-group">
-        <label htmlFor="matiere">Matière:</label>
-        <select className="form-control" id="matiere" name="matiere" value={inscrits.matiere} onChange={handleChange}>
-          <option value="">Sélectionner une matière</option>
-          {matieres.map((matieress) => (
-            <option key={matieress.id} value={matieress.id}>
-              {matieress.nom}
+            
+            <option key={personnel.id} value={personnel.id}>
+              {personnel.nom} {personnel.prenom} {personnel.statut}
+              
             </option>
           ))}
         </select>
-      </div>
+      </div> }
+
+
+
+
+   
+  
+
 
       <div className="form-group">
         <label htmlFor="commune">commune:</label>

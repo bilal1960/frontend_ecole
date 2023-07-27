@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Pagination } from 'react-bootstrap';
+import UpdateForm from './UpdateFormMatiereEtudiant'; 
 
 function MatieresEtudiant() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,7 +16,7 @@ function MatieresEtudiant() {
     const fetchData = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
-        const matieresResponse = await fetch(`/add/matieres/api?page=${currentPage - 1}&size=${itemsPerPage}`, {
+        const matieresResponse = await fetch(`/add/matiere/matieres/api?page=${currentPage - 1}&size=${itemsPerPage}`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
@@ -30,7 +31,7 @@ function MatieresEtudiant() {
         setData(matieresData.content ? matieresData.content : []);
         setTotalPages(matieresData.totalPages);
 
-        const personnesResponse = await fetch(`/add/perso/api`, {
+        const personnesResponse = await fetch(`/add/matiere/professeurs/api1`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
@@ -55,9 +56,39 @@ function MatieresEtudiant() {
     setCurrentPage(pageNumber);
   };
 
+  const handleUpdate = async (index, updatedMatiere) => {
+    try {
+      const accessToken = await getAccessTokenSilently();
+      const itemToUpdate = data[index];
+
+      const updateResponse = await fetch(`/add/matiere/matieres/${itemToUpdate.id}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedMatiere),
+      });
+
+      console.log('Update Response:', updateResponse);
+
+      if (!updateResponse.ok) {
+        throw new Error("Une erreur s'est produite lors de la mise à jour des données.");
+      }
+
+      setData((prevData) => {
+        const updatedData = [...prevData];
+        updatedData[index] = updatedMatiere;
+        return updatedData;
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="row">
-      {data.map((item) => {
+      {data.map((item, index) => {
         const personneAssociee = personnes.find((personne) => personne.id === item.personne.id);
 
         return (
@@ -73,6 +104,7 @@ function MatieresEtudiant() {
                     <p className="card-text">DébutTime: {item.debutime}</p>
                     <p className="card-text">FinTime: {item.fintime}</p>
 
+                    <UpdateForm item={item} onUpdate={(updatedMatiere) => handleUpdate(index, updatedMatiere)} />
                   </div>
                 )}
               </div>
@@ -80,7 +112,7 @@ function MatieresEtudiant() {
           </div>
         );
       })}
-      
+
       <Pagination>
         <Pagination.Prev
           onClick={() => handlePageChange(currentPage - 1)}
@@ -105,4 +137,5 @@ function MatieresEtudiant() {
 }
 
 export default MatieresEtudiant;
+
 

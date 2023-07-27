@@ -8,53 +8,48 @@ function InscriptionEtudiant() {
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 1;
   const [data, setData] = useState([]);
-  const [personnes, setPersonnes] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
-
-  async function fetchInscriptionsData(accessToken, currentPage, itemsPerPage) {
-    const personnesResponse = await fetch(`/add/perso/api`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!personnesResponse.ok) {
-      throw new Error("Une erreur s'est produite lors de la tentative de récupération des données des personnes.");
-    }
-
-    const personnesData = await personnesResponse.json();
-
-    const inscriptionsResponse = await fetch(`/add/inscriptions/api?page=${currentPage - 1}&size=${itemsPerPage}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!inscriptionsResponse.ok) {
-      throw new Error("Une erreur s'est produite lors de la tentative de récupération des données des inscriptions.");
-    }
-
-    const inscriptionsData = await inscriptionsResponse.json();
-    return { personnes: personnesData, inscriptions: inscriptionsData };
-  }
+  const [personnes, setPersonnes] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
-        const { personnes, inscriptions } = await fetchInscriptionsData(accessToken, currentPage, itemsPerPage);
-        setPersonnes(personnes);
-        setData(inscriptions.content ? inscriptions.content : []);
-        setTotalPages(inscriptions.totalPages);
+        const inscriptionsResponse = await fetch(`/add/inscriptions/api?page=${currentPage - 1}&size=${itemsPerPage}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!inscriptionsResponse.ok) {
+          throw new Error("Une erreur s'est produite lors de la tentative de récupération des données des inscriptions.");
+        }
+
+        const inscriptionsData = await inscriptionsResponse.json();
+        setData(inscriptionsData.content ? inscriptionsData.content : []);
+        setTotalPages(inscriptionsData.totalPages);
+
+        const personnesResponse = await fetch(`/add/perso/api`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!personnesResponse.ok) {
+          throw new Error("Une erreur s'est produite lors de la tentative de récupération des données des personnes.");
+        }
+
+        const personnesData = await personnesResponse.json();
+        setPersonnes(personnesData);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchData();
-  }, [currentPage, getAccessTokenSilently, itemsPerPage]);
+  }, [currentPage, getAccessTokenSilently]);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -68,8 +63,9 @@ function InscriptionEtudiant() {
     <div className="row">
       {data.map((item) => {
         const personneAssociee = findPersonneAssociee(item, personnes);
+
         return (
-          <div key={personneAssociee.id} className="col-lg-6 col-md-6 mb-4">
+          <div key={item.id} className="col-lg-6 col-md-6 mb-4">
             <div className="card">
               <div className="card-body">
                 {personneAssociee && (
@@ -83,6 +79,8 @@ function InscriptionEtudiant() {
                     <p className="card-text">Commune : {item.commune}</p>
                     <p className="card-text">Minerval : {item.minerval}</p>
                     <p className="card-text">Statut: {personneAssociee.statut}</p>
+
+                   
                   </div>
                 )}
               </div>

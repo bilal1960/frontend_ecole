@@ -17,7 +17,7 @@ function ListMatiere({ matiere }) {
     }).then((r) => r.json());
   };
 
-  const { data, isLoading, error } = useSWR("/add/matieres", fetcher);
+  const { data, isLoading, error } = useSWR("/add/matiere/matieres", fetcher);
 
   // Mettre à jour les autorisations lors du chargement des données
   React.useEffect(() => {
