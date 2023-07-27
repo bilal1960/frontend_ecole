@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const UpdateForm = ({ personne, onUpdate }) => {
-  const [adresse, setAdresse] = useState(personne.adresse);
+const UpdateForm = ({ item, onUpdatepersonne }) => {
+  const [adresse, setAdresse] = useState(item.adresse);
 
   const handleAdresseChange = (e) => {
     setAdresse(e.target.value);
@@ -11,10 +11,10 @@ const UpdateForm = ({ personne, onUpdate }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedPersonne = {
-      ...personne,
+      ...item,
       adresse: adresse,
     };
-    onUpdate(updatedPersonne);
+    onUpdatepersonne(updatedPersonne);
   };
 
   return (
