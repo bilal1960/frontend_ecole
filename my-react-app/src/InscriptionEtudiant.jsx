@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Pagination } from 'react-bootstrap';
+import UpdateInscription from './UpdateInscription';
 
 function InscriptionEtudiant() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -59,10 +60,38 @@ function InscriptionEtudiant() {
     return personnes.find((personne) => personne.id === inscription.personne.id);
   }
 
+  async function handleUpdate(index, updatedInscription) {
+    try {
+      const accessToken = await getAccessTokenSilently();
+
+      const response = await fetch(`/add/inscriptions/inscrit/${updatedInscription.id}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedInscription),
+      });
+
+      if (!response.ok) {
+        throw new Error("Une erreur s'est produite lors de la mise à jour de l'inscription.");
+      }
+
+      setData((prevData) => {
+        const updatedData = [...prevData];
+        updatedData[index] = updatedInscription;
+        return updatedData;
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div className="row">
-      {data.map((item) => {
+      {data.map((item, index) => {
         const personneAssociee = findPersonneAssociee(item, personnes);
+
 
         return (
           <div key={item.id} className="col-lg-6 col-md-6 mb-4">
@@ -70,17 +99,22 @@ function InscriptionEtudiant() {
               <div className="card-body">
                 {personneAssociee && (
                   <div>
-                    <p className="card-text">Nom : {personneAssociee.nom}</p>
-                    <p className="card-text">Prénom : {personneAssociee.prenom}</p>
-                    <p className="card-text">Naissance: {personneAssociee.naissance}</p>
-                    <p className="card-text">Nationalité: {personneAssociee.nationalite}</p>
-                    <p className="card-text">Sexe: {personneAssociee.sexe}</p>
-                    <p className="card-text">Adresse: {personneAssociee.adresse}</p>
-                    <p className="card-text">Commune : {item.commune}</p>
-                    <p className="card-text">Minerval : {item.minerval}</p>
-                    <p className="card-text">Statut: {personneAssociee.statut}</p>
-
-                   
+                    <p>Nom : {personneAssociee.nom}</p>
+                    <p>Prénom : {personneAssociee.prenom}</p>
+                    <p>Naissance: {personneAssociee.naissance}</p>
+                    <p>Nationalité: {personneAssociee.nationalite}</p>
+                    <p>Sexe: {personneAssociee.sexe}</p>
+                    <p>Adresse: {personneAssociee.adresse}</p>
+                    <p>Inscription: {item.date_inscrit}</p>
+                    <p>Remboursement: {item.rembourser}</p>
+                    <p>Section: {item.section}</p>
+                    <p>Commune: {item.commune}</p>
+                    <p>Année: {item.secondaire_anne}</p>
+                    <p>Minerval: {item.minerval}</p>
+                    <UpdateInscription
+                      inscription={item}
+                      onUpdateinscrit={(updatedInscription) => handleUpdate(index, updatedInscription)}
+                    />
                   </div>
                 )}
               </div>

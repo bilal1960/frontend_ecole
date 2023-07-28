@@ -9,6 +9,8 @@ const UpdateForm = ({ item, onUpdate }) => {
   const [newFintime, setNewFintime] = useState(item.fintime);
   const [newLocal, setNewLocal] = useState(item.local);
   const [newJour, setNewJour] = useState(item.jour);
+  const [newSecondaire, setNewSecondaire] = useState(item.secondaire);
+
 
 
 
@@ -36,6 +38,10 @@ const UpdateForm = ({ item, onUpdate }) => {
     setNewJour(e.target.value);
   }
 
+  const handleSecondaireChange = (e) => {
+    setNewSecondaire(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedMatiere = {
@@ -46,6 +52,7 @@ const UpdateForm = ({ item, onUpdate }) => {
       fintime: newFintime,
       local: newLocal,
       jour: newJour,
+      secondaire: newSecondaire,
     };
     onUpdate(updatedMatiere);
   };
@@ -119,6 +126,18 @@ const UpdateForm = ({ item, onUpdate }) => {
           onChange={handlejourChange}
         />
       </div>
+
+      <div className="form-group">
+        <label htmlFor="secondaire"> changement année:</label>
+        <input
+          type="text"
+          className="form-control"
+          id="secondaire"
+          value={newSecondaire}
+          onChange={handleSecondaireChange}
+        />
+      </div>
+      
       <button type="submit" className="btn btn-primary">Mettre à jour</button>
       </PermissionGuard>
 

@@ -28,6 +28,17 @@ function MatiereForm({ setmatieres }) {
    
 
   ];
+
+  const tabsecondaire = [
+    { value: '1 secondaire', label: '1 secondaire' },
+    { value: '2 secondaire', label: '2 secondaire' },
+    { value: '3 secondaire', label: '3 secondaire' },
+    { value: '4 secondaire', label: '4 secondaire' },
+    { value: '5 secondaire', label: '5 secondaire' },
+    { value: '6 secondaire', label: '6 secondaire' },
+
+  ];
+
   
 
   useEffect(() => {
@@ -57,6 +68,7 @@ function MatiereForm({ setmatieres }) {
     fintime: '',
     local: '',
     jour: '',
+    secondaire: '',
     personne: '',
   };
 
@@ -149,6 +161,27 @@ function MatiereForm({ setmatieres }) {
     ))}
   </select>
 </div>
+
+<div className="form-group">
+  <label htmlFor="secondaire" >Secondaire:</label>
+  <select
+    className="form-control"
+    id="secondaire"
+    name="secondaire"
+    value={matieres.secondaire}
+    onChange={handleChange}
+    
+  >
+    <option value="">Sélectionner une année </option>
+    {tabsecondaire.map((matiere) => (
+      <option key={matiere.value} value={matiere.value}>
+        {matiere.label}
+      </option>
+    ))}
+  </select>
+</div>
+
+
 
 
       <div className="form-group">
