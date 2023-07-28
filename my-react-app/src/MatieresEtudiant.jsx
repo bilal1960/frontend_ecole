@@ -103,6 +103,10 @@ function MatieresEtudiant() {
                     <p className="card-text">Fin: {item.fin}</p>
                     <p className="card-text">DébutTime: {item.debutime}</p>
                     <p className="card-text">FinTime: {item.fintime}</p>
+                    <p className="card-text">Local: {item.local}</p>
+                    <p className="card-text">Jour: {item.jour}</p>
+
+
 
                     <UpdateForm item={item} onUpdate={(updatedMatiere) => handleUpdate(index, updatedMatiere)} />
                   </div>

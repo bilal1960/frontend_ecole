@@ -8,6 +8,23 @@ function InscriptionForm({ setinscrits }) {
   const [personnels, setPersonnes] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
 
+  const sectionList = [
+    {value: 'General', label: 'General'},
+    {value: 'Technique', label: 'Technique'},
+    {value: 'Professionnel', label: 'Professionnel'},
+
+  ];
+
+  const secondaire = [
+    {value: '1 secondaire', label: '1 secondaire'},
+    {value: '2 secondaire', label: '2 secondaire'},
+    {value: '3 secondaire', label: '3 secondaire'},
+    {value: '4 secondaire', label: '4 secondaire'},
+    {value: '5 secondaire', label: '5 secondaire'},
+    {value: '6 secondaire', label: '6 secondaire'},
+
+  ];
+
 
 
 
@@ -39,6 +56,10 @@ function InscriptionForm({ setinscrits }) {
   const initialState = {
     commune: '',
     minerval: '',
+    date_inscrit: '',
+    rembourser: 0.0,
+    section: '',
+    secondaire_anne:'',
     personne: '',
     
   };
@@ -50,7 +71,6 @@ function InscriptionForm({ setinscrits }) {
 
   function handleChange(event) {
     const { name, value, } = event.target;
-    console.log("Valeur sélectionnée:", value); // Ajoutez cette ligne pour vérifier la valeur de "inscrits.matiere"
   
     setinscritss({
       ...inscrits,
@@ -92,27 +112,59 @@ function InscriptionForm({ setinscrits }) {
 
   return (
     <Form onSubmit={handleForsubmit}>
-      { <div className="form-group">
+       <div className="form-group">
         <label htmlFor="personne">Personne:</label>
         <select className="form-control" id="personne" name="personne" value={inscrits.personne} onChange={handleChange}>
           <option value="">Sélectionner une personne</option>
           {personnels.map((personnel) => (
-
-            
             <option key={personnel.id} value={personnel.id}>
               {personnel.nom} {personnel.prenom} {personnel.statut}
               
             </option>
           ))}
         </select>
-      </div> }
+      </div> 
 
+      <div className="form-group">
+        <label htmlFor="date_inscrit">date_inscrit:</label>
+        <input type="text" className="form-control" id="date_inscrit" name="date_inscrit" value={inscrits.date_inscrit} onChange={handleChange} />
+      </div>
 
+      <div className="form-group">
+  <label htmlFor="section">Section:</label>
+  <select
+    className="form-control"
+    id="section"
+    name="section"
+    value={inscrits.section}
+    onChange={handleChange}
+  >
+    <option value="">Sélectionner une section</option>
+    {sectionList.map((inscrit) => (
+      <option key={inscrit.value} value={inscrit.value}>
+        {inscrit.label}
+      </option>
+    ))}
+  </select>
+</div>
 
-
-   
-  
-
+<div className="form-group">
+  <label htmlFor="secondaire_anne">Secondaire:</label>
+  <select
+    className="form-control"
+    id="secondaire_anne"
+    name="secondaire_anne"
+    value={inscrits.secondaire_anne}
+    onChange={handleChange}
+  >
+    <option value="">Sélectionner une section</option>
+    {secondaire.map((inscrit) => (
+      <option key={inscrit.value} value={inscrit.value}>
+        {inscrit.label}
+      </option>
+    ))}
+  </select>
+</div>
 
       <div className="form-group">
         <label htmlFor="commune">commune:</label>

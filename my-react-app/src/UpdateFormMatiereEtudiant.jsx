@@ -7,6 +7,10 @@ const UpdateForm = ({ item, onUpdate }) => {
   const [newFin, setNewFin] = useState(item.fin);
   const [newDebutime, setNewDebutime] = useState(item.debutime);
   const [newFintime, setNewFintime] = useState(item.fintime);
+  const [newLocal, setNewLocal] = useState(item.local);
+  const [newJour, setNewJour] = useState(item.jour);
+
+
 
   const handleDebutChange = (e) => {
     setNewDebut(e.target.value);
@@ -24,6 +28,14 @@ const UpdateForm = ({ item, onUpdate }) => {
     setNewFintime(e.target.value);
   };
 
+  const handlelocalchange = (e) => {
+    setNewLocal(e.target.value);
+  };
+
+  const handlejourChange = (e) => {
+    setNewJour(e.target.value);
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const updatedMatiere = {
@@ -32,6 +44,8 @@ const UpdateForm = ({ item, onUpdate }) => {
       fin: newFin,
       debutime: newDebutime,
       fintime: newFintime,
+      local: newLocal,
+      jour: newJour,
     };
     onUpdate(updatedMatiere);
   };
@@ -81,6 +95,28 @@ const UpdateForm = ({ item, onUpdate }) => {
           id="newFintime"
           value={newFintime}
           onChange={handleFintimeChange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="local">Nouveau local:</label>
+        <input
+          type="text"
+          className="form-control"
+          id="local"
+          value={newLocal}
+          onChange={handlelocalchange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="jour"> changement jour:</label>
+        <input
+          type="text"
+          className="form-control"
+          id="jour"
+          value={newJour}
+          onChange={handlejourChange}
         />
       </div>
       <button type="submit" className="btn btn-primary">Mettre à jour</button>

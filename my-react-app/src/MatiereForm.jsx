@@ -18,6 +18,16 @@ function MatiereForm({ setmatieres }) {
     { value: 'biologie', label: 'biologie' },
 
   ];
+
+  const matieresJours = [
+    { value: 'Lundi', label: 'Lundi' },
+    { value: 'Mardi', label: 'Mardi' },
+    { value: 'Mercredi', label: 'Mercredi' },
+    { value: 'Jeudi', label: 'Jeudi' },
+    { value: 'Vendredi', label: 'Vendredi' },
+   
+
+  ];
   
 
   useEffect(() => {
@@ -45,6 +55,8 @@ function MatiereForm({ setmatieres }) {
     fin: '',
     debutime: '',
     fintime: '',
+    local: '',
+    jour: '',
     personne: '',
   };
 
@@ -59,7 +71,6 @@ function MatiereForm({ setmatieres }) {
       [name]: value,
     });
   }
-
 
   async function handleForsubmit(event) {
     event.preventDefault();
@@ -119,6 +130,26 @@ function MatiereForm({ setmatieres }) {
   </select>
 </div>
 
+<div className="form-group">
+  <label htmlFor="jour">Jour:</label>
+  <select
+    className="form-control"
+    id="jour"
+    name="jour"
+    value={matieres.jour}
+    onChange={handleChange}
+    
+  >
+    <option value="">Sélectionner un jour </option>
+    {matieresJours.map((matiere) => (
+      <option key={matiere.value} value={matiere.value}>
+        {matiere.label}
+        
+      </option>
+    ))}
+  </select>
+</div>
+
 
       <div className="form-group">
         <label htmlFor="debut">Début:</label>
@@ -138,6 +169,11 @@ function MatiereForm({ setmatieres }) {
       <div className="form-group">
         <label htmlFor="fintime">Fintime (HH:mm):</label>
         <input type="time" className="form-control" id="fintime" name="fintime" value={matieres.fintime} onChange={handleChange} />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="local">Local:</label>
+        <input type="text" className="form-control" id="local" name="local" value={matieres.local} onChange={handleChange} />
       </div>
 
       <p>
