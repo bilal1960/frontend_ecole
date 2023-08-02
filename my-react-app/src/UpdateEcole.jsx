@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UpdateEcole = ({ ecole, onUpdateEcole }) => {
-  const [newAdresse, setNewAdresse] = useState(ecole.adresse);
-  const [newMail, setNewMail] = useState(ecole.mail);
-  const [newNumber, setNewNumber] = useState(ecole.number);
-  const [newType, setNewType] = useState(ecole.type);
+  const [newAdresse, setNewAdresse] = useState('');
+  const [newMail, setNewMail] = useState('');
+  const [newNumber, setNewNumber] = useState('');
+  const [newType, setNewType] = useState('');
 
   
 
@@ -27,13 +27,13 @@ const UpdateEcole = ({ ecole, onUpdateEcole }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const updatedEcole = {
-      ...ecole,
-      adresse: newAdresse,
-      mail: newMail,
-      number: newNumber,
-      type: newType,
-    };
+    let updatedEcole = { ...ecole };
+
+    if (newAdresse !== '') updatedEcole.adresse = newAdresse;
+    if (newMail !== '') updatedEcole.mail = newMail;
+    if (newNumber !== '') updatedEcole.number = newNumber;
+    if (newType !== '') updatedEcole.type = newType;
+   
     onUpdateEcole(updatedEcole);
   };
 

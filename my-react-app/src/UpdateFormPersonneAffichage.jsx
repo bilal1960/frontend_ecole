@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UpdateForm = ({ item, onUpdatepersonne }) => {
-  const [adresse, setAdresse] = useState(item.adresse);
+  const [adresse, setAdresse] = useState('');
+  const adressevalided = /^[A-Za-z][A-Za-z\d\s./]*$/;
 
   const handleAdresseChange = (e) => {
     setAdresse(e.target.value);
@@ -10,6 +11,10 @@ const UpdateForm = ({ item, onUpdatepersonne }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(!adressevalided.test(adresse)){
+        alert("saississez une adresse à un format normal")
+        return;
+    }
     const updatedPersonne = {
       ...item,
       adresse: adresse,

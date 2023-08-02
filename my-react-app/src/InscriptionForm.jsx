@@ -7,6 +7,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 function InscriptionForm({ setinscrits }) {
   const [personnels, setPersonnes] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
+  const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+  const communeRegex = /^[a-zA-Z]+$/;
 
   const sectionList = [
     {value: 'General', label: 'General'},
@@ -86,8 +88,24 @@ function InscriptionForm({ setinscrits }) {
 
     const personneAssociee = personnels.find((personnel) => personnel.id === inscrits.personne);
   if ( personneAssociee.statut === "professeur") {
-    
+       
   }
+
+  if(inscrits.minerval <=0){
+    alert("le prix du minerval doit être positif et supérieur à 0")
+    return;
+  }
+
+  if(!datePattern.test(inscrits.date_inscrit)){
+    alert("format date invalide, le bon format  est dd/MM/yyyy")
+    return;
+  }
+
+  if(!communeRegex.test(inscrits.commune)){
+    alert("entrer une commune valide uniquement des lettres et aucun espace")
+    return;
+  }
+
 
 
     
@@ -126,7 +144,7 @@ function InscriptionForm({ setinscrits }) {
       </div> 
 
       <div className="form-group">
-        <label htmlFor="date_inscrit">date_inscrit:</label>
+        <label htmlFor="date_inscrit">date_inscrit:(dd/MM/yyyy)</label>
         <input type="text" className="form-control" id="date_inscrit" name="date_inscrit" value={inscrits.date_inscrit} onChange={handleChange} />
       </div>
 

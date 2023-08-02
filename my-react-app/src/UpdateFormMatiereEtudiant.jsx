@@ -3,15 +3,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import PermissionGuard from './PermissionGuard';
 
 const UpdateForm = ({ item, onUpdate }) => {
-  const [newDebut, setNewDebut] = useState(item.debut);
-  const [newFin, setNewFin] = useState(item.fin);
-  const [newDebutime, setNewDebutime] = useState(item.debutime);
-  const [newFintime, setNewFintime] = useState(item.fintime);
-  const [newLocal, setNewLocal] = useState(item.local);
-  const [newJour, setNewJour] = useState(item.jour);
-  const [newSecondaire, setNewSecondaire] = useState(item.secondaire);
-
-
+  const [newDebut, setNewDebut] = useState('');
+  const [newFin, setNewFin] = useState('');
+  const [newDebutime, setNewDebutime] = useState('');
+  const [newFintime, setNewFintime] = useState('');
+  const [newLocal, setNewLocal] = useState('');
+  const [newJour, setNewJour] = useState('');
+  const [newSecondaire, setNewSecondaire] = useState('');
+  const currentYear = new Date().getFullYear();
+  const localPattern = /^[a-zA-Z][a-zA-Z0-9]*$/;
+  const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+  const joursAutorises = ["lundi", "mardi", "mercredi", "jeudi", "vendredi"];
+  const secondairePattern = /^[1-6] secondaire$/;
+  const jourEnMinuscules = newJour.toLowerCase();
 
 
   const handleDebutChange = (e) => {
@@ -44,6 +48,51 @@ const UpdateForm = ({ item, onUpdate }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const debutYear = new Date(newDebut).getFullYear();
+    const finYear = new Date(newFin).getFullYear();;
+
+    if (!datePattern.test(newDebut)) {
+      alert("Le format de la date de début doit être dd/MM/yyyy.");
+      return; 
+    }
+
+    if (!datePattern.test(newFin)) {
+      alert("Le format de la date de fin doit être dd/MM/yyyy.");
+      return; 
+    }
+
+    if(finYear > debutYear+1){
+      alert("La date de fin scolaire ne peut pas dépasser 1 ans de différence avec datedebut.");
+      return; 
+    }
+
+    if(newDebutime < "09:00"){
+      
+      alert("L'heure de début doit être 09:00 ou ultérieure.");
+      return; 
+      }
+
+      if (debutYear !== currentYear && debutYear !== currentYear -1 || finYear !== currentYear && finYear !== currentYear+1) {
+        alert("L'année de début doit être l'année en cours ou l'année précédente ou vérifier que la fin d'année est 2023 ou 2024.");
+        return; 
+      }
+
+      if (!localPattern.test(newLocal)) {
+        alert("Le local doit commencer par une lettre de l'alphabet ensuite elle peut contenir des lettres ou chiffres positif");
+        return; 
+      }
+
+      if (!joursAutorises.includes(jourEnMinuscules)) {
+        alert("Le jour de la semaine doit être du lundi au vendredi.");
+        return;
+      }
+
+      if (!secondairePattern.test(newSecondaire)) {
+        alert("La valeur doit être entre '1 secondaire' et '6 secondaire'.");
+        return; 
+      }
+
     const updatedMatiere = {
       ...item,
       debut: newDebut,
@@ -116,8 +165,10 @@ const UpdateForm = ({ item, onUpdate }) => {
         />
       </div>
 
-      <div className="form-group">
-        <label htmlFor="jour"> changement jour:</label>
+
+
+<div className="form-group">
+        <label htmlFor="jour"> jour:</label>
         <input
           type="text"
           className="form-control"
@@ -126,6 +177,7 @@ const UpdateForm = ({ item, onUpdate }) => {
           onChange={handlejourChange}
         />
       </div>
+
 
       <div className="form-group">
         <label htmlFor="secondaire"> changement année:</label>
@@ -137,7 +189,7 @@ const UpdateForm = ({ item, onUpdate }) => {
           onChange={handleSecondaireChange}
         />
       </div>
-      
+
       <button type="submit" className="btn btn-primary">Mettre à jour</button>
       </PermissionGuard>
 

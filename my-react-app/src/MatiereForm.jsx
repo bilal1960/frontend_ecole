@@ -7,6 +7,12 @@ import { useAuth0 } from '@auth0/auth0-react';
 function MatiereForm({ setmatieres }) {
   const [personnelss, setPersonnes] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
+  const currentYear = new Date().getFullYear();
+  const localPattern = /^[a-zA-Z][a-zA-Z0-9]*$/;
+  const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+
+
+
 
   const matieresList = [
     { value: 'mathématiques', label: 'Mathématiques' },
@@ -45,7 +51,7 @@ function MatiereForm({ setmatieres }) {
     const fetchPersonnesDisponibles = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
-        const response = await fetch('/add/perso/professeurs/api', {
+        const response = await fetch('/add/matiere/professeurs/api1', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -76,6 +82,8 @@ function MatiereForm({ setmatieres }) {
 
   function handleChange(event) {
     const { name, value } = event.target;
+
+    
     
 
     setmatieress({
@@ -86,6 +94,33 @@ function MatiereForm({ setmatieres }) {
 
   async function handleForsubmit(event) {
     event.preventDefault();
+
+    const debutYear = new Date(matieres.debut).getFullYear();
+    const finYear = debutYear+1;
+
+    if(matieres.debutime < "09:00"){
+      
+    alert("L'heure de début doit être 09:00 ou ultérieure.");
+    return; 
+    }
+
+    if (!datePattern.test(matieres.debut)) {
+      alert("Le format de la date de début doit être dd/MM/yyyy.");
+      return; // Ne pas envoyer la requête si la saisie est mauvaise
+    }
+
+    
+
+  if (debutYear !== currentYear && debutYear !== currentYear -1 || finYear !== currentYear && finYear !== currentYear+1) {
+    alert("L'année de début doit être l'année en cours ou l'année précédente ou vérifier que la fin d'année est 2022 ou 2023.");
+    return; 
+  }
+
+  if (!localPattern.test(matieres.local)) {
+    alert("Le local doit commencer par une lettre de l'alphabet ensuite elle peut contenir des lettres ou chiffres positif");
+    return; 
+  }
+
     
     const accessToken = await getAccessTokenSilently();
     
@@ -102,8 +137,8 @@ function MatiereForm({ setmatieres }) {
       setmatieres((matiere) => [...matiere, matieres]);
       setmatieress(initialState);
     } else {
-      const data = await response.json();
-      
+      const data = await response.text();
+      console.error('Erreur lors de l\'ajout de la matière:', data);
 
     }
   
@@ -125,7 +160,7 @@ function MatiereForm({ setmatieres }) {
       </div>
 
 <div className="form-group">
-  <label htmlFor="nom">Matière:</label>
+  <label htmlFor="nom">Jour:</label>
   <select
     className="form-control"
     id="nom"
@@ -181,9 +216,6 @@ function MatiereForm({ setmatieres }) {
   </select>
 </div>
 
-
-
-
       <div className="form-group">
         <label htmlFor="debut">Début:</label>
         <input type="text" className="form-control" id="debut" name="debut" value={matieres.debut} onChange={handleChange}  />
@@ -195,17 +227,17 @@ function MatiereForm({ setmatieres }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="debutime">Debutime (HH:mm):</label>
+        <label htmlFor="debutime">Debutime:</label>
         <input type="time" className="form-control" id="debutime" name="debutime" value={matieres.debutime} onChange={handleChange} />
       </div>
 
       <div className="form-group">
-        <label htmlFor="fintime">Fintime (HH:mm):</label>
+        <label htmlFor="fintime">Fintime </label>
         <input type="time" className="form-control" id="fintime" name="fintime" value={matieres.fintime} onChange={handleChange} />
       </div>
 
       <div className="form-group">
-        <label htmlFor="local">Local:</label>
+        <label htmlFor="local">Local:(lettrechiffre ou lettre)</label>
         <input type="text" className="form-control" id="local" name="local" value={matieres.local} onChange={handleChange} />
       </div>
 

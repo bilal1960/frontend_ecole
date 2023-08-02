@@ -6,6 +6,11 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 function PersonnelForm({ setPersonnelss }) {
   const { getAccessTokenSilently } = useAuth0();
+  const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+  const adresseRegexp = /^[A-Za-z][A-Za-z\d\s./]*$/;
+  const nationalitechamp = /^[A-Za-zéèç]*$/;
+  const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
+
   const [personnelss, setPersonnels] = useState({
     nom: '',
     prenom: '',
@@ -74,9 +79,43 @@ function PersonnelForm({ setPersonnelss }) {
 
   async function handleForsubmit(event) {
     event.preventDefault();
+
+    if(!regex.test(personnelss.nom)){
+      alert("Le nom doit contenir uniquement des lettres et espace");
+      return;
+    }
+
+    if (!regex.test(personnelss.prenom)) {
+      alert("Le prénom doit contenir uniquement des lettres et espace");
+      
+      return;
+    }
+    if (!datePattern.test(personnelss.naissance)) {
+      alert("Le format de la date de début doit être dd/MM/yyyy.");
+      return;
+    }
+    
+    if(personnelss.sexe != "homme" && personnelss.sexe != "femme"){
+      alert("Le champ sexe doit être complété par homme ou femme");
+      return;
+    }
+    if(personnelss.statut != "etudiant" && personnelss.statut != "professeur"){
+      alert("Le champ statut doit être complété par etudiant ou professeur");
+      return;
+    }
+
+    if (!adresseRegexp.test(personnelss.adresse)) {
+      alert("Entrer une adresse valide");
+      return;
+  }
+
+  if (!nationalitechamp.test(personnelss.nationalite)) {
+    alert("Entrer une nationalité sans espace ni chiffre");
+    return;
+}
+
     const accessToken = await getAccessTokenSilently();
 
-   
     const response = await fetch('/add/perso/pagi', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -129,7 +168,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="naissance">Naissance:</label>
+        <label htmlFor="naissance">Naissance:(dd/MM/yyyy)</label>
         <input
           type="text"
           className="form-control"
@@ -151,7 +190,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="sexe">Sexe:</label>
+        <label htmlFor="sexe">Sexe: homme ou femme</label>
         <input
           type="text"
           className="form-control"
@@ -173,7 +212,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="statut">Statut:</label>
+        <label htmlFor="statut">Statut: etudiant ou professeur</label>
         <input
           type="text"
           className="form-control"

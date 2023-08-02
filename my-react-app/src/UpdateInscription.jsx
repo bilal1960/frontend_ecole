@@ -3,14 +3,42 @@ import { Form, Button } from 'react-bootstrap';
 
 function UpdateFormInscription({ inscription, onUpdateinscrit }) {
 
-  const [rembourser, setRembourser] = useState(inscription.rembourser || ''); 
-  const [section, setSection] = useState(inscription.section || ''); 
-  const [secondaire_anne, setSecondaire_anne] = useState(inscription.secondaire_anne || ''); 
-  const [commune, setCommune] = useState(inscription.commune || ''); 
-  const [minerval, setMinerval] = useState(inscription.minerval || ''); 
+  const [rembourser, setRembourser] = useState(''); 
+  const [section, setSection] = useState(''); 
+  const [secondaire_anne, setSecondaire_anne] = useState(''); 
+  const [commune, setCommune] = useState(''); 
+  const [minerval, setMinerval] = useState(''); 
+  const secondairePattern = /^[1-6] secondaire$/;
+  const communeRegex = /^[a-zA-Z]+$/;
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    if(rembourser <0){
+        alert("aucune valeur négatif autorisé")
+        return;
+    }
+
+    if (rembourser === '') {
+        rembourser = 0;
+        return rembourser;
+      }
+
+      if(section.toLocaleLowerCase() != "general" && section.toLocaleLowerCase() != "technique" && section.toLocaleLowerCase() != "professionnel" ){
+        alert("les sections autorisées: general, technique, professionnel")
+        return;
+      }
+
+      if(!secondairePattern.test(secondaire_anne)){
+        alert("l'année scolaire  doit être au format 1 secondaire jusqu'à 6 secondaire")
+        return;
+      }
+
+      if(!communeRegex.test(commune)){
+        alert("la commune doit contenir uniquement des lettres et aucun espace")
+        return;
+      }
+
     const updatedInscription = {
       ...inscription,
       rembourser: rembourser,
@@ -27,7 +55,7 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
       <div className="form-group">
         <label htmlFor="rembourser">Remboursement:</label>
         <input
-          type="text"
+          type="number"
           className="form-control"
           id="rembourser"
           name="rembourser"
@@ -75,7 +103,7 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
       <div className="form-group">
         <label htmlFor="minerval">Minerval:</label>
         <input
-          type="text"
+          type="number"
           className="form-control"
           id="minerval"
           name="minerval"
