@@ -10,43 +10,57 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
   const [minerval, setMinerval] = useState(''); 
   const secondairePattern = /^[1-6] secondaire$/;
   const communeRegex = /^[a-zA-Z]+$/;
+  let updatedRembourser = rembourser !== '' ? rembourser : inscription.rembourser;
+  let updatedSection = section !== '' ? section : inscription.section;
+  let updatedSecondaire_anne = secondaire_anne !== '' ? secondaire_anne : inscription.secondaire_anne;
+  let updatedCommune = commune !== '' ? commune : inscription.commune;
+  let updatedMinerval = minerval !== '' ? minerval : inscription.minerval;
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    if(rembourser <0){
+    if(updatedRembourser < 0){
         alert("aucune valeur négatif autorisé")
         return;
     }
 
-    if (rembourser === '') {
-        rembourser = 0;
-        return rembourser;
-      }
-
-      if(section.toLocaleLowerCase() != "general" && section.toLocaleLowerCase() != "technique" && section.toLocaleLowerCase() != "professionnel" ){
+    if(updatedSection !== ''){
+      if(updatedSection.toLocaleLowerCase() != "general" && updatedSection.toLocaleLowerCase() != "technique" && updatedSection.toLocaleLowerCase() != "professionnel" ){
         alert("les sections autorisées: general, technique, professionnel")
         return;
       }
+    }
 
-      if(!secondairePattern.test(secondaire_anne)){
-        alert("l'année scolaire  doit être au format 1 secondaire jusqu'à 6 secondaire")
+    if(updatedSecondaire_anne !== ''){
+      if(!secondairePattern.test(updatedSecondaire_anne)){
+        alert("format de saisit:1 secondaire, max:6 secondaire")
         return;
       }
-
-      if(!communeRegex.test(commune)){
+    }
+      
+    if(updatedCommune !== ''){
+      if(!communeRegex.test(updatedCommune)){
         alert("la commune doit contenir uniquement des lettres et aucun espace")
         return;
       }
+    }
+
+    if(updatedMinerval !== ''){
+        if(updatedMinerval <=0){
+            alert("le minerval ne peut pas être null ou négatif")
+            return;
+        }
+    }
 
     const updatedInscription = {
       ...inscription,
-      rembourser: rembourser,
-      section: section,
-      secondaire_anne: secondaire_anne,
-      commune: commune,
-      minerval: minerval,
+      rembourser: updatedRembourser,
+      section: updatedSection,
+      secondaire_anne: updatedSecondaire_anne,
+      commune: updatedCommune,
+      minerval: updatedMinerval,
     };
+
     onUpdateinscrit(updatedInscription);
   }
 
