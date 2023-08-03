@@ -11,25 +11,19 @@ function InscriptionForm({ setinscrits }) {
   const communeRegex = /^[a-zA-Z]+$/;
 
   const sectionList = [
-    {value: 'General', label: 'General'},
-    {value: 'Technique', label: 'Technique'},
-    {value: 'Professionnel', label: 'Professionnel'},
-
+    { value: 'General', label: 'General' },
+    { value: 'Technique', label: 'Technique' },
+    { value: 'Professionnel', label: 'Professionnel' },
   ];
 
   const secondaire = [
-    {value: '1 secondaire', label: '1 secondaire'},
-    {value: '2 secondaire', label: '2 secondaire'},
-    {value: '3 secondaire', label: '3 secondaire'},
-    {value: '4 secondaire', label: '4 secondaire'},
-    {value: '5 secondaire', label: '5 secondaire'},
-    {value: '6 secondaire', label: '6 secondaire'},
-
+    { value: '1 secondaire', label: '1 secondaire' },
+    { value: '2 secondaire', label: '2 secondaire' },
+    { value: '3 secondaire', label: '3 secondaire' },
+    { value: '4 secondaire', label: '4 secondaire' },
+    { value: '5 secondaire', label: '5 secondaire' },
+    { value: '6 secondaire', label: '6 secondaire' },
   ];
-
-
-
-
 
   useEffect(() => {
     const fetchPersonnesDisponibles = async () => {
@@ -46,14 +40,9 @@ function InscriptionForm({ setinscrits }) {
         console.error('Une erreur s\'est produite lors de la récupération des personnes disponibles.', error);
       }
     };
-    
-    
-  
 
     fetchPersonnesDisponibles();
-  },[]);
-
-  
+  }, []);
 
   const initialState = {
     commune: '',
@@ -61,55 +50,45 @@ function InscriptionForm({ setinscrits }) {
     date_inscrit: '',
     rembourser: 0.0,
     section: '',
-    secondaire_anne:'',
+    secondaire_anne: '',
     personne: '',
-    
   };
-
- 
-
 
   const [inscrits, setinscritss] = useState(initialState);
 
   function handleChange(event) {
     const { name, value, } = event.target;
-  
+
     setinscritss({
       ...inscrits,
       [name]: value,
     });
   }
 
-  
-
   async function handleForsubmit(event) {
     event.preventDefault();
     const accessToken = await getAccessTokenSilently();
 
     const personneAssociee = personnels.find((personnel) => personnel.id === inscrits.personne);
-  if ( personneAssociee.statut === "professeur") {
-       
-  }
+    if (personneAssociee.statut === "professeur") {
 
-  if(inscrits.minerval <=0){
-    alert("le prix du minerval doit être positif et supérieur à 0")
-    return;
-  }
+    }
 
-  if(!datePattern.test(inscrits.date_inscrit)){
-    alert("format date invalide, le bon format  est dd/MM/yyyy")
-    return;
-  }
+    if (inscrits.minerval <= 0) {
+      alert("le prix du minerval doit être positif et supérieur à 0")
+      return;
+    }
 
-  if(!communeRegex.test(inscrits.commune)){
-    alert("entrer une commune valide uniquement des lettres et aucun espace")
-    return;
-  }
+    if (!datePattern.test(inscrits.date_inscrit)) {
+      alert("format date invalide, le bon format  est dd/MM/yyyy")
+      return;
+    }
 
+    if (!communeRegex.test(inscrits.commune)) {
+      alert("entrer une commune valide uniquement des lettres et aucun espace")
+      return;
+    }
 
-
-    
-   
     const response = await fetch('/add/inscriptions', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -130,18 +109,18 @@ function InscriptionForm({ setinscrits }) {
 
   return (
     <Form onSubmit={handleForsubmit}>
-       <div className="form-group">
+      <div className="form-group">
         <label htmlFor="personne">Personne:</label>
         <select className="form-control" id="personne" name="personne" value={inscrits.personne} onChange={handleChange}>
           <option value="">Sélectionner une personne</option>
           {personnels.map((personnel) => (
             <option key={personnel.id} value={personnel.id}>
               {personnel.nom} {personnel.prenom} {personnel.statut}
-              
+
             </option>
           ))}
         </select>
-      </div> 
+      </div>
 
       <div className="form-group">
         <label htmlFor="date_inscrit">date_inscrit:(dd/MM/yyyy)</label>
@@ -149,40 +128,40 @@ function InscriptionForm({ setinscrits }) {
       </div>
 
       <div className="form-group">
-  <label htmlFor="section">Section:</label>
-  <select
-    className="form-control"
-    id="section"
-    name="section"
-    value={inscrits.section}
-    onChange={handleChange}
-  >
-    <option value="">Sélectionner une section</option>
-    {sectionList.map((inscrit) => (
-      <option key={inscrit.value} value={inscrit.value}>
-        {inscrit.label}
-      </option>
-    ))}
-  </select>
-</div>
+        <label htmlFor="section">Section:</label>
+        <select
+          className="form-control"
+          id="section"
+          name="section"
+          value={inscrits.section}
+          onChange={handleChange}
+        >
+          <option value="">Sélectionner une section</option>
+          {sectionList.map((inscrit) => (
+            <option key={inscrit.value} value={inscrit.value}>
+              {inscrit.label}
+            </option>
+          ))}
+        </select>
+      </div>
 
-<div className="form-group">
-  <label htmlFor="secondaire_anne">Secondaire:</label>
-  <select
-    className="form-control"
-    id="secondaire_anne"
-    name="secondaire_anne"
-    value={inscrits.secondaire_anne}
-    onChange={handleChange}
-  >
-    <option value="">Sélectionner une section</option>
-    {secondaire.map((inscrit) => (
-      <option key={inscrit.value} value={inscrit.value}>
-        {inscrit.label}
-      </option>
-    ))}
-  </select>
-</div>
+      <div className="form-group">
+        <label htmlFor="secondaire_anne">Secondaire:</label>
+        <select
+          className="form-control"
+          id="secondaire_anne"
+          name="secondaire_anne"
+          value={inscrits.secondaire_anne}
+          onChange={handleChange}
+        >
+          <option value="">Sélectionner une section</option>
+          {secondaire.map((inscrit) => (
+            <option key={inscrit.value} value={inscrit.value}>
+              {inscrit.label}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <div className="form-group">
         <label htmlFor="commune">commune:</label>

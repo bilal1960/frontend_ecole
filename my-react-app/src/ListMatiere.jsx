@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import useSWR from "swr";
 import { useAuth0 } from '@auth0/auth0-react';
@@ -41,10 +40,10 @@ function ListMatiere({ matiere }) {
     <ul>
       {matieresFiltrees.map((item) => (
         <li key={item.id}>
-          <span>id:        {item.id}      </span>
-          <span>nom:      {item.nom}      </span>
-          <span> debut:  {item.debut}    </span>
-          <span>fin:     {item.fin}      </span>
+          <span>id:    {item.id}   </span>
+          <span>nom:   {item.nom}  </span>
+          <span>debut: {item.debut}</span>
+          <span>fin:   {item.fin}  </span>
         </li>
       ))}
     </ul>

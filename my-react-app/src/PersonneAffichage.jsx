@@ -56,8 +56,6 @@ function PersonneAffichage() {
         body: JSON.stringify(updatedPersonne),
       });
 
-      console.log('Update Response:', updateResponse);
-
       if (!updateResponse.ok) {
         throw new Error("Une erreur s'est produite lors de la mise à jour des données.");
       }
@@ -85,14 +83,11 @@ function PersonneAffichage() {
               <p className="card-text">sexe: {item.sexe}</p>
               <p className="card-text">adresse: {item.adresse}</p>
               <p className="card-text">statut: {item.statut}</p>
-
               <UpdateFormPersonneAffichage item={item} onUpdatepersonne={(updatedPersonne) => handleUpdate(index, updatedPersonne)} />
-
             </div>
           </div>
         </div>
       ))}
-
       <Pagination>
         <Pagination.Prev
           onClick={() => handlePageChange(currentPage - 1)}
@@ -117,4 +112,3 @@ function PersonneAffichage() {
 }
 
 export default PersonneAffichage;
-

@@ -8,7 +8,7 @@ const UpdateEcole = ({ ecole, onUpdateEcole }) => {
   const [newType, setNewType] = useState('');
   const regex = /(\+32\s?)?\d{1,}(\s?\d{2}){1,}/;
   const regenmail = /.*@.*\..*/;
-  const regenxpadresse = /^[A-Za-z][A-Za-z\d\s./]*$/;
+  const regenxpadresse = /^\s*[A-Za-z][A-Za-z\d\s./]*$/;
 
   const handleAdresseChange = (e) => {
     setNewAdresse(e.target.value);
@@ -31,36 +31,36 @@ const UpdateEcole = ({ ecole, onUpdateEcole }) => {
     let updatedEcole = { ...ecole };
 
     if (newAdresse !== ''){
-        if (!regenxpadresse.test(newAdresse)) {
-            alert("Entrez une adresse valide pas de chiffre en début ni caractère spéciaux")
-            return;
-        } else {
-            updatedEcole.adresse = newAdresse;
-        }
+      if (!regenxpadresse.test(newAdresse)) {
+        alert("Entrez une adresse valide pas de chiffre en début ni caractère spéciaux");
+        return;
+      } else {
+        updatedEcole.adresse = newAdresse;
+      }
     }
     if (newMail !== ''){
-        if (!regenmail.test(newMail)) {
-            alert("L'email doit contenir @ pour être validé")
-            return;
-        } else {
-            updatedEcole.mail = newMail;
-        }
+      if (!regenmail.test(newMail)) {
+        alert("L'email doit contenir @ pour être validé");
+        return;
+      } else {
+        updatedEcole.mail = newMail;
+      }
     }
     if (newNumber !== ''){
-        if (!regex.test(newNumber)) {
-            alert("Veuillez saisir un numéro valide: 0480 ect ou +32 04890 ect")
-            return;
-        } else {
-            updatedEcole.number = newNumber;
-        }
+      if (!regex.test(newNumber)) {
+        alert("Veuillez saisir un numéro valide: 0480 ect ou +32 04890 ect");
+        return;
+      } else {
+        updatedEcole.number = newNumber;
+      }
     }
     if (newType !== ''){
-        if(newType != "secondaire" && newType != "secondaire/supérieur" && newType != "secondaire /supérieur"){
-            alert("Il faut saisir des données validées : secondaire ou secondaire/supérieur ou secondaire /supérieur")
-            return;
-        } else {
-            updatedEcole.type = newType;
-        }
+      if(newType != "secondaire" && newType != "secondaire/supérieur" && newType != "secondaire /supérieur"){
+        alert("Il faut saisir des données validées : secondaire ou secondaire/supérieur ou secondaire /supérieur");
+        return;
+      } else {
+        updatedEcole.type = newType;
+      }
     }
 
     onUpdateEcole(updatedEcole);

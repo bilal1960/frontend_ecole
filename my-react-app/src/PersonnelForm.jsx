@@ -7,7 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 function PersonnelForm({ setPersonnelss }) {
   const { getAccessTokenSilently } = useAuth0();
   const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
-  const adresseRegexp = /^[A-Za-z][A-Za-z\d\s./]*$/;
+  const adresseRegexp = /^\s*[A-Za-z][A-Za-z\d\s./]*$/;
   const nationalitechamp = /^[A-Za-zéèç]*$/;
   const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
 
@@ -80,26 +80,25 @@ function PersonnelForm({ setPersonnelss }) {
   async function handleForsubmit(event) {
     event.preventDefault();
 
-    if(!regex.test(personnelss.nom)){
+    if (!regex.test(personnelss.nom)) {
       alert("Le nom doit contenir uniquement des lettres et espace");
       return;
     }
 
     if (!regex.test(personnelss.prenom)) {
       alert("Le prénom doit contenir uniquement des lettres et espace");
-      
       return;
     }
     if (!datePattern.test(personnelss.naissance)) {
       alert("Le format de la date de début doit être dd/MM/yyyy.");
       return;
     }
-    
-    if(personnelss.sexe != "homme" && personnelss.sexe != "femme"){
+
+    if (personnelss.sexe != "homme" && personnelss.sexe != "femme") {
       alert("Le champ sexe doit être complété par homme ou femme");
       return;
     }
-    if(personnelss.statut != "etudiant" && personnelss.statut != "professeur"){
+    if (personnelss.statut != "etudiant" && personnelss.statut != "professeur") {
       alert("Le champ statut doit être complété par etudiant ou professeur");
       return;
     }
@@ -107,12 +106,12 @@ function PersonnelForm({ setPersonnelss }) {
     if (!adresseRegexp.test(personnelss.adresse)) {
       alert("Entrer une adresse valide");
       return;
-  }
+    }
 
-  if (!nationalitechamp.test(personnelss.nationalite)) {
-    alert("Entrer une nationalité sans espace ni chiffre");
-    return;
-}
+    if (!nationalitechamp.test(personnelss.nationalite)) {
+      alert("Entrer une nationalité sans espace ni chiffre");
+      return;
+    }
 
     const accessToken = await getAccessTokenSilently();
 

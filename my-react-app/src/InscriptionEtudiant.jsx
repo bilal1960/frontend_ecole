@@ -92,7 +92,6 @@ function InscriptionEtudiant() {
       {data.map((item, index) => {
         const personneAssociee = findPersonneAssociee(item, personnes);
 
-
         return (
           <div key={item.id} className="col-lg-6 col-md-6 mb-4">
             <div className="card">

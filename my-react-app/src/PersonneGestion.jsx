@@ -3,9 +3,8 @@ import PersonnelForm from './PersonnelForm';
 import { useAuth0 } from '@auth0/auth0-react';
 
 function PersonneGestion() {
-  const [personnels, setPersonnelss] = useState( []);
+  const [personnels, setPersonnelss] = useState([]);
   const { user, getAccessTokenSilently } = useAuth0();
-
 
   useEffect(() => {
     const fetchPersonne = async () => {
@@ -25,7 +24,6 @@ function PersonneGestion() {
 
     fetchPersonne();
   }, [getAccessTokenSilently]);
-
 
   return (
     <>

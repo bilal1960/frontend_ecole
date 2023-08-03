@@ -33,13 +33,13 @@ function ListPersonnel({ personnels }) {
     <ul>
       {personnels.map((item) => (
         <li key={item.id}>
-          <span>id:          {item.id}</span>
-          <span>nom:         {item.nom}</span>
+          <span>id:         {item.id}</span>
+          <span>nom:        {item.nom}</span>
           <span>prenom:     {item.prenom}</span>
           <span>naissance:  {item.naissance}</span>
-          <span>nationalite: {item.nationalite}</span>
-          <span>sexe:        {item.sexe}</span>
-          <span>adresse:     {item.adresse}</span>
+          <span>nationalite:{item.nationalite}</span>
+          <span>sexe:       {item.sexe}</span>
+          <span>adresse:    {item.adresse}</span>
           <span>statut:     {item.statut}</span>
         </li>
       ))}
@@ -48,10 +48,3 @@ function ListPersonnel({ personnels }) {
 }
 
 export default ListPersonnel;
-
-        
-
-
-
-    
-     
