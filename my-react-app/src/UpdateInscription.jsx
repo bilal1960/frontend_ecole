@@ -27,7 +27,7 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
 
         if(updatedSection !== ''){
             if(updatedSection.toLocaleLowerCase() != "general" && updatedSection.toLocaleLowerCase() != "technique" && updatedSection.toLocaleLowerCase() != "professionnel" ){
-                alert("les sections autorisées: general, technique, professionnel t aucun espace")
+                alert("les sections autorisées: general, technique, professionnel et aucun espace")
                 return;
             }
         }

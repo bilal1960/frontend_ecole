@@ -10,7 +10,7 @@ const LogoutButton = () => {
       variant="primary" 
       onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
     >
-      Log Out
+      Déconnexion
     </Button>
   );
 };

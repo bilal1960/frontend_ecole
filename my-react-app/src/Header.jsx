@@ -21,7 +21,7 @@ function Header({ activeMenu, onMenuChange }) {
               <Nav.Link eventKey="Inscription">Inscription</Nav.Link>
             </PermissionGuard>
             <PermissionGuard permission="write:matiere">
-              <Nav.Link eventKey="Matière">Matière</Nav.Link>
+              <Nav.Link eventKey="Matière">ajouter_Matière</Nav.Link>
             </PermissionGuard>
             <PermissionGuard permission="read:matiere">
               <Nav.Link eventKey="ListMatiere">Listmatiere</Nav.Link>

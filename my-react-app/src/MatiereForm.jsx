@@ -83,7 +83,7 @@ function MatiereForm({ setmatieres }) {
     event.preventDefault();
 
     const debutYear = new Date(matieres.debut).getFullYear();
-    const finYear = debutYear+1;
+    const finYear = new Date(matieres.fin).getFullYear();
 
     if(matieres.debutime < "09:00"){
       alert("L'heure de début doit être 09:00 ou ultérieure.");
@@ -95,8 +95,8 @@ function MatiereForm({ setmatieres }) {
       return;
     }
 
-    if (debutYear !== currentYear && debutYear !== currentYear -1 || finYear !== currentYear && finYear !== currentYear+1) {
-      alert("L'année de début doit être l'année en cours ou l'année précédente ou vérifier que la fin d'année est 2022 ou 2023.");
+    if (debutYear !== currentYear && debutYear !== currentYear -1 || finYear !== currentYear && finYear !== currentYear+1 || finYear > debutYear+1) {
+      alert("L'année de début doit être l'année en cours ou l'année précédente ou inférieur à la fin d'année. max 1 année écart entre debut et fin");
       return; 
     }
 

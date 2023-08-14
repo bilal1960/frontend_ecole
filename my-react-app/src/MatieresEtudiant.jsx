@@ -7,7 +7,7 @@ import UpdateForm from './UpdateFormMatiereEtudiant';
 function MatieresEtudiant() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const itemsPerPage = 1;
+    const itemsPerPage = 4;
     const [data, setData] = useState([]);
     const { getAccessTokenSilently } = useAuth0();
     const [personnes, setPersonnes] = useState([]);
@@ -16,7 +16,7 @@ function MatieresEtudiant() {
         const fetchData = async () => {
             try {
                 const accessToken = await getAccessTokenSilently();
-                const matieresResponse = await fetch(`/add/matiere/matieres/api?page=${currentPage - 1}&size=${itemsPerPage}`, {
+                const matieresResponse = await fetch(`/add/matiere/matieres/api?page=${currentPage - 1}&size=${itemsPerPage}&sort=secondaire,asc`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                         'Content-Type': 'application/json',

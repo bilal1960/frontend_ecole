@@ -9,7 +9,8 @@ export default defineConfig({
     proxy: {
       '/add': {
         target: 'http://localhost:8080',
-      }
+        
+      } 
     }
   }
 })
