@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Pagination } from 'react-bootstrap';
 import UpdateForm from './UpdateFormMatiereEtudiant'; 
+import { useTranslation } from 'react-i18next';
 
 function MatieresEtudiant() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -11,7 +12,7 @@ function MatieresEtudiant() {
     const [data, setData] = useState([]);
     const { getAccessTokenSilently } = useAuth0();
     const [personnes, setPersonnes] = useState([]);
-
+    const {t } = useTranslation();
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -95,15 +96,15 @@ function MatieresEtudiant() {
                             <div className="card-body">
                                 {personneAssociee && (
                                     <div>
-                                        <p className="card-text">Professeur: {personneAssociee.nom} {personneAssociee.prenom}</p>
-                                        <p className="card-text">Matière: {item.nom}</p>
-                                        <p className="card-text">Début: {item.debut}</p>
-                                        <p className="card-text">Fin: {item.fin}</p>
-                                        <p className="card-text">DébutTime: {item.debutime}</p>
-                                        <p className="card-text">FinTime: {item.fintime}</p>
-                                        <p className="card-text">Local: {item.local}</p>
-                                        <p className="card-text">Jour: {item.jour}</p>
-                                        <p className="card-text">Année: {item.secondaire}</p>
+                                        <p className="card-text">{t("teacher")}: {personneAssociee.nom} {personneAssociee.prenom}</p>
+                                        <p className="card-text">{t("subject")}: {item.nom}</p>
+                                        <p className="card-text">{t("begin")}: {item.debut}</p>
+                                        <p className="card-text">{t("end")}: {item.fin}</p>
+                                        <p className="card-text">{t("start time")}: {item.debutime}</p>
+                                        <p className="card-text">{t("end time")}: {item.fintime}</p>
+                                        <p className="card-text">{t("room")}: {item.local}</p>
+                                        <p className="card-text">{t("day")}: {item.jour}</p>
+                                        <p className="card-text">{t("year")}: {item.secondaire}</p>
                                         <UpdateForm item={item} onUpdate={(updatedMatiere) => handleUpdate(index, updatedMatiere)} />
                                     </div>
                                 )}

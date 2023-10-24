@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useTranslation } from 'react-i18next';
 
 const UpdateEcole = ({ ecole, onUpdateEcole }) => {
   const [newAdresse, setNewAdresse] = useState('');
@@ -9,6 +10,7 @@ const UpdateEcole = ({ ecole, onUpdateEcole }) => {
   const regex = /(\+32\s?)?\d{1,}(\s?\d{2}){1,}/;
   const regenmail = /.*@.*\..*/;
   const regenxpadresse = /^\s*[A-Za-z][A-Za-z\d\s./]*$/;
+  const {t} = useTranslation();
 
   const handleAdresseChange = (e) => {
     setNewAdresse(e.target.value);
@@ -69,7 +71,7 @@ const UpdateEcole = ({ ecole, onUpdateEcole }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
-        <label htmlFor="newAdresse">Nouvelle Adresse:</label>
+        <label htmlFor="newAdresse">{t("new adress")}:</label>
         <input
           type="text"
           className="form-control"
@@ -79,7 +81,7 @@ const UpdateEcole = ({ ecole, onUpdateEcole }) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="newMail">Nouveau Mail:</label>
+        <label htmlFor="newMail">{t("new mail")}:</label>
         <input
           type="text"
           className="form-control"
@@ -89,7 +91,7 @@ const UpdateEcole = ({ ecole, onUpdateEcole }) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="newNumber">Nouveau Number:</label>
+        <label htmlFor="newNumber">{t("new number")}:</label>
         <input
           type="text"
           className="form-control"
@@ -99,7 +101,7 @@ const UpdateEcole = ({ ecole, onUpdateEcole }) => {
         />
       </div>
       <div className="form-group">
-        <label htmlFor="newType">Nouveau Type:</label>
+        <label htmlFor="newType">{t("new type")}:</label>
         <input
           type="text"
           className="form-control"
@@ -108,7 +110,7 @@ const UpdateEcole = ({ ecole, onUpdateEcole }) => {
           onChange={handleTypeChange}
         />
       </div>
-      <button type="submit" className="btn btn-primary">Mettre à jour</button>
+      <button type="submit" className="btn btn-primary">{t("update")}</button>
     </form>
   );
 };

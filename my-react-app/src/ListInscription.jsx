@@ -44,6 +44,7 @@ function ListInscription({ inscrit }) {
           <span>commune:     {item.commune}    </span>
           <span>adresse:     {item.adresse}   </span>
           <span>minerval:    {item.minerval}  </span>
+
         </li>
       ))}
     </ul>

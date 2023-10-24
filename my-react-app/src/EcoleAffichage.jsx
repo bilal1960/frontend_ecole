@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import PermissionGuard from './PermissionGuard';
 import UpdateEcole from './UpdateEcole';
+import { useTranslation } from 'react-i18next';
+
 
 const SchoolDetails = () => {
   const [ecole, setEcole] = useState(null);
   const { getAccessTokenSilently } = useAuth0();
   const id = '04ece6ce-2690-4152-a5c9-09d40d5891b7';
+  const {t} = useTranslation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,10 +62,10 @@ const SchoolDetails = () => {
     <div>
       {ecole ? (
         <div>
-          <h2>{ecole.nom}</h2>
-          <p>Adresse: {ecole.adresse}</p>
-          <p>Email: {ecole.mail}</p>
-          <p>Téléphone: {ecole.number}</p>
+          <h2>{t("name")}:  {ecole.nom}</h2>
+          <p>{t("adress")}: {ecole.adresse}</p>
+          <p>{t("mail")}: {ecole.mail}</p>
+          <p>{t("phone")}: {ecole.number}</p>
           <p>Type: {ecole.type}</p>
 
           <PermissionGuard permission="write:ecole">

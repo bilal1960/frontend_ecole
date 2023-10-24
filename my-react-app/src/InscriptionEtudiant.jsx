@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Pagination } from 'react-bootstrap';
 import UpdateInscription from './UpdateInscription';
+import { useTranslation } from 'react-i18next';
 
 function InscriptionEtudiant() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -11,7 +12,7 @@ function InscriptionEtudiant() {
   const [data, setData] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
   const [personnes, setPersonnes] = useState([]);
-
+  const {t } = useTranslation();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -98,18 +99,18 @@ function InscriptionEtudiant() {
               <div className="card-body">
                 {personneAssociee && (
                   <div>
-                    <p>Nom : {personneAssociee.nom}</p>
-                    <p>Prénom : {personneAssociee.prenom}</p>
-                    <p>Naissance: {personneAssociee.naissance}</p>
-                    <p>Nationalité: {personneAssociee.nationalite}</p>
-                    <p>Sexe: {personneAssociee.sexe}</p>
-                    <p>Adresse: {personneAssociee.adresse}</p>
-                    <p>Inscription: {item.date_inscrit}</p>
-                    <p>Remboursement: {item.rembourser}</p>
+                    <p>{t("name")} : {personneAssociee.nom}</p>
+                    <p>{t("firstname")} : {personneAssociee.prenom}</p>
+                    <p>{t("year of birth")}: {personneAssociee.naissance}</p>
+                    <p>{t("nationality")}: {personneAssociee.nationalite}</p>
+                    <p>{t("sex")}: {personneAssociee.sexe}</p>
+                    <p>{t("adress")}: {personneAssociee.adresse}</p>
+                    <p>{t("date of registration")}: {item.date_inscrit}</p>
+                    <p>{t("refund")}: {item.rembourser}</p>
                     <p>Section: {item.section}</p>
-                    <p>Commune: {item.commune}</p>
-                    <p>Année: {item.secondaire_anne}</p>
-                    <p>Minerval: {item.minerval}</p>
+                    <p>{t("town")}: {item.commune}</p>
+                    <p>{t("year")}: {item.secondaire_anne}</p>
+                    <p>{t("registration fees")}: {item.minerval}</p>
                     <UpdateInscription
                       inscription={item}
                       onUpdateinscrit={(updatedInscription) => handleUpdate(index, updatedInscription)}

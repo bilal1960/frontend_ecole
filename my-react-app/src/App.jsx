@@ -11,19 +11,29 @@ import InscriptionGestion from './InscriptionGestion';
 import InscriptionEtudiant from './InscriptionEtudiant';
 import PersonneAffichage from './PersonneAffichage';
 import EcoleAffichage from './EcoleAffichage';
+import { useTranslation } from "react-i18next";
+import Lang from './Lang';
 
 function App() {
+
+  
   const [activeMenu, setActiveMenu] = useState('');
   const { isAuthenticated, isLoading } = useAuth0();
+  const { t } = useTranslation();
 
   if (isLoading) {
     return <div>En chargement....</div>;
   }
 
   return (
+
+    
     <>
       {isAuthenticated ? (
         <div>
+
+<Lang />
+        <p>{t('common.translated-text')}</p>
           <Header activeMenu={activeMenu} onMenuChange={setActiveMenu} />
           <Container>
             {activeMenu === 'accueil' && <h2>Accueil</h2>}
@@ -35,10 +45,14 @@ function App() {
             {activeMenu === 'ListPersonne' && <PersonneAffichage />}
             {activeMenu === 'Ecole' && <EcoleAffichage />}
           </Container>
+
+          
         </div>
       ) : (
         <LoginButton />
       )}
+
+
     </>
   );
 }

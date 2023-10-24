@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useTranslation } from 'react-i18next';
 
 const UpdateForm = ({ item, onUpdatepersonne }) => {
     const [adresse, setAdresse] = useState('');
     const adressevalided = /^\s*[A-Za-z][A-Za-z\d\s./]*$/;
+    const { t } = useTranslation();
 
     const handleAdresseChange = (e) => {
         setAdresse(e.target.value);
@@ -25,7 +27,7 @@ const UpdateForm = ({ item, onUpdatepersonne }) => {
     return (
         <form onSubmit={handleSubmit}>
             <div className="form-group">
-                <label htmlFor="adresse">Adresse:</label>
+                <label htmlFor="adresse">{t('adress')}:</label>
                 <input
                     type="text"
                     className="form-control"
@@ -34,7 +36,7 @@ const UpdateForm = ({ item, onUpdatepersonne }) => {
                     onChange={handleAdresseChange}
                 />
             </div>
-            <button type="submit" className="btn btn-primary">Mettre à jour</button>
+            <button type="submit" className="btn btn-primary">{t('update')}</button>
         </form>
     );
 };

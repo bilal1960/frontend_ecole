@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PermissionGuard from './PermissionGuard';
+import { useTranslation } from 'react-i18next';
 
 const UpdateForm = ({ item, onUpdate }) => {
     const [newDebut, setNewDebut] = useState('');
@@ -15,6 +16,7 @@ const UpdateForm = ({ item, onUpdate }) => {
     const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
     const joursAutorises = ["lundi", "mardi", "mercredi", "jeudi", "vendredi"];
     const secondairePattern = /^[1-6] secondaire$/;
+    const {t } = useTranslation();
 
     const handleDebutChange = (e) => {
         setNewDebut(e.target.value);
@@ -125,7 +127,7 @@ const UpdateForm = ({ item, onUpdate }) => {
         <form onSubmit={handleSubmit}>
             <PermissionGuard permission={'write:matiere'}>
                 <div className="form-group">
-                    <label htmlFor="newDebut">Nouveau Début:</label>
+                    <label htmlFor="newDebut">{t("new begin")}:</label>
                     <input
                         type="text"
                         className="form-control"
@@ -136,7 +138,7 @@ const UpdateForm = ({ item, onUpdate }) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="newFin">Nouvelle Fin:</label>
+                    <label htmlFor="newFin">{t("new end")}:</label>
                     <input
                         type="text"
                         className="form-control"
@@ -145,10 +147,9 @@ const UpdateForm = ({ item, onUpdate }) => {
                         onChange={handleFinChange}
                     />
                 </div>
-                <p>attention le champ debut et fin doivent être complété ensemble dans le cas d'un update de l'année scolaire</p>
 
                 <div className="form-group">
-                    <label htmlFor="newDebutime">Nouveau DébutTime:</label>
+                    <label htmlFor="newDebutime">{t("new start time")}:</label>
                     <input
                         type="time"
                         className="form-control"
@@ -160,7 +161,7 @@ const UpdateForm = ({ item, onUpdate }) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="newFintime">Nouvelle FinTime:</label>
+                    <label htmlFor="newFintime">{t("new end time")}:</label>
                     <input
                         type="time"
                         className="form-control"
@@ -171,7 +172,7 @@ const UpdateForm = ({ item, onUpdate }) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="local">Nouveau local:</label>
+                    <label htmlFor="local">{t("new room")}:</label>
                     <input
                         type="text"
                         className="form-control"
@@ -182,7 +183,7 @@ const UpdateForm = ({ item, onUpdate }) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="jour"> jour:</label>
+                    <label htmlFor="jour"> {t("day")}:</label>
                     <input
                         type="text"
                         className="form-control"
@@ -193,7 +194,7 @@ const UpdateForm = ({ item, onUpdate }) => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="secondaire"> changement année:</label>
+                    <label htmlFor="secondaire"> {t("year change")}:</label>
                     <input
                         type="text"
                         className="form-control"
@@ -203,7 +204,7 @@ const UpdateForm = ({ item, onUpdate }) => {
                     />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Mettre à jour</button>
+                <button type="submit" className="btn btn-primary">{t("update")}</button>
            
                 </PermissionGuard>
         </form>

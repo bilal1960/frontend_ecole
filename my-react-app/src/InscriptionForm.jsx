@@ -3,26 +3,28 @@ import { Form, Button } from 'react-bootstrap';
 import style from './PersonnelForm.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useTranslation } from 'react-i18next';
 
 function InscriptionForm({ setinscrits }) {
   const [personnels, setPersonnes] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
   const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
   const communeRegex = /^[a-zA-Z]+$/;
+  const { t } = useTranslation();
 
   const sectionList = [
     { value: 'General', label: 'General' },
-    { value: 'Technique', label: 'Technique' },
-    { value: 'Professionnel', label: 'Professionnel' },
+    { value: 'Technique', label: t('Technical') },
+    { value: 'Professionnel', label: t('Professional') },
   ];
 
   const secondaire = [
-    { value: '1 secondaire', label: '1 secondaire' },
-    { value: '2 secondaire', label: '2 secondaire' },
-    { value: '3 secondaire', label: '3 secondaire' },
-    { value: '4 secondaire', label: '4 secondaire' },
-    { value: '5 secondaire', label: '5 secondaire' },
-    { value: '6 secondaire', label: '6 secondaire' },
+    { value: '1 secondaire', label: t("1 secondary") },
+    { value: '2 secondaire', label: t("2 secondary") },
+    { value: '3 secondaire', label: t("3 secondary") },
+    { value: '4 secondaire', label: t("4 secondary") },
+    { value: '5 secondaire', label: t("5 secondary") },
+    { value: '6 secondaire', label: t("6 secondary") },
   ];
 
   useEffect(() => {
@@ -52,6 +54,7 @@ function InscriptionForm({ setinscrits }) {
     section: '',
     secondaire_anne: '',
     personne: '',
+    
   };
 
   const [inscrits, setinscritss] = useState(initialState);
@@ -110,9 +113,9 @@ function InscriptionForm({ setinscrits }) {
   return (
     <Form onSubmit={handleForsubmit}>
       <div className="form-group">
-        <label htmlFor="personne">Personne:</label>
+        <label htmlFor="personne">{t("person")}:</label>
         <select className="form-control" id="personne" name="personne" value={inscrits.personne} onChange={handleChange}>
-          <option value="">Sélectionner une personne</option>
+          <option value="">{t("select a person")}</option>
           {personnels.map((personnel) => (
             <option key={personnel.id} value={personnel.id}>
               {personnel.nom} {personnel.prenom} {personnel.statut}
@@ -123,7 +126,7 @@ function InscriptionForm({ setinscrits }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="date_inscrit">date_inscrit:(dd/MM/yyyy)</label>
+        <label htmlFor="date_inscrit">{t("date of registration")}:(dd/MM/yyyy)</label>
         <input type="text" className="form-control" id="date_inscrit" name="date_inscrit" value={inscrits.date_inscrit} onChange={handleChange} />
       </div>
 
@@ -136,7 +139,7 @@ function InscriptionForm({ setinscrits }) {
           value={inscrits.section}
           onChange={handleChange}
         >
-          <option value="">Sélectionner une section</option>
+          <option value="">{t("select a section")}</option>
           {sectionList.map((inscrit) => (
             <option key={inscrit.value} value={inscrit.value}>
               {inscrit.label}
@@ -146,7 +149,7 @@ function InscriptionForm({ setinscrits }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="secondaire_anne">Secondaire:</label>
+        <label htmlFor="secondaire_anne">{t("secondary")}:</label>
         <select
           className="form-control"
           id="secondaire_anne"
@@ -154,7 +157,8 @@ function InscriptionForm({ setinscrits }) {
           value={inscrits.secondaire_anne}
           onChange={handleChange}
         >
-          <option value="">Sélectionner une section</option>
+
+          <option value="">{t("select a section")}</option>
           {secondaire.map((inscrit) => (
             <option key={inscrit.value} value={inscrit.value}>
               {inscrit.label}
@@ -164,18 +168,18 @@ function InscriptionForm({ setinscrits }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="commune">commune:</label>
+        <label htmlFor="commune">{t("town")}:</label>
         <input type="text" className="form-control" id="commune" name="commune" value={inscrits.commune} onChange={handleChange} />
       </div>
 
       <div className="form-group">
-        <label htmlFor="minerval">minerval:</label>
+        <label htmlFor="minerval">{t("registration fees")}:</label>
         <input type="text" className="form-control" id="minerval" name="minerval" value={inscrits.minerval} onChange={handleChange} />
       </div>
 
       <p>
         <Button className={`btn btn-primary ${style.menu}`} type="submit">
-          <i className="bi bi-save" /> inscrire étudiant
+          <i className="bi bi-save" /> {t("registrer a student")}
         </Button>
       </p>
     </Form>

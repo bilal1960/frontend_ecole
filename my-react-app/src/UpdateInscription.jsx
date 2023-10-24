@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 
 function UpdateFormInscription({ inscription, onUpdateinscrit }) {
     const [rembourser, setRembourser] = useState(''); 
@@ -7,7 +8,7 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
     const [secondaire_anne, setSecondaire_anne] = useState(''); 
     const [commune, setCommune] = useState(''); 
     const [minerval, setMinerval] = useState(''); 
-
+    const {t} = useTranslation();
     const secondairePattern = /^[1-6] secondaire$/;
     const communeRegex = /^[a-zA-Z]+$/;
 
@@ -68,7 +69,7 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
     return (
         <Form onSubmit={handleSubmit}>
             <div className="form-group">
-                <label htmlFor="rembourser">Remboursement:</label>
+                <label htmlFor="rembourser">{t("refund")}:</label>
                 <input
                     type="number"
                     className="form-control"
@@ -92,7 +93,7 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
             </div>
 
             <div className="form-group">
-                <label htmlFor="secondaire_anne">secondaire:</label>
+                <label htmlFor="secondaire_anne">{t("secondary")}:</label>
                 <input
                     type="text"
                     className="form-control"
@@ -104,7 +105,7 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
             </div>
 
             <div className="form-group">
-                <label htmlFor="commune">Commune:</label>
+                <label htmlFor="commune">{t("town")}:</label>
                 <input
                     type="text"
                     className="form-control"
@@ -116,7 +117,7 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
             </div>
 
             <div className="form-group">
-                <label htmlFor="minerval">Minerval:</label>
+                <label htmlFor="minerval">{t("registration fees")}:</label>
                 <input
                     type="number"
                     className="form-control"
@@ -128,7 +129,7 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
             </div>
 
             <Button type="submit" className="btn btn-primary">
-                Mettre à jour l'inscription
+                {t("update registration")}
             </Button>
         </Form>
     );

@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Pagination } from 'react-bootstrap';
 import UpdateFormPersonneAffichage from './UpdateFormPersonneAffichage';
+import QRCode  from 'react-qr-code';
+import { useTranslation } from 'react-i18next';
 
 function PersonneAffichage() {
   const [currentPage, setCurrentPage] = useState(0); 
@@ -10,6 +12,8 @@ function PersonneAffichage() {
   const itemsPerPage = 1; 
   const [data, setData] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
+  const { t } = useTranslation();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,13 +80,14 @@ function PersonneAffichage() {
         <div key={item.id} className="col-lg-6 col-md-6 mb-4">
           <div className="card">
             <div className="card-body">
-              <p className="card-text">nom: {item.nom}</p>
-              <p className="card-text">prenom: {item.prenom}</p>
-              <p className="card-text">naissance: {item.naissance}</p>
-              <p className="card-text">nationalite: {item.nationalite}</p>
-              <p className="card-text">sexe: {item.sexe}</p>
-              <p className="card-text">adresse: {item.adresse}</p>
-              <p className="card-text">statut: {item.statut}</p>
+              <p className="card-text">id: {item.id} <QRCode value = {item.id}   ></QRCode></p>
+              <p className="card-text">{t('name')}: {item.nom}</p>
+              <p className="card-text">{t('firstname')}: {item.prenom} </p>
+              <p className="card-text">{t('year of birth')}: {item.naissance}</p>
+              <p className="card-text">{t('nationality')}: {item.nationalite}</p>
+              <p className="card-text">{t('sex')}: {item.sexe}</p>
+              <p className="card-text">{t('adress')}: {item.adresse}</p>
+              <p className="card-text">{t('status')}: {item.statut}</p>
               <UpdateFormPersonneAffichage item={item} onUpdatepersonne={(updatedPersonne) => handleUpdate(index, updatedPersonne)} />
             </div>
           </div>

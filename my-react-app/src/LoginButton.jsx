@@ -1,16 +1,20 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import Button from 'react-bootstrap/Button';
+import { useTranslation } from 'react-i18next';
 
 const LoginButton = () => {
-  const { loginWithRedirect} = useAuth0();
+  const { loginWithRedirect } = useAuth0();
+  const { t } = useTranslation();
+
+  const handleLogin = () => {
+    loginWithRedirect();
+  };
 
   return (
-    <button
-      className="btn btn-primary"
-      onClick={() => loginWithRedirect()}
-    >
-      Connexion
-    </button>
+    <Button variant="primary" onClick={handleLogin}>
+      {t('login')}
+    </Button>
   );
 };
 

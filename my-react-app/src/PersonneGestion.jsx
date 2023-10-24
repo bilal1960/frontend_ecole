@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PersonnelForm from './PersonnelForm';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useTranslation } from 'react-i18next';
 
 function PersonneGestion() {
   const [personnels, setPersonnelss] = useState([]);
   const { user, getAccessTokenSilently } = useAuth0();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchPersonne = async () => {
@@ -27,7 +29,7 @@ function PersonneGestion() {
 
   return (
     <>
-      <h2>ajouter une personne svp</h2>
+      <h2>{t('add a person please')}</h2>
       <PersonnelForm setPersonnelss={setPersonnelss} />
     </>
   );

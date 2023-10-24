@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import style from './PersonnelForm.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useTranslation } from 'react-i18next';
 
 function PersonnelForm({ setPersonnelss }) {
   const { getAccessTokenSilently } = useAuth0();
@@ -10,6 +11,8 @@ function PersonnelForm({ setPersonnelss }) {
   const adresseRegexp = /^\s*[A-Za-z][A-Za-z\d\s./]*$/;
   const nationalitechamp = /^[A-Za-zéèç]*$/;
   const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
+  const { t } = useTranslation();
+
 
   const [personnelss, setPersonnels] = useState({
     nom: '',
@@ -145,7 +148,7 @@ function PersonnelForm({ setPersonnelss }) {
   return (
     <Form onSubmit={handleForsubmit}>
       <div className="form-group">
-        <label htmlFor="nom">Nom:</label>
+        <label htmlFor="nom">{t('name')}</label>
         <input
           type="text"
           className="form-control"
@@ -156,7 +159,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="prenom">Prénom:</label>
+        <label htmlFor="prenom">{t('firstname')}</label>
         <input
           type="text"
           className="form-control"
@@ -167,7 +170,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="naissance">Naissance:(dd/MM/yyyy)</label>
+        <label htmlFor="naissance">{t('year of birth')}:(dd/MM/yyyy)</label>
         <input
           type="text"
           className="form-control"
@@ -178,7 +181,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="nationalite">Nationalité:</label>
+        <label htmlFor="nationalite">{t('nationality')}</label>
         <input
           type="text"
           className="form-control"
@@ -189,7 +192,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="sexe">Sexe: homme ou femme</label>
+        <label htmlFor="sexe">{t('sex')}</label>
         <input
           type="text"
           className="form-control"
@@ -200,7 +203,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="adresse">Adresse:</label>
+        <label htmlFor="adresse">{t('adress')}</label>
         <input
           type="text"
           className="form-control"
@@ -211,7 +214,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="statut">Statut: etudiant ou professeur</label>
+        <label htmlFor="statut">{t('status')}</label>
         <input
           type="text"
           className="form-control"
@@ -222,7 +225,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
       <p>
         <Button className={`btn btn-primary ${style.menu}`} type="submit">
-          <i className="bi bi-save" /> Enregistrer personne
+          <i className="bi bi-save" /> {t('registrer person')}
         </Button>
       </p>
     </Form>
