@@ -40,3 +40,25 @@
 .read-the-docs {
   color: #888;
 }
+
+.App {
+  background-image: url('./images/images1.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100vh;
+  margin: 0;
+  color: #333;
+  font-family: Arial, sans-serif;
+  
+}
+
+.data-container {
+  background-color: #ffffff;  
+  padding: 20px;              
+  margin: 20px 0;             
+  border-radius: 8px;         
+}
+
+
+

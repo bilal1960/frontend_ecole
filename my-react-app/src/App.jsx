@@ -11,12 +11,14 @@ import InscriptionGestion from './InscriptionGestion';
 import InscriptionEtudiant from './InscriptionEtudiant';
 import PersonneAffichage from './PersonneAffichage';
 import EcoleAffichage from './EcoleAffichage';
-import { useTranslation } from "react-i18next";
+import AbsenceGestion from './AbsenceGestion';
+import AbsenceProfGestion from './AbsenceProfGestion';
+import PresenceEtudiant from './PresenceEtudiant';
+import { useTranslation } from 'react-i18next';
 import Lang from './Lang';
+import MapComponent from './MapComponent';
 
 function App() {
-
-  
   const [activeMenu, setActiveMenu] = useState('');
   const { isAuthenticated, isLoading } = useAuth0();
   const { t } = useTranslation();
@@ -26,15 +28,13 @@ function App() {
   }
 
   return (
-
-    
     <>
+
       {isAuthenticated ? (
         <div>
-
-<Lang />
-        <p>{t('common.translated-text')}</p>
-          <Header activeMenu={activeMenu} onMenuChange={setActiveMenu} />
+          <Lang />
+          <p>{t('common.translated-text')}</p>
+          <Header activeMenu={activeMenu} onMenuChange={setActiveMenu}  />
           <Container>
             {activeMenu === 'accueil' && <h2>Accueil</h2>}
             {activeMenu === 'Personne' && <PersonneGestion />}
@@ -44,15 +44,16 @@ function App() {
             {activeMenu === 'Listinscription' && <InscriptionEtudiant />}
             {activeMenu === 'ListPersonne' && <PersonneAffichage />}
             {activeMenu === 'Ecole' && <EcoleAffichage />}
+            {activeMenu === 'Absence' && <AbsenceGestion />}
+            {activeMenu === 'ListAbsence' && <PresenceEtudiant />}
+            {activeMenu === 'ProfAbsent' && <AbsenceProfGestion />}
+            {activeMenu === 'Map' && <MapComponent />}
           </Container>
-
-          
         </div>
       ) : (
         <LoginButton />
+
       )}
-
-
     </>
   );
 }

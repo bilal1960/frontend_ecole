@@ -25,7 +25,7 @@ function MatiereForm({ setmatieres }) {
     { value: 'Lundi', label: t('monday') },
     { value: 'Mardi', label: t('tuesday') },
     { value: 'Mercredi', label: t('wednesday') },
-    { value: 'Jeudi', label: t('thrusday') },
+    { value: 'Jeudi', label: t('thursday') },
     { value: 'Vendredi', label: t('friday') },
   ];
 

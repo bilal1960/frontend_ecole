@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import LogoutButton from './LogoutButton';
 import PermissionGuard from './PermissionGuard';
 import { useTranslation } from 'react-i18next';
-
+import DropdownGroup from './DropdownGroup';
 function Header({ activeMenu, onMenuChange }) {
   const { t } = useTranslation();
+  
+
 
   return (
     <Navbar bg="light" expand="lg">
@@ -26,16 +28,15 @@ function Header({ activeMenu, onMenuChange }) {
             <PermissionGuard permission="write:matiere">
               <Nav.Link eventKey="Matière">{t('addSubject')}</Nav.Link>
             </PermissionGuard>
-            <PermissionGuard permission="read:matiere">
-              <Nav.Link eventKey="ListMatiere">{t('subjectList')}</Nav.Link>
-            </PermissionGuard>
-            <PermissionGuard permission="read:inscrit">
-              <Nav.Link eventKey="Listinscription">{t('registrationList')}</Nav.Link>
-            </PermissionGuard>
-            <PermissionGuard permission="read:personne">
-              <Nav.Link eventKey="ListPersonne">{t('personList')}</Nav.Link>
-            </PermissionGuard>
             <Nav.Link eventKey="Ecole">{t('school')}</Nav.Link>
+            <PermissionGuard permission="write:presence">
+            <Nav.Link eventKey="Absence">Absence</Nav.Link>
+            </PermissionGuard>
+            <PermissionGuard permission="write:profabsent">
+            <Nav.Link eventKey="ProfAbsent">ProfAbsent</Nav.Link>
+            </PermissionGuard>
+            <Nav.Link eventKey="Map">Map</Nav.Link>
+            <DropdownGroup activeMenu={activeMenu} onMenuChange={onMenuChange} />
             <LogoutButton/>
           </Nav>
         </Navbar.Collapse>
