@@ -17,6 +17,8 @@ import PresenceEtudiant from './PresenceEtudiant';
 import { useTranslation } from 'react-i18next';
 import Lang from './Lang';
 import MapComponent from './MapComponent';
+import CalendarComponent from './CalendarComponent';
+import ReactPayPal from './payement/ReactPayPal';
 
 function App() {
   const [activeMenu, setActiveMenu] = useState('');
@@ -48,6 +50,8 @@ function App() {
             {activeMenu === 'ListAbsence' && <PresenceEtudiant />}
             {activeMenu === 'ProfAbsent' && <AbsenceProfGestion />}
             {activeMenu === 'Map' && <MapComponent />}
+            {activeMenu === 'Calendrier' && <CalendarComponent />}
+            {activeMenu === 'Paypal' && <ReactPayPal />}
           </Container>
         </div>
       ) : (

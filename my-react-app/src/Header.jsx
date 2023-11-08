@@ -36,6 +36,8 @@ function Header({ activeMenu, onMenuChange }) {
             <Nav.Link eventKey="ProfAbsent">ProfAbsent</Nav.Link>
             </PermissionGuard>
             <Nav.Link eventKey="Map">Map</Nav.Link>
+            <Nav.Link eventKey="Calendrier">Calendrier</Nav.Link>
+            <Nav.Link eventKey="Paypal">Paypal</Nav.Link>
             <DropdownGroup activeMenu={activeMenu} onMenuChange={onMenuChange} />
             <LogoutButton/>
           </Nav>

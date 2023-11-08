@@ -14,19 +14,19 @@ function MapComponent() {
   };
 
   const tramStops = [
-    { position: [50.8672, 4.3759], name: "STIB/MIVB - 92" },
-    { position: [50.8659, 4.3786], name: "STIB/MIVB - 55" }
+    { position: [50.966292, 4.394938], name: "tram - 92" },
+    { position: [50.8693488, 4.3727925], name: "tram - 92" },
   ];
 
   const busStops = [
-    { position: [50.8670, 4.3765], name: "STIB/MIVB - 66" },
-    { position: [50.8660, 4.3790], name: "STIB/MIVB - 59" }
+    { position: [50.86678, 4.378813], name: "BUS - 59" },
+    { position: [50.8681912, 4.3770505], name: "BUS - 59" },
+    { position: [50.8680575, 4.3792105], name: "BUS  - 56" },
+
+
   ];
 
-  const metroStops = [
-    { position: [50.8645, 4.3770], name: "STIB/MIVB - 6" },
-    { position: [50.8680, 4.3760], name: "STIB/MIVB - 2" }
-  ];
+ 
 
   return (
     <MapContainer center={position} zoom={13} style={{ width: '100%', height: '400px' }}>
@@ -45,11 +45,7 @@ function MapComponent() {
         </Marker>
       ))}
 
-      {metroStops.map((stop, index) => (
-        <Marker key={`metro-${index}`} position={stop.position}>
-          <Popup>{stop.name}</Popup>
-        </Marker>
-      ))}
+     
 
       <Marker position={position}>
         <Popup>
