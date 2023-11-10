@@ -38,6 +38,7 @@ function Header({ activeMenu, onMenuChange }) {
             <Nav.Link eventKey="Map">Map</Nav.Link>
             <Nav.Link eventKey="Calendrier">Calendrier</Nav.Link>
             <Nav.Link eventKey="Paypal">Paypal</Nav.Link>
+            <Nav.Link eventKey="Vacance">Vacance</Nav.Link>
             <DropdownGroup activeMenu={activeMenu} onMenuChange={onMenuChange} />
             <LogoutButton/>
           </Nav>

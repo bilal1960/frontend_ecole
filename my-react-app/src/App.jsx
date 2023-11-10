@@ -19,6 +19,8 @@ import Lang from './Lang';
 import MapComponent from './MapComponent';
 import CalendarComponent from './CalendarComponent';
 import ReactPayPal from './payement/ReactPayPal';
+import VacanceProfGestion from './VacanceProfGestion';
+import AffichageVacance from './AffichageVacance'; 
 
 function App() {
   const [activeMenu, setActiveMenu] = useState('');
@@ -52,6 +54,9 @@ function App() {
             {activeMenu === 'Map' && <MapComponent />}
             {activeMenu === 'Calendrier' && <CalendarComponent />}
             {activeMenu === 'Paypal' && <ReactPayPal />}
+            {activeMenu === 'Vacance' && <VacanceProfGestion />}
+            {activeMenu === 'ListVacance' && <AffichageVacance />}
+
           </Container>
         </div>
       ) : (

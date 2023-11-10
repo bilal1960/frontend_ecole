@@ -28,6 +28,9 @@ function DropdownGroup({ activeMenu, onMenuChange }) {
         <PermissionGuard permission="read:presence">
         <Dropdown.Item eventKey="ListAbsence">{t('absenceList')}</Dropdown.Item>
         </PermissionGuard>
+        <PermissionGuard permission="read:vacance">
+        <Dropdown.Item eventKey="ListVacance">{t('List of Vacations')}</Dropdown.Item>
+        </PermissionGuard>
       </Dropdown.Menu>
     </Dropdown>
   );
