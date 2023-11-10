@@ -3,6 +3,7 @@ import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import { format, parseISO } from 'date-fns';
 
 function VacanceProfForm({ setVacances }) {
   const { getAccessTokenSilently } = useAuth0();
@@ -50,7 +51,13 @@ function VacanceProfForm({ setVacances }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    
+    const formattedVacance = {
+      ...vacance,
+      datedebut: vacance.datedebut ? format(parseISO(vacance.datedebut), 'dd/MM/yyyy') : '',
+      datefin: vacance.datefin ? format(parseISO(vacance.datefin), 'dd/MM/yyyy') : '',
+      // Assurez-vous que 'personne' est un objet avec l'ID si nécessaire
+      personne: vacance.personne ? { id: vacance.personne } : null,
+    };
 
     
 
@@ -62,7 +69,7 @@ function VacanceProfForm({ setVacances }) {
         'Content-Type': 'application/json',
       },
       method: 'POST',
-      body: JSON.stringify(vacance),
+      body: JSON.stringify(formattedVacance),
     });
 
     if (response.ok) {
@@ -93,7 +100,7 @@ function VacanceProfForm({ setVacances }) {
       <Form.Group>
         <Form.Label>{t('start_date')}</Form.Label>
         <Form.Control
-          type="text"
+          type="date"
           name="datedebut"
           value={vacance.datedebut}
           onChange={handleChange}
@@ -103,7 +110,7 @@ function VacanceProfForm({ setVacances }) {
       <Form.Group>
         <Form.Label>{t('end_date')}</Form.Label>
         <Form.Control
-          type="text"
+          type="date"
           name="datefin"
           value={vacance.datefin}
           onChange={handleChange}

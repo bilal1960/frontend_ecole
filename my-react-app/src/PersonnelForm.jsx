@@ -4,6 +4,8 @@ import style from './PersonnelForm.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import { format, parseISO } from 'date-fns';
+
 
 function PersonnelForm({ setPersonnelss }) {
   const { getAccessTokenSilently } = useAuth0();
@@ -12,6 +14,7 @@ function PersonnelForm({ setPersonnelss }) {
   const nationalitechamp = /^[A-Za-zéèç]*$/;
   const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ\s]*$/;
   const { t } = useTranslation();
+
 
 
   const [personnelss, setPersonnels] = useState({
@@ -23,6 +26,13 @@ function PersonnelForm({ setPersonnelss }) {
     adresse: '',
     statut: '',
   });
+
+  const formattedNaissance = personnelss.naissance ? format(parseISO(personnelss.naissance), 'dd/MM/yyyy') : '';
+
+  const personnelToSubmit = {
+    ...personnelss,
+    naissance: formattedNaissance, 
+  };
 
   function handleNomChange(event) {
     const newnom = event.target.value;
@@ -83,6 +93,8 @@ function PersonnelForm({ setPersonnelss }) {
   async function handleForsubmit(event) {
     event.preventDefault();
 
+
+
     if (!regex.test(personnelss.nom)) {
       alert("Le nom doit contenir uniquement des lettres et espace");
       return;
@@ -92,8 +104,8 @@ function PersonnelForm({ setPersonnelss }) {
       alert("Le prénom doit contenir uniquement des lettres et espace");
       return;
     }
-    if (!datePattern.test(personnelss.naissance)) {
-      alert("Le format de la date de début doit être dd/MM/yyyy.");
+    if (!datePattern.test(formattedNaissance)) {
+      alert("Le format de la date de naissance doit être dd/MM/yyyy.");
       return;
     }
 
@@ -124,7 +136,7 @@ function PersonnelForm({ setPersonnelss }) {
         'Content-type': 'application/json',
       },
       method: 'POST',
-      body: JSON.stringify(personnelss),
+      body: JSON.stringify(personnelToSubmit),
     });
 
     if (response.ok) {
@@ -172,7 +184,7 @@ function PersonnelForm({ setPersonnelss }) {
       <div className="form-group">
         <label htmlFor="naissance">{t('year of birth')}:(dd/MM/yyyy)</label>
         <input
-          type="text"
+          type="date"
           className="form-control"
           id="naissance"
           value={personnelss.naissance}
