@@ -39,9 +39,9 @@ function Header({ activeMenu, onMenuChange }) {
             <Nav.Link eventKey="Calendrier">Calendrier</Nav.Link>
             <Nav.Link eventKey="Paypal">Paypal</Nav.Link>
             <Nav.Link eventKey="Vacance">Vacance</Nav.Link>
-            
+             <PermissionGuard permission="write:note">
             <Nav.Link eventKey="Note">Note</Nav.Link>
-            
+            </PermissionGuard>
             <DropdownGroup activeMenu={activeMenu} onMenuChange={onMenuChange} />
             <LogoutButton/>
           </Nav>

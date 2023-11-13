@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Pagination } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import UpdateAbsence from './UpdateAbsence';
 
 function PresenceEtudiant() {
     const [currentPage, setCurrentPage] = useState(0);
@@ -59,6 +60,34 @@ function PresenceEtudiant() {
         setCurrentPage(pageNumber);
     };
 
+    const handleUpdate = async (index, updatedabsence) => {
+        try {
+            const accessToken = await getAccessTokenSilently();
+            const itemToUpdate = data[index];
+
+            const updateResponse = await fetch(`/add/absence/absences/${itemToUpdate.id}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedabsence),
+            });
+
+            if (!updateResponse.ok) {
+                throw new Error("Une erreur s'est produite lors de la mise à jour des données.");
+            }
+
+            setData((prevData) => {
+                const updatedData = [...prevData];
+                updatedData[index] = updatedabsence;
+                return updatedData;
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     function findPersonneAssociee(presence, personnes) {
         return personnes.find((personne) => personne.id === presence.personne.id);
       }
@@ -82,6 +111,7 @@ function PresenceEtudiant() {
                             <p className="card-text">{t('Start Time')}: {item.heuredebut}</p>
                             <p className="card-text">{t('End Time')}: {item.heurefin}</p>
                             <p className="card-text">{t('Certificate')}: {item.certficat ? t('Yes') : t('No')}</p>
+                            <UpdateAbsence item={item} onUpdateAbsence={(updatedabsence) => handleUpdate(index, updatedabsence)} />
                         </div>
                          )}
                          </div>
