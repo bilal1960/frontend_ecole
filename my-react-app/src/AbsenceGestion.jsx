@@ -12,7 +12,7 @@ function AbsenceGestion() {
     const fetchAbsences = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
-        const response = await fetch("/add/absence", {
+        const response = await fetch("/add/absence/etudiants/api1", {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },

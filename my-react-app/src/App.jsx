@@ -20,7 +20,9 @@ import MapComponent from './MapComponent';
 import CalendarComponent from './CalendarComponent';
 import ReactPayPal from './payement/ReactPayPal';
 import VacanceProfGestion from './VacanceProfGestion';
-import AffichageVacance from './AffichageVacance'; 
+import AffichageVacance from './AffichageVacance';
+import NoteGestion from './note/Notegestion'; 
+import AffichageNotes from './note/AffichageNotes';
 
 function App() {
   const [activeMenu, setActiveMenu] = useState('');
@@ -56,6 +58,9 @@ function App() {
             {activeMenu === 'Paypal' && <ReactPayPal />}
             {activeMenu === 'Vacance' && <VacanceProfGestion />}
             {activeMenu === 'ListVacance' && <AffichageVacance />}
+            {activeMenu === 'Note' && <NoteGestion />}
+            {activeMenu === 'ListNote' && <AffichageNotes />}
+
 
           </Container>
         </div>

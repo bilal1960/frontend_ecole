@@ -4,22 +4,22 @@ import { useAuth0 } from '@auth0/auth0-react';
 import ReactPaginate from 'react-paginate';
 import { useTranslation } from 'react-i18next';
 
-function AffichageVacance() {
+function AffichageNotes() {
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(1);
     const itemsPerPage = 2;
-    const [data, setData] = useState([]);
+    const [notes, setNotes] = useState([]);
     const { getAccessTokenSilently } = useAuth0();
     const { t } = useTranslation();
     const [personnelss, setPersonnes] = useState([]);
 
 
     useEffect(() => {
-        const fetchVacances = async () => {
+        const fetchNotes = async () => {
             try {
                 const accessToken = await getAccessTokenSilently();
 
-                const response = await fetch(`/add/vacance/pagivac?page=${currentPage}&size=${itemsPerPage}`, {
+                const response = await fetch(`/add/note/paginote?page=${currentPage}&size=${itemsPerPage}`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                         'Content-Type': 'application/json',
@@ -27,32 +27,35 @@ function AffichageVacance() {
                 });
 
                 if (!response.ok) {
-                    throw new Error(t("une erreur s'est produite ."));
+                    throw new Error(t("une erreur s'est produite lors de la récupération des notes."));
                 }
 
                 const responseData = await response.json();
-                setData(responseData.content);
+
+                console.log("Données récupérées : ", responseData.content);
+
+                setNotes(responseData.content);
                 setTotalPages(responseData.totalPages);
 
-                const personnesResponse = await fetch(`/add/vacance/personnet`, {
+                const personnesResponse = await fetch(`/add/note/notepersonne`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
                         'Content-Type': 'application/json',
                     },
                 });
-
+    
                 if (!personnesResponse.ok) {
                     throw new Error("Une erreur s'est produite lors de la tentative de récupération des données des personnes.");
                 }
-
+    
                 const personnesData = await personnesResponse.json();
                 setPersonnes(personnesData);
             } catch (error) {
                 console.error(error);
             }
-        }
+            } 
               
-        fetchVacances();
+        fetchNotes();
     }, [currentPage, getAccessTokenSilently, itemsPerPage, t]);
 
     const handlePageClick = (data) => {
@@ -62,7 +65,7 @@ function AffichageVacance() {
     return (
         <div className="container mt-5">
           <div className="row">
-            {data.map((item, index) => {
+            {notes.map((item, index) => {
               const personneAssociee = personnelss.find((personne) => personne.id === item.personne.id);
       
               return ( 
@@ -73,11 +76,12 @@ function AffichageVacance() {
                             <div>
                     <p className="card-text">nom: {personneAssociee.nom}</p>
                     <p className="card-text">prénom: {personneAssociee.prenom}</p>
-                    <p className="card-text">statut: {personneAssociee.statut}</p>
-                    <p className="card-text">Datedebut: {item.datedebut}</p>
-                    <p className="card-text">Datefin: {item.datefin}</p>
-                    <p className="card-text">Type: {item.type}</p>
-                    <p className="card-text">Commentaire: {item.commentaire}</p>
+                    <p className="card-text">Nom: {item.nom}</p>
+                    <p className="card-text">deliberation: {item.deliberation}</p>
+                    <p className="card-text">session: {item.session}</p>
+                    <p className="card-text">resultat: {item.resultat}</p>
+                    <p className="card-text">moyenne: {personneAssociee.moyenne}</p>
+                    <p className="card-text">reussi: {item.reussi ? 'Oui' : 'Non'}</p>
                     </div>
                         )}
                   </div>
@@ -87,7 +91,7 @@ function AffichageVacance() {
             })}
           
         </div>
-      
+
             <ReactPaginate
                 previousLabel={'Précédent'}
                 nextLabel={'Suivant'}
@@ -108,8 +112,8 @@ function AffichageVacance() {
                 activeClassName={'active'}
                 forcePage={currentPage } 
             />
-            </div>
+        </div>
     );       
 }
 
-export default AffichageVacance;
+export default AffichageNotes;

@@ -12,16 +12,14 @@ export default function ReactPayPal() {
   const [error, setError] = React.useState(null);
   const paypalRef = React.useRef();
 
-  // Cette fonction envoie un e-mail de confirmation
   const sendEmail = (order) => {
-    // Préparez les variables pour le modèle d'e-mail
+
     const templateParams = {
       app_name: 'Gestion école',
       transaction_id: order.id, 
       order_id: order.id,
       order_amount: order.purchase_units[0].amount.value,
       order_currency: order.purchase_units[0].amount.currency_code,
-      // Vous pouvez ajouter plus de détails ici selon votre modèle d'e-mail
     };
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, USER_ID)
@@ -43,7 +41,7 @@ export default function ReactPayPal() {
               description: 'Your description',
               amount: {
                 currency_code: 'EUR',
-                value: '500.00', // Remarquez que la valeur est une chaîne
+                value: '500.00', 
               },
             }],
           });
@@ -52,7 +50,7 @@ export default function ReactPayPal() {
           const order = await actions.order.capture();
           setPaid(true);
           console.log(order);
-          sendEmail(order); // Envoyez l'e-mail après la capture de la commande
+          sendEmail(order); 
         },
         onError: (err) => {
           setError(err);
@@ -62,17 +60,16 @@ export default function ReactPayPal() {
     }
   }, []);
 
-  // Si le paiement a été effectué
+
   if (paid) {
     return <div>Payment successful!</div>;
   }
 
-  // En cas d'erreur
   if (error) {
     return <div>Error Occurred in processing payment! Please try again.</div>;
   }
 
-  // Rendu par défaut
+  
   return (
     <div>
       <h4>Acheter l'application</h4>
