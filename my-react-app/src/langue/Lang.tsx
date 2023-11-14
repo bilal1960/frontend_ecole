@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from "react"
 import { useTranslation } from 'react-i18next';
-import { Language } from "./enums/Language";
+import { Language } from "../enums/Language";
  
 const Lang = () => {
     const { i18n } = useTranslation();

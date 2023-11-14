@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
-import LogoutButton from './LogoutButton';
-import PermissionGuard from './PermissionGuard';
+import LogoutButton from '../connexion/LogoutButton';
+import PermissionGuard from '../permission/PermissionGuard';
 import { useTranslation } from 'react-i18next';
 import DropdownGroup from './DropdownGroup';
 function Header({ activeMenu, onMenuChange }) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import PermissionGuard from './PermissionGuard';
+import PermissionGuard from '../permission/PermissionGuard';
 import UpdateEcole from './UpdateEcole';
 import { useTranslation } from 'react-i18next';
 

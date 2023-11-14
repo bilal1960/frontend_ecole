@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import PermissionGuard from './PermissionGuard';
+import PermissionGuard from '../permission/PermissionGuard';
 import { useTranslation } from 'react-i18next';
 
 const UpdateForm = ({ item, onUpdate }) => {

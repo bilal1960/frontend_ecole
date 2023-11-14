@@ -95,7 +95,7 @@ function AbsenceForm({ setAbsences }) {
         </select>
       </div>
             <div className="form-group">
-                <label htmlFor="presence">{t("Presence")}:</label>
+                <label htmlFor="presence">Presence</label>
                 <input 
                     type="text" 
                     className="form-control" 

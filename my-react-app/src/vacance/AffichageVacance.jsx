@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import ReactPaginate from 'react-paginate';
 import { useTranslation } from 'react-i18next';
+import UpdateVacance from './UpdateVacance';
 
 function AffichageVacance() {
     const [currentPage, setCurrentPage] = useState(0);
@@ -59,6 +60,34 @@ function AffichageVacance() {
         setCurrentPage(data.selected);
     };
 
+    const handleUpdate = async (index, updatedvacance) => {
+        try {
+            const accessToken = await getAccessTokenSilently();
+            const itemToUpdate = data[index];
+
+            const updateResponse = await fetch(`/add/vacance/vacances/${itemToUpdate.id}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedvacance),
+            });
+
+            if (!updateResponse.ok) {
+                throw new Error("Une erreur s'est produite lors de la mise à jour des données.");
+            }
+
+            setData((prevData) => {
+                const updatedData = [...prevData];
+                updatedData[index] = updatedvacance;
+                return updatedData;
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <div className="container mt-5">
           <div className="row">
@@ -78,6 +107,7 @@ function AffichageVacance() {
                     <p className="card-text">Datefin: {item.datefin}</p>
                     <p className="card-text">Type: {item.type}</p>
                     <p className="card-text">Commentaire: {item.commentaire}</p>
+                    <UpdateVacance vac={item} onUpdateVacance={(updatedvacance) => handleUpdate(index,updatedvacance)} />
                     </div>
                         )}
                   </div>

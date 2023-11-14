@@ -25,6 +25,7 @@ function PersonnelForm({ setPersonnelss }) {
     sexe: '',
     adresse: '',
     statut: '',
+    mail: '',
   });
 
   const formattedNaissance = personnelss.naissance ? format(parseISO(personnelss.naissance), 'dd/MM/yyyy') : '';
@@ -90,6 +91,14 @@ function PersonnelForm({ setPersonnelss }) {
     });
   }
 
+  function handleMail(event) {
+    const newmail = event.target.value;
+    setPersonnels({
+      ...personnelss,
+      mail: newmail,
+    });
+  }
+
   async function handleForsubmit(event) {
     event.preventDefault();
 
@@ -150,6 +159,7 @@ function PersonnelForm({ setPersonnelss }) {
         sexe: '',
         adresse: '',
         statut: '',
+        mail: '',
       });
     } else {
       return 'error';
@@ -233,6 +243,17 @@ function PersonnelForm({ setPersonnelss }) {
           id="statut"
           value={personnelss.statut}
           onChange={handleStatut}
+        />
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="mil">mail</label>
+        <input
+          type="text"
+          className="form-control"
+          id="statut"
+          value={personnelss.mail}
+          onChange={handleMail}
         />
       </div>
       <p>

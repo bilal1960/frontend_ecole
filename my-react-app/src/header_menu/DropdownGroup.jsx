@@ -1,7 +1,7 @@
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
-import PermissionGuard from './PermissionGuard';
+import PermissionGuard from '../permission/PermissionGuard';
 
 function DropdownGroup({ activeMenu, onMenuChange }) {
   const { t } = useTranslation();
@@ -31,7 +31,9 @@ function DropdownGroup({ activeMenu, onMenuChange }) {
         <PermissionGuard permission="read:vacance">
         <Dropdown.Item eventKey="ListVacance">{t('List of Vacations')}</Dropdown.Item>
         </PermissionGuard>
+        <PermissionGuard permission="read:personne">
         <Dropdown.Item eventKey="ListNote">ListNote</Dropdown.Item>
+        </PermissionGuard>
       </Dropdown.Menu>
     </Dropdown>
   );

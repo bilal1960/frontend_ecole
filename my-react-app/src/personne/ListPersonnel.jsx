@@ -41,6 +41,8 @@ function ListPersonnel({ personnels }) {
           <span>sexe:       {item.sexe}</span>
           <span>adresse:    {item.adresse}</span>
           <span>statut:     {item.statut}</span>
+          <span>mail:       {item.mail}</span>
+
         </li>
       ))}
     </ul>
