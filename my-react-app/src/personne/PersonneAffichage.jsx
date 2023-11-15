@@ -86,7 +86,7 @@ function PersonneAffichage() {
               <p className="card-text">{t('sex')}: {item.sexe}</p>
               <p className="card-text">{t('adress')}: {item.adresse}</p>
               <p className="card-text">{t('status')}: {item.statut}</p>
-              <p className="card-text">mail: {item.mail}</p>
+              <p className="card-text">{t("email")} {item.mail}</p>
               <UpdateFormPersonneAffichage item={item} onUpdatepersonne={(updatedPersonne) => handleUpdate(index, updatedPersonne)} />
             </div>
           </div>

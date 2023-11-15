@@ -126,7 +126,7 @@ function InscriptionForm({ setinscrits }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="date_inscrit">{t("date of registration")}:(dd/MM/yyyy)</label>
+        <label htmlFor="date_inscrit">{t("date of registration")}</label>
         <input type="text" className="form-control" id="date_inscrit" name="date_inscrit" value={inscrits.date_inscrit} onChange={handleChange} />
       </div>
 

@@ -95,7 +95,7 @@ function AbsenceForm({ setAbsences }) {
         </select>
       </div>
             <div className="form-group">
-                <label htmlFor="presence">Presence</label>
+                <label htmlFor="presence">{t("presence")}</label>
                 <input 
                     type="text" 
                     className="form-control" 
@@ -119,7 +119,7 @@ function AbsenceForm({ setAbsences }) {
             </div>
 
             <div className="form-group">
-                <label htmlFor="heuredebut">{t("Start Time")}:</label>
+                <label htmlFor="heuredebut">{t("start time")}:</label>
                 <input 
                     type="time" 
                     className="form-control" 
@@ -131,7 +131,7 @@ function AbsenceForm({ setAbsences }) {
             </div>
 
             <div className="form-group">
-                <label htmlFor="heurefin">{t("End Time")}:</label>
+                <label htmlFor="heurefin">{t("end time")}:</label>
                 <input 
                     type="time" 
                     className="form-control" 
@@ -144,7 +144,7 @@ function AbsenceForm({ setAbsences }) {
 
             <p>
                 <Button type="submit">
-                    <i className="bi bi-save" /> {t("Save Absence")}
+                    <i className="bi bi-save" /> {t("save absence")}
                 </Button>
             </p>
         </Form>

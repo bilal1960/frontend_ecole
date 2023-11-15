@@ -100,13 +100,13 @@ function AffichageVacance() {
                     <div className="card-body">
                         {personneAssociee && (
                             <div>
-                    <p className="card-text">nom: {personneAssociee.nom}</p>
-                    <p className="card-text">prénom: {personneAssociee.prenom}</p>
-                    <p className="card-text">statut: {personneAssociee.statut}</p>
-                    <p className="card-text">Datedebut: {item.datedebut}</p>
-                    <p className="card-text">Datefin: {item.datefin}</p>
+                    <p className="card-text">{t("name")}: {personneAssociee.nom}</p>
+                    <p className="card-text">{t("firstname")} {personneAssociee.prenom}</p>
+                    <p className="card-text">{t("status")} {personneAssociee.statut}</p>
+                    <p className="card-text">{t("start date")} {item.datedebut}</p>
+                    <p className="card-text">{t("end date")} {item.datefin}</p>
                     <p className="card-text">Type: {item.type}</p>
-                    <p className="card-text">Commentaire: {item.commentaire}</p>
+                    <p className="card-text">{t("comment")} {item.commentaire}</p>
                     <UpdateVacance vac={item} onUpdateVacance={(updatedvacance) => handleUpdate(index,updatedvacance)} />
                     </div>
                         )}
@@ -119,8 +119,8 @@ function AffichageVacance() {
         </div>
       
             <ReactPaginate
-                previousLabel={'Précédent'}
-                nextLabel={'Suivant'}
+                previousLabel={t("Previous")}
+                nextLabel={t("Next")}
                 breakLabel={'...'}
                 breakClassName={'page-item'}
                 breakLinkClassName={'page-link'}

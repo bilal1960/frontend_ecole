@@ -29,7 +29,7 @@ function AbsenceGestion() {
 
   return (
     <>
-      <h2>{t('Manage Absences')}</h2>
+      <h2>{t("Manages absences")}</h2>
       <AbsenceProfForm setAbsences={setAbsences} />
     </>
   );

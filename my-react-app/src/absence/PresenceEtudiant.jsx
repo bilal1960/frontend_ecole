@@ -103,14 +103,14 @@ function PresenceEtudiant() {
                         <div className="card-body">
                         {personneAssociee &&(
                             <div>
-                            <p className="card-text">nom: {personneAssociee.nom}</p>
-                            <p className="card-text">prénom: {personneAssociee.prenom}</p>
-                            <p className="card-text">statut: {personneAssociee.statut}</p>    
-                            <p className="card-text">{t('Presence')}: {item.presence}</p>
+                            <p className="card-text">{t("name")} {personneAssociee.nom}</p>
+                            <p className="card-text">{t("firstname")} {personneAssociee.prenom}</p>
+                            <p className="card-text">{t("status")} {personneAssociee.statut}</p>    
+                            <p className="card-text">{t('presence')}: {item.presence}</p>
                             <p className="card-text">{t('Date')}: {item.date}</p>
-                            <p className="card-text">{t('Start Time')}: {item.heuredebut}</p>
-                            <p className="card-text">{t('End Time')}: {item.heurefin}</p>
-                            <p className="card-text">{t('Certificate')}: {item.certficat ? t('Yes') : t('No')}</p>
+                            <p className="card-text">{t('start time')}: {item.heuredebut}</p>
+                            <p className="card-text">{t('end time')}: {item.heurefin}</p>
+                            <p className="card-text">{t('certificate')}: {item.certficat ? t('Yes') : t('No')}</p>
                             <UpdateAbsence item={item} onUpdateAbsence={(updatedabsence) => handleUpdate(index, updatedabsence)} />
                         </div>
                          )}

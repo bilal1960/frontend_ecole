@@ -80,7 +80,7 @@ const UpdateAbsence = ({ item, onUpdateAbsence }) => {
     return (
         <form onSubmit={handleSubmit}>
             <div className="form-group">
-                <label htmlFor="presence">presence</label>
+                <label htmlFor="presence">{t("presence")}</label>
                 <input
                     type="text"
                     className="form-control"
@@ -102,7 +102,7 @@ const UpdateAbsence = ({ item, onUpdateAbsence }) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="debut">debut</label>
+                <label htmlFor="debut">{t("begin")}</label>
                 <input
                     type="time"
                     className="form-control"
@@ -113,7 +113,7 @@ const UpdateAbsence = ({ item, onUpdateAbsence }) => {
             </div>
 
             <div className="form-group">
-                <label htmlFor="endTime">endTime</label>
+                <label htmlFor="endTime">{t("end time")}</label>
                 <input
                     type="time"
                     className="form-control"
@@ -124,7 +124,7 @@ const UpdateAbsence = ({ item, onUpdateAbsence }) => {
             </div>
 
     <div className="form-group d-flex align-items-center mb-3" style={{ gap: '10px' }}>  {/* Ajoutez une marge en bas ici */}
-    <label htmlFor="reussi" className="mb-0 flex-grow-1">Réussi</label>
+    <label htmlFor="reussi" className="mb-0 flex-grow-1">{t("passed")}</label>
     <input 
         type="checkbox" 
         className="form-check-input" 

@@ -83,7 +83,7 @@ const UpdateVacance = ({ vac, onUpdateVacance }) => {
     </div>
 
     <div className="form-group">
-        <label htmlFor="datefin">datefin</label>
+        <label htmlFor="datefin">{t("end date")}</label>
         <input
             type="date"
             className="form-control"
@@ -105,7 +105,7 @@ const UpdateVacance = ({ vac, onUpdateVacance }) => {
     </div>
 
     <div className="form-group">
-        <label htmlFor="commentaire">Commentaire</label>
+        <label htmlFor="commentaire">{t("comment")}</label>
         <input
             type="text"
             className="form-control"

@@ -66,7 +66,7 @@ const SchoolDetails = () => {
           <p>{t("adress")}: {ecole.adresse}</p>
           <p>{t("mail")}: {ecole.mail}</p>
           <p>{t("phone")}: {ecole.number}</p>
-          <p>Type: {ecole.type}</p>
+          <p>type: {ecole.type}</p>
 
           <PermissionGuard permission="write:ecole">
             <UpdateEcole ecole={ecole} onUpdateEcole={handleUpdateEcole} />

@@ -101,12 +101,12 @@ function NoteForm({ setNotes }) {
       </div>
            
             <div className="form-group">
-                <label htmlFor="nom">nom:</label>
+                <label htmlFor="nom">{t("name")}</label>
                 <input type="text" className="form-control" id="nom" name="nom" value={noteData.nom} onChange={handleChange} />
             </div>
 
             <div className="form-group">
-                <label htmlFor="deliberation">deliberation:</label>
+                <label htmlFor="deliberation">{t("grades release date")}</label>
                 <input type="date" className="form-control" id="deliberation" name="deliberation" value={noteData.deliberation} onChange={handleChange} />
             </div>
 
@@ -116,12 +116,12 @@ function NoteForm({ setNotes }) {
             </div>
 
             <div className="form-group">
-                <label htmlFor="resultat">resultat:</label>
+                <label htmlFor="resultat">{t("result")}</label>
                 <input type="number" className="form-control" id="resultat" name="resultat" value={noteData.resultat} onChange={handleChange} />
             </div>
 
             <div className="form-group d-flex align-items-center mb-3" style={{ gap: '10px' }}>  {/* Ajoutez une marge en bas ici */}
-    <label htmlFor="reussi" className="mb-0 flex-grow-1">Réussi</label>
+    <label htmlFor="reussi" className="mb-0 flex-grow-1">{t("passed")}</label>
     <input 
         type="checkbox" 
         className="form-check-input" 
@@ -135,7 +135,7 @@ function NoteForm({ setNotes }) {
 
 
 
-        <Button type="submit">{t("Submit Grade")}</Button>
+        <Button type="submit">{t("submit grade")}</Button>
         </Form>
     );
 }

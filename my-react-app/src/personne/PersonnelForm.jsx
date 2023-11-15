@@ -192,7 +192,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="naissance">{t('year of birth')}:(dd/MM/yyyy)</label>
+        <label htmlFor="naissance">{t('year of birth')}</label>
         <input
           type="date"
           className="form-control"
@@ -247,7 +247,7 @@ function PersonnelForm({ setPersonnelss }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="mil">mail</label>
+        <label htmlFor="mil">{t('email')}</label>
         <input
           type="text"
           className="form-control"

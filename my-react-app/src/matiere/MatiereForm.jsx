@@ -190,12 +190,12 @@ function MatiereForm({ setmatieres }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="debut">Début:</label>
+        <label htmlFor="debut">{t("begin")}</label>
         <input type="text" className="form-control" id="debut" name="debut" value={matieres.debut} onChange={handleChange} required />
       </div>
 
       <div className="form-group">
-        <label htmlFor="fin">Fin:</label>
+        <label htmlFor="fin">{t("end")}</label>
         <input type="text" className="form-control" id="fin" name="fin" value={matieres.fin} onChange={handleChange} required />
       </div>
 

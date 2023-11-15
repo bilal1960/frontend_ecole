@@ -74,14 +74,14 @@ function AffichageNotes() {
                     <div className="card-body">
                         {personneAssociee && (
                             <div>
-                    <p className="card-text">nom: {personneAssociee.nom}</p>
-                    <p className="card-text">prénom: {personneAssociee.prenom}</p>
-                    <p className="card-text">Nom: {item.nom}</p>
-                    <p className="card-text">deliberation: {item.deliberation}</p>
+                    <p className="card-text">{t("name")} {personneAssociee.nom}</p>
+                    <p className="card-text">{t("firstname")} {personneAssociee.prenom}</p>
+                    <p className="card-text">{t("name")} {item.nom}</p>
+                    <p className="card-text">{t("grades release date")} {item.deliberation}</p>
                     <p className="card-text">session: {item.session}</p>
-                    <p className="card-text">resultat: {item.resultat}</p>
+                    <p className="card-text">{t("result")} {item.resultat}</p>
                     <p className="card-text">moyenne: {personneAssociee.moyenne}</p>
-                    <p className="card-text">reussi: {item.reussi ? 'Oui' : 'Non'}</p>
+                    <p className="card-text">{t("passed")} {item.reussi ? 'Oui' : 'Non'}</p>
                     </div>
                         )}
                   </div>
@@ -93,8 +93,8 @@ function AffichageNotes() {
         </div>
 
             <ReactPaginate
-                previousLabel={'Précédent'}
-                nextLabel={'Suivant'}
+                previousLabel={t("Previous")}
+                nextLabel={t("Next")}
                 breakLabel={'...'}
                 breakClassName={'page-item'}
                 breakLinkClassName={'page-link'}

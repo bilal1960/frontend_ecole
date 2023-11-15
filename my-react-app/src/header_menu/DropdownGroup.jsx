@@ -13,7 +13,7 @@ function DropdownGroup({ activeMenu, onMenuChange }) {
   return (
     <Dropdown onSelect={handleSelect}>
       <Dropdown.Toggle variant="success" id="dropdown-group">
-        {t('groupMenu')}
+        {t('Group Menu')}
       </Dropdown.Toggle>
       <Dropdown.Menu>
       <PermissionGuard permission="read:matiere">
@@ -32,7 +32,7 @@ function DropdownGroup({ activeMenu, onMenuChange }) {
         <Dropdown.Item eventKey="ListVacance">{t('List of Vacations')}</Dropdown.Item>
         </PermissionGuard>
         <PermissionGuard permission="read:personne">
-        <Dropdown.Item eventKey="ListNote">ListNote</Dropdown.Item>
+        <Dropdown.Item eventKey="ListNote">{t("List of note")}</Dropdown.Item>
         </PermissionGuard>
       </Dropdown.Menu>
     </Dropdown>

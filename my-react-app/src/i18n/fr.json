@@ -82,7 +82,67 @@
         "new end time": "nouvelle heure de fin",
         "new room": "nouveau local",
         "add a subject": "ajouter une matière",
-        "List of Vacations": "List de vacance"
+        "List of Vacations": "List de vacance",
+        "email": "mail",
+        "presence": "présence",
+        "calendar": "calendrier",
+        "Holiday": "vacance",
+        "List of note": "Liste de note",
+        "comment": "commentaire",
+        "start date": "début date",
+        "end date": "fin date",
+        "certificate": "certificat",
+        "passed": "réussi",
+        "Manages absences": "gérer les absences",
+        "save absence": "enregistrer une absence",
+        "submit": "soumettre",
+        "grades release date": "délibération",
+        "result": "résultat",
+        "submit grade": "soumettre",
+        "average": "moyenne",
+        "Group Menu": "groupMenu",
+        "Next": "Suivant",
+        "Previous": "Précédent",
+        "School Management": "gestion d'école",
+        "Month": "mois",
+        "close": "fermer",
+        "title": "titre",
+        "julyRegistrationSession": "Session d'inscription de juillet",
+        "augustRegistrationSession": "Session d'inscription de août",
+        "back to school": "rentré scolaire",
+        "French Community Day": "fête de la communauté française",
+        "Autumn Break (All Saints' Day)": "Congé d'automne (Toussaint)",
+        "Winter Break (Christmas)": "Vacances d'hiver (noel)",
+        "Carnival Break": "congé de carnaval",
+        "Easter Monday": "Lundi de Pâques",
+        "Spring Break (Easter)": "Vacance de printemps(Pâques)",
+        "Pentecost Monday": "Lundi de Pentecôte",
+        "Summer Holidays": "Vacances d'été",
 
-      }
+        "calenda": {
+            "month": "mois",
+            "week": "Semaine",
+            "day": "Jour",
+            "agenda": "Agenda",
+            "today": "Aujourd'hui",
+            "previous": "Précédent",
+            "next": "Suivant"
+          },
+
+          
+
+    "eventDetails": "Détails de l'événement"
+    
+  }
+  
+
+       
+        
+        
+
+      
+
+      
+
+    
       

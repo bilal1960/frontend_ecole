@@ -2,7 +2,29 @@
     "common": {
         "translate-button": "EN",
         "translated-text": "This is english"
-    }
+    },
+
+    "calenda": {
+        "month": "Month",
+        "week": "Week",
+        "day": "Day",
+        "agenda": "Agenda",
+        "today": "Today",
+        "previous": "Previous",
+        "next": "Next"
+        
+
+        
+      },
+
+      "eventDetails": "Event Details"
+  
+}
+    
 
     
-}
+        
+      
+      
+    
+    

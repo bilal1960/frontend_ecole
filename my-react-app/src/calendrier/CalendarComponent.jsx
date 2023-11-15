@@ -1,50 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import { Modal, Button } from 'react-bootstrap'; // Importation des composants Bootstrap
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Importation du CSS de Bootstrap
 import 'moment/locale/fr';
+import { useTranslation } from 'react-i18next';
+
+
 
 moment.locale('fr');
 const localizer = momentLocalizer(moment);
 
-const frenchMessages = {
-  // ... (vos messages en français)
-};
-
 const CalendarComponent = () => {
+
+  const { t, i18n } = useTranslation();
+  const [localizedMessages, setLocalizedMessages] = useState({});
+
+  useEffect(() => {
+    setLocalizedMessages({
+      month: t("calenda.month"),
+      week: t("calenda.week"),
+      day: t("calenda.day"),
+      agenda: t("calenda.agenda"),
+      today: t("calenda.today"),
+      previous: t("calenda.previous"),
+      next: t("calenda.next"),
+      
+    });
+  }, [t, i18n.language]);
+
+  
+
   const events = [{
     start: new Date('2023-07-01'), 
       end: new Date('2023-07-12'),  
-      title: 'Session d\'inscription de juillet',
+      title: t("julyRegistrationSession"),
       type: 'inscription'
     },
     {
       start: new Date('2023-08-05'), 
       end: new Date('2023-08-16'),  
-      title: 'Session d\'inscription d\'août',
+      title: t("augustRegistrationSession"),
       type: 'inscription'
     },
     {
       start: new Date('2023-08-28'),
       end: new Date('2023-08-28'),
-      title: 'Rentrée scolaire'
+      title: t("back to school")
     },
     {
       start: new Date('2023-09-27'),
       end: new Date('2023-09-27'),
-      title: 'Fête de la Communauté française'
+      title: t("French Community Day")
     },
     {
       start: new Date('2023-10-23'),
       end: new Date('2023-11-03'),
-      title: 'Congé d\'automne (Toussaint)'
+      title: t("Autumn Break (All Saints' Day)")
     },
     {
       start: new Date('2023-12-25'),
       end: new Date('2024-01-05'),
-      title: 'Vacances d\'hiver (Noël)'
+      title: t("Winter Break (Christmas)")
     },
     {
       start: new Date('2024-02-13'),
@@ -54,27 +72,27 @@ const CalendarComponent = () => {
     {
       start: new Date('2024-02-26'),
       end: new Date('2024-03-08'),
-      title: 'Congé de détente (Carnaval)'
+      title: t("Carnival Break")
     },
     {
       start: new Date('2024-04-01'),
       end: new Date('2024-04-01'),
-      title: 'Lundi de Pâques'
+      title: t("Easter Monday")
     },
     {
       start: new Date('2024-04-29'),
       end: new Date('2024-05-10'),
-      title: 'Vacances de printemps (Pâques)'
+      title: t("Spring Break (Easter)")
     },
     {
       start: new Date('2024-05-20'),
       end: new Date('2024-05-20'),
-      title: 'Lundi de Pentecôte'
+      title: t("Pentecost Monday")
     },
     {
       start: new Date('2024-07-06'),
-      end: new Date('2024-08-25'), // Assumant que les vacances d'été se terminent à la fin du mois d'août
-      title: 'Vacances d\'été'
+      end: new Date('2024-08-25'), 
+      title: t("Summer Holidays")
     },
   
   ];
@@ -100,21 +118,21 @@ const CalendarComponent = () => {
         startAccessor="start"
         endAccessor="end"
         onSelectEvent={handleEventClick}
-        messages={frenchMessages}
+        messages={localizedMessages}
         style={{ height: '100vh' }}
       />
 
       <Modal show={isModalOpen} onHide={closeModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Détails de l'événement</Modal.Title>
+          <Modal.Title>{t("eventDetails")}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p><strong>Titre:</strong> {modalEvent.title}</p>
-          <p><strong>Date de début:</strong> {modalEvent.start?.toLocaleDateString()}</p>
-          <p><strong>Date de fin:</strong> {modalEvent.end?.toLocaleDateString()}</p>
+          <p><strong>{t("title")}</strong> {modalEvent.title}</p>
+          <p><strong>{t("start date")}</strong> {modalEvent.start?.toLocaleDateString()}</p>
+          <p><strong>{t("end date")}</strong> {modalEvent.end?.toLocaleDateString()}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={closeModal}>Fermer</Button>
+          <Button variant="secondary" onClick={closeModal}>{t("close")}</Button>
         </Modal.Footer>
       </Modal>
     </div>

@@ -14,7 +14,7 @@ function Header({ activeMenu, onMenuChange }) {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">{t('brand')}</Navbar.Brand>
+        <Navbar.Brand href="#home">{t("School Management")}</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav activeKey={activeMenu} className="me-auto" onSelect={onMenuChange}>
@@ -36,9 +36,9 @@ function Header({ activeMenu, onMenuChange }) {
             <Nav.Link eventKey="ProfAbsent">ProfAbsent</Nav.Link>
             </PermissionGuard>
             <Nav.Link eventKey="Map">Map</Nav.Link>
-            <Nav.Link eventKey="Calendrier">Calendrier</Nav.Link>
+            <Nav.Link eventKey="Calendrier">{t("calendar")}</Nav.Link>
             <Nav.Link eventKey="Paypal">Paypal</Nav.Link>
-            <Nav.Link eventKey="Vacance">Vacance</Nav.Link>
+            <Nav.Link eventKey="Vacance">{t("Holiday")}</Nav.Link>
              <PermissionGuard permission="write:note">
             <Nav.Link eventKey="Note">Note</Nav.Link>
             </PermissionGuard>

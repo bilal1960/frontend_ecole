@@ -98,7 +98,7 @@ function VacanceProfForm({ setVacances }) {
         </select>
       </div>
       <Form.Group>
-        <Form.Label>{t('start_date')}</Form.Label>
+        <Form.Label>{t('start date')}</Form.Label>
         <Form.Control
           type="date"
           name="datedebut"
@@ -108,7 +108,7 @@ function VacanceProfForm({ setVacances }) {
       </Form.Group>
 
       <Form.Group>
-        <Form.Label>{t('end_date')}</Form.Label>
+        <Form.Label>{t('end date')}</Form.Label>
         <Form.Control
           type="date"
           name="datefin"
