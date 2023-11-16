@@ -4,6 +4,8 @@ import style from '../personne/PersonnelForm.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import { format, parseISO } from 'date-fns';
+
 
 function InscriptionForm({ setinscrits }) {
   const [personnels, setPersonnes] = useState([]);
@@ -59,6 +61,13 @@ function InscriptionForm({ setinscrits }) {
 
   const [inscrits, setinscritss] = useState(initialState);
 
+  const formattedinscrit = inscrits.date_inscrit ? format(parseISO(inscrits.date_inscrit), 'dd/MM/yyyy') : '';
+
+  const inscritToSubmit = {
+    ...inscrits,
+    date_inscrit: formattedinscrit, 
+  };
+
   function handleChange(event) {
     const { name, value, } = event.target;
 
@@ -82,10 +91,7 @@ function InscriptionForm({ setinscrits }) {
       return;
     }
 
-    if (!datePattern.test(inscrits.date_inscrit)) {
-      alert("format date invalide, le bon format  est dd/MM/yyyy")
-      return;
-    }
+    
 
     if (!communeRegex.test(inscrits.commune)) {
       alert("entrer une commune valide uniquement des lettres et aucun espace")
@@ -98,7 +104,7 @@ function InscriptionForm({ setinscrits }) {
         'Content-type': 'application/json',
       },
       method: 'POST',
-      body: JSON.stringify(inscrits),
+      body: JSON.stringify(inscritToSubmit),
     });
 
     if (response.ok) {
@@ -127,7 +133,7 @@ function InscriptionForm({ setinscrits }) {
 
       <div className="form-group">
         <label htmlFor="date_inscrit">{t("date of registration")}</label>
-        <input type="text" className="form-control" id="date_inscrit" name="date_inscrit" value={inscrits.date_inscrit} onChange={handleChange} />
+        <input type="date" className="form-control" id="date_inscrit" name="date_inscrit" value={inscrits.date_inscrit} onChange={handleChange} />
       </div>
 
       <div className="form-group">

@@ -169,11 +169,12 @@ function PersonnelForm({ setPersonnelss }) {
 
   return (
     <Form onSubmit={handleForsubmit}>
+      
       <div className="form-group">
         <label htmlFor="nom">{t('name')}</label>
         <input
           type="text"
-          className="form-control"
+          className="form-control custom-input"
           id="nom"
           value={personnelss.nom}
           onChange={handleNomChange}

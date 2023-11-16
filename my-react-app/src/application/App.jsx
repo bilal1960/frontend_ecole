@@ -23,11 +23,19 @@ import VacanceProfGestion from '../vacance/VacanceProfGestion';
 import AffichageVacance from '../vacance/AffichageVacance';
 import NoteGestion from '../note/Notegestion'; 
 import AffichageNotes from '../note/AffichageNotes';
+import images1 from '../images/images1.jpg'
 
 function App() {
   const [activeMenu, setActiveMenu] = useState('');
   const { isAuthenticated, isLoading } = useAuth0();
   const { t } = useTranslation();
+  const backgroundStyle = {
+    backgroundImage: `url(${images1})`,
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    height: '100vh'
+  };
 
   if (isLoading) {
     return <div>En chargement....</div>;
@@ -37,7 +45,7 @@ function App() {
     <>
 
       {isAuthenticated ? (
-        <div>
+        <div className="App">
           <Lang />
           <p>{t('common.translated-text')}</p>
           <Header activeMenu={activeMenu} onMenuChange={setActiveMenu}  />

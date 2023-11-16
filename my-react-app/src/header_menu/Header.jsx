@@ -38,7 +38,9 @@ function Header({ activeMenu, onMenuChange }) {
             <Nav.Link eventKey="Map">Map</Nav.Link>
             <Nav.Link eventKey="Calendrier">{t("calendar")}</Nav.Link>
             <Nav.Link eventKey="Paypal">Paypal</Nav.Link>
+            <PermissionGuard permission="read:vacance">
             <Nav.Link eventKey="Vacance">{t("Holiday")}</Nav.Link>
+            </PermissionGuard>
              <PermissionGuard permission="write:note">
             <Nav.Link eventKey="Note">Note</Nav.Link>
             </PermissionGuard>

@@ -41,17 +41,57 @@
   color: #888;
 }
 
+.Calendar, .data-container {
+  background-color: rgba(230, 220, 210, 0.8);
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-container .rbc-event {
+  background-color: rgba(122, 124, 255, 1.); /* Couleur de fond avec opacité */
+
+  color: #ffffff; /* Couleur du texte */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-family: 'Arial', sans-serif;
+  font-size: 0.9em;
+  padding: 5px;
+  cursor: pointer; /* Change le curseur pour indiquer la possibilité de cliquer */
+  transition: all 0.3s ease; /* Transition pour les effets de survol */
+}
+
+.calendar-container .rbc-event:hover {
+  background-color: #ffff; /* Légèrement plus foncé au survol */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.calendar-container .rbc-day-bg {
+  background-color: rgba(120, 170, 210, 0.5); /* Bleu clair semi-transparent */
+}
+
+
+.content-container {
+  background-color: rgba(0, 0, 0, 0.5); /* Superposition semi-transparente */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .App {
-  background-image: url('./images/images1.jpg');
-  background-size: cover;
+  background-image: url('../images/images1.jpg');
+  background-size: 100% auto;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  height: 100vh;
+  background-position: center;
+  min-height: 100vh;
   margin: 0;
-  color: #333;
-  font-family: Arial, sans-serif;
-  
+  color: #fff;
+  font-family: 'Open Sans', sans-serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
+
 
 .data-container {
   background-color: #ffffff;  
@@ -64,9 +104,30 @@
   padding-top: 20px;
   height: 300px;
   width: 300px;
-  background: rgba(0, 0, 0, 0.6);
+  background: transparent;
   border-radius: 20px;
 }
 
+
+#root, .data-container, .content-container, .calendar-container {
+  background-color: transparent; 
+}
+
+body, #root {
+  background-color: #4CAF50 !important;
+}
+
+.main-content {
+  flex: 1; 
+}
+
+
+.map-container {
+  padding-top: 20px;
+  height: 300px;
+  width: 300px;
+  border-radius: 20px;
+
+}
 
 

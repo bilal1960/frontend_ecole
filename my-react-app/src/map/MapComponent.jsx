@@ -40,7 +40,9 @@ function MapComponent() {
  
 
   return (
-    <MapContainer center={position} zoom={13} style={{ width: '100%', height: '400px' }}>
+    <div className="map-container" style={{ width: '50%', maxHeight: 'none', height: 'auto',  marginTop: '60px' }}>
+
+    <MapContainer center={position} zoom={13} style={{ width: '100%', height: '200px' }}>
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
       <TileLayer url="https://www.openrailwaymap.org/overlay/{z}/{x}/{y}.png" attribution="&copy; OpenStreetMap contributors, &copy; OpenRailwayMap contributors" />
       
@@ -70,6 +72,8 @@ function MapComponent() {
         </Popup>
       </Marker>
     </MapContainer>
+    </div>
+
   );
 }
 

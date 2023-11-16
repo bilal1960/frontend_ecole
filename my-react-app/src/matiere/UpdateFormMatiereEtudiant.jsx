@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PermissionGuard from '../permission/PermissionGuard';
 import { useTranslation } from 'react-i18next';
+import { format,parse } from 'date-fns';
 
 const UpdateForm = ({ item, onUpdate }) => {
     const [newDebut, setNewDebut] = useState('');
@@ -11,9 +12,7 @@ const UpdateForm = ({ item, onUpdate }) => {
     const [newLocal, setNewLocal] = useState('');
     const [newJour, setNewJour] = useState('');
     const [newSecondaire, setNewSecondaire] = useState('');
-    const currentYear = new Date().getFullYear();
     const localPattern = /^[\s]*[a-zA-Z][a-zA-Z0-9\s]*$/;
-    const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
     const joursAutorises = ["lundi", "mardi", "mercredi", "jeudi", "vendredi"];
     const secondairePattern = /^[1-6] secondaire$/;
     const {t } = useTranslation();
@@ -53,19 +52,17 @@ const UpdateForm = ({ item, onUpdate }) => {
         const updatedMatiere = { ...item };
 
         if (newDebut !== '') {
-            if (!datePattern.test(newDebut)) {
-                alert("Le format de la date de début doit être dd/MM/yyyy.");
-                return;
-            }
-            updatedMatiere.debut = newDebut;
+            const parsedDatedebut = parse(newDebut, 'yyyy-MM-dd', new Date());
+            if (!isNaN(parsedDatedebut)) {
+                updatedMatiere.debut = format(parsedDatedebut, 'dd/MM/yyyy');
         }
-
+    }
+    
         if (newFin !== '') {
-            if (!datePattern.test(newFin)) {
-                alert("Le format de la date de fin doit être dd/MM/yyyy.");
-                return;
+            const parsedDatefin = parse(newFin, 'yyyy-MM-dd', new Date());
+            if (!isNaN(parsedDatefin)) {
+                updatedMatiere.fin = format(parsedDatefin, 'dd/MM/yyyy');
             }
-            updatedMatiere.fin = newFin;
         }
 
         const debutYear = new Date(newDebut).getFullYear();
@@ -77,10 +74,7 @@ const UpdateForm = ({ item, onUpdate }) => {
                 return; 
             }
     
-            if (debutYear !== currentYear && debutYear !== currentYear -1 || finYear !== currentYear && finYear !== currentYear+1) {
-                alert("L'année de début doit être l'année en cours ou l'année précédente ou vérifier que la fin d'année est 2023 ou 2024.");
-                return; 
-            }
+           
         }
         
         if (newDebutime !== '') {
@@ -129,7 +123,7 @@ const UpdateForm = ({ item, onUpdate }) => {
                 <div className="form-group">
                     <label htmlFor="newDebut">{t("new begin")}:</label>
                     <input
-                        type="text"
+                        type="date"
                         className="form-control"
                         id="newDebut"
                         value={newDebut}
@@ -140,7 +134,7 @@ const UpdateForm = ({ item, onUpdate }) => {
                 <div className="form-group">
                     <label htmlFor="newFin">{t("new end")}:</label>
                     <input
-                        type="text"
+                        type="date"
                         className="form-control"
                         id="newFin"
                         value={newFin}

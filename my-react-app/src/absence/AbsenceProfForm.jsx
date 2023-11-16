@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import { format, parseISO } from 'date-fns';
+
 
 function AbsenceForm({ setAbsences }) {
     const [personnels, setPersonnes] = useState([]);
@@ -39,6 +41,13 @@ function AbsenceForm({ setAbsences }) {
 
     const [absenceData, setAbsenceData] = useState(initialState);
 
+    const formattedNaissance = absenceData.date ? format(parseISO(absenceData.date), 'dd/MM/yyyy') : '';
+
+  const personnelToSubmit = {
+    ...absenceData,
+    date: formattedNaissance, 
+  };
+
     function handleChange(event) {
         const { name,value, checked } = event.target;
 
@@ -60,6 +69,7 @@ function AbsenceForm({ setAbsences }) {
 
     async function handleSubmit(event) {
         event.preventDefault();
+
         const accessToken = await getAccessTokenSilently();
 
         const response = await fetch('/add/absence/prof', {
@@ -68,7 +78,7 @@ function AbsenceForm({ setAbsences }) {
                 'Content-type': 'application/json',
             },
             method: 'POST',
-            body: JSON.stringify(absenceData)
+            body: JSON.stringify(personnelToSubmit)
         });
 
         if (response.ok) {
@@ -109,7 +119,7 @@ function AbsenceForm({ setAbsences }) {
             <div className="form-group">
                 <label htmlFor="date">{t("Date")}:</label>
                 <input 
-                    type="text" 
+                    type="date" 
                     className="form-control" 
                     id="date" 
                     name="date" 

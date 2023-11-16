@@ -22,6 +22,7 @@ const UpdateAbsence = ({ item, onUpdateAbsence }) => {
     setDate(e.target.value);
     };
 
+
     const handlestartTime = (e) => {
         setStartTime(e.target.value);
     };
@@ -59,9 +60,7 @@ const UpdateAbsence = ({ item, onUpdateAbsence }) => {
             const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
             updatedabsence.date = format(parsedDate, 'dd/MM/yyyy');
         }
-
-        
-        
+  
         if(startTime !== ''){
             updatedabsence.heuredebut = startTime;
         }
@@ -124,7 +123,7 @@ const UpdateAbsence = ({ item, onUpdateAbsence }) => {
             </div>
 
     <div className="form-group d-flex align-items-center mb-3" style={{ gap: '10px' }}>  {/* Ajoutez une marge en bas ici */}
-    <label htmlFor="reussi" className="mb-0 flex-grow-1">{t("passed")}</label>
+    <label htmlFor="reussi" className="mb-0 flex-grow-1">{t("certificate")}</label>
     <input 
         type="checkbox" 
         className="form-check-input" 

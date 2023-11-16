@@ -9,6 +9,16 @@ function NoteForm({ setNotes }) {
     const { t } = useTranslation();
     const [personnels, setPersonnes] = useState([]);
 
+    const matieresList = [
+      { value: 'mathématiques', label: t('Mathematics') },
+      { value: 'physique', label: t("physics") },
+      { value: 'français', label: t("french") },
+      { value: 'chimie', label: t("chimistry") },
+      { value: 'histoire', label: t("history") },
+      { value: 'informatique', label: t('computer') },
+      { value: 'biologie', label: t('biology') },
+    ];
+
     useEffect(() => {
         const fetchPersonnesDisponibles = async () => {
           try {
@@ -100,10 +110,23 @@ function NoteForm({ setNotes }) {
         </select>
       </div>
            
-            <div className="form-group">
-                <label htmlFor="nom">{t("name")}</label>
-                <input type="text" className="form-control" id="nom" name="nom" value={noteData.nom} onChange={handleChange} />
-            </div>
+      <div className="form-group">
+        <label htmlFor="nom">{t("subject")}:</label>
+        <select
+          className="form-control"
+          id="nom"
+          name="nom"
+          value={noteData.nom}
+          onChange={handleChange}
+        >
+          <option value="">Sélectionner une matière</option>
+          {matieresList.map((note) => (
+            <option key={note.value} value={note.value}>
+              {note.label}
+            </option>
+          ))}
+        </select>
+      </div>
 
             <div className="form-group">
                 <label htmlFor="deliberation">{t("grades release date")}</label>

@@ -111,7 +111,7 @@ const CalendarComponent = () => {
   };
 
   return (
-    <div style={{ height: '700px' }}>
+    <div className='calendar-container'     style={{ height: '700px' }}>
       <Calendar
         localizer={localizer}
         events={events}

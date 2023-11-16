@@ -73,7 +73,7 @@ export default function ReactPayPal() {
   return (
     <div>
       <h4>Acheter l'application</h4>
-      <div ref={paypalRef} />
+      <div className='payment-div' ref={paypalRef} />
     </div>
   );
 }

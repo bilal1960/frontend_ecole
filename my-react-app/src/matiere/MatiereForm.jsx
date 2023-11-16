@@ -3,13 +3,13 @@ import { Form, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import { format, parseISO } from 'date-fns';
 
 function MatiereForm({ setmatieres }) {
   const [personnelss, setPersonnes] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
   const currentYear = new Date().getFullYear();
   const localPattern = /^[\s]*[a-zA-Z][a-zA-Z0-9\s]*$/;
-  const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
   const {t } = useTranslation();
   const matieresList = [
     { value: 'mathématiques', label: t('Mathematics') },
@@ -71,6 +71,14 @@ function MatiereForm({ setmatieres }) {
 
   const [matieres, setmatieress] = useState(initialState);
 
+  const formattedMatiere = {
+    ...matieres,
+    debut: matieres.debut ? format(parseISO(matieres.debut), 'dd/MM/yyyy') : '',
+    fin: matieres.fin ? format(parseISO(matieres.fin), 'dd/MM/yyyy') : '',
+
+    personne: matieres.personne ? { id: matieres.personne } : null,
+  };
+
   function handleChange(event) {
     const { name, value } = event.target;
 
@@ -91,10 +99,7 @@ function MatiereForm({ setmatieres }) {
       return; 
     }
 
-    if (!datePattern.test(matieres.debut)) {
-      alert("Le format de la date de début doit être dd/MM/yyyy.");
-      return;
-    }
+   
 
     if (debutYear !== currentYear && debutYear !== currentYear -1 || finYear !== currentYear && finYear !== currentYear+1 || finYear > debutYear+1) {
       alert("L'année de début doit être l'année en cours ou l'année précédente ou inférieur à la fin d'année. max 1 année écart entre debut et fin");
@@ -114,7 +119,7 @@ function MatiereForm({ setmatieres }) {
         'Content-type': 'application/json',
       },
       method: 'POST',
-      body: JSON.stringify(matieres),
+      body: JSON.stringify(formattedMatiere),
     });
 
     if (response.ok) {
@@ -191,12 +196,12 @@ function MatiereForm({ setmatieres }) {
 
       <div className="form-group">
         <label htmlFor="debut">{t("begin")}</label>
-        <input type="text" className="form-control" id="debut" name="debut" value={matieres.debut} onChange={handleChange} required />
+        <input type="date" className="form-control" id="debut" name="debut" value={matieres.debut} onChange={handleChange} required />
       </div>
 
       <div className="form-group">
         <label htmlFor="fin">{t("end")}</label>
-        <input type="text" className="form-control" id="fin" name="fin" value={matieres.fin} onChange={handleChange} required />
+        <input type="date" className="form-control" id="fin" name="fin" value={matieres.fin} onChange={handleChange} required />
       </div>
 
       <div className="form-group">
