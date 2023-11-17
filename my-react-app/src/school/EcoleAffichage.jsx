@@ -3,6 +3,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 import PermissionGuard from '../permission/PermissionGuard';
 import UpdateEcole from './UpdateEcole';
 import { useTranslation } from 'react-i18next';
+import Rating from 'react-rating-stars-component'; 
+import EcoleCommentaire from './EcoleCommentaire';
+
 
 
 const SchoolDetails = () => {
@@ -10,6 +13,14 @@ const SchoolDetails = () => {
   const { getAccessTokenSilently } = useAuth0();
   const id = '04ece6ce-2690-4152-a5c9-09d40d5891b7';
   const {t} = useTranslation();
+
+  
+
+  
+
+    
+      
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,6 +69,11 @@ const SchoolDetails = () => {
     }
   };
 
+  
+
+    
+  
+  
   return (
     <div>
       {ecole ? (

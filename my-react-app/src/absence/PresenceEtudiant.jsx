@@ -98,9 +98,9 @@ function PresenceEtudiant() {
             const personneAssociee = findPersonneAssociee(item, personnes);
             
             return (
-                <div key={item.id} className="col-lg-6 col-md-6 mb-4">
+                <div key={item.id} className="col-lg-3 col-md-3 mb-3">
                     <div className="card">
-                        <div className="card-body">
+                        <div className="card-body" >
                         {personneAssociee &&(
                             <div>
                             <p className="card-text">{t("name")} {personneAssociee.nom}</p>
