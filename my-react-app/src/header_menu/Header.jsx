@@ -6,6 +6,8 @@ import LogoutButton from '../connexion/LogoutButton';
 import PermissionGuard from '../permission/PermissionGuard';
 import { useTranslation } from 'react-i18next';
 import DropdownGroup from './DropdownGroup';
+import { NavLink } from 'react-router-dom';
+
 function Header({ activeMenu, onMenuChange }) {
   const { t } = useTranslation();
   
@@ -20,29 +22,35 @@ function Header({ activeMenu, onMenuChange }) {
           <Nav activeKey={activeMenu} className="me-auto" onSelect={onMenuChange}>
             <Nav.Link eventKey="Accueil">{t('home')}</Nav.Link>
             <PermissionGuard permission="write:personne">
-            <Nav.Link eventKey="Personne">{t('person')}</Nav.Link>
+            <Nav.Item>
+                <Nav.Link as={NavLink} to="/personne">{t('person')}</Nav.Link>
+              </Nav.Item>
             </PermissionGuard>
             <PermissionGuard permission="write:inscrit">
-              <Nav.Link eventKey="Inscription">{t('registration')}</Nav.Link>
+               <Nav.Item>
+                <Nav.Link as={NavLink} to="/inscription">{t('registrer')}</Nav.Link>
+              </Nav.Item>
             </PermissionGuard>
             <PermissionGuard permission="write:matiere">
-              <Nav.Link eventKey="Matière">{t('addSubject')}</Nav.Link>
+              <Nav.Item>
+              <Nav.Link as={NavLink} to= "/matière">{t('addSubject')}</Nav.Link>
+              </Nav.Item>
             </PermissionGuard>
-            <Nav.Link eventKey="Ecole">{t('school')}</Nav.Link>
+            <Nav.Link as={NavLink} to="/ecole">{t('school')}</Nav.Link>
             <PermissionGuard permission="write:presence">
-            <Nav.Link eventKey="Absence">Absence</Nav.Link>
+            <Nav.Link as={NavLink}to="/absenceetudiant">Absence</Nav.Link>
             </PermissionGuard>
             <PermissionGuard permission="write:profabsent">
-            <Nav.Link eventKey="ProfAbsent">ProfAbsent</Nav.Link>
+            <Nav.Link as={NavLink}to= "/absence">absence</Nav.Link>
             </PermissionGuard>
-            <Nav.Link eventKey="Map">Map</Nav.Link>
-            <Nav.Link eventKey="Calendrier">{t("calendar")}</Nav.Link>
-            <Nav.Link eventKey="Paypal">Paypal</Nav.Link>
+            <Nav.Link as={NavLink}to="/map">Map</Nav.Link>
+            <Nav.Link as={NavLink}to="/calendrier">{t("calendar")}</Nav.Link>
+            <Nav.Link as={NavLink}to="/payer">Paypal</Nav.Link>
             <PermissionGuard permission="read:vacance">
-            <Nav.Link eventKey="Vacance">{t("Holiday")}</Nav.Link>
+            <Nav.Link as={NavLink}to= "/vacance">{t("Holiday")}</Nav.Link>
             </PermissionGuard>
              <PermissionGuard permission="write:note">
-            <Nav.Link eventKey="Note">Note</Nav.Link>
+            <Nav.Link as={NavLink}to="/note">Note</Nav.Link>
             </PermissionGuard>
             <DropdownGroup activeMenu={activeMenu} onMenuChange={onMenuChange} />
             <LogoutButton/>

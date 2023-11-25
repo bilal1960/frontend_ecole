@@ -2,6 +2,8 @@ import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useTranslation } from 'react-i18next';
 import PermissionGuard from '../permission/PermissionGuard';
+import { NavLink } from 'react-router-dom';
+
 
 function DropdownGroup({ activeMenu, onMenuChange }) {
   const { t } = useTranslation();
@@ -11,28 +13,28 @@ function DropdownGroup({ activeMenu, onMenuChange }) {
   };
 
   return (
-    <Dropdown onSelect={handleSelect}>
+    <Dropdown>
       <Dropdown.Toggle variant="success" id="dropdown-group">
         {t('Group Menu')}
       </Dropdown.Toggle>
       <Dropdown.Menu>
       <PermissionGuard permission="read:matiere">
-        <Dropdown.Item eventKey="ListMatiere">{t('subjectList')}</Dropdown.Item>
+        <Dropdown.Item as= {NavLink} to="/matières">{t('subjectList')}</Dropdown.Item>
         </PermissionGuard>
         <PermissionGuard permission="read:inscrit">
-        <Dropdown.Item eventKey="Listinscription">{t('registrationList')}</Dropdown.Item>
+        <Dropdown.Item as={NavLink} to="/inscriptions">{t('registrationList')}</Dropdown.Item>
         </PermissionGuard>
         <PermissionGuard permission="read:personne">
-        <Dropdown.Item eventKey="ListPersonne">{t('personList')}</Dropdown.Item>
+        <Dropdown.Item as={NavLink} to="/personnes">{t('personList')}</Dropdown.Item>
         </PermissionGuard>
         <PermissionGuard permission="read:presence">
-        <Dropdown.Item eventKey="ListAbsence">{t('absenceList')}</Dropdown.Item>
+        <Dropdown.Item as={NavLink} to= "/absences">{t('absenceList')}</Dropdown.Item>
         </PermissionGuard>
         <PermissionGuard permission="read:vacance">
-        <Dropdown.Item eventKey="ListVacance">{t('List of Vacations')}</Dropdown.Item>
+        <Dropdown.Item as={NavLink}to="/vacances">{t('List of Vacations')}</Dropdown.Item>
         </PermissionGuard>
         <PermissionGuard permission="read:personne">
-        <Dropdown.Item eventKey="ListNote">{t("List of note")}</Dropdown.Item>
+        <Dropdown.Item as={NavLink}to="/notes">{t("List of note")}</Dropdown.Item>
         </PermissionGuard>
       </Dropdown.Menu>
     </Dropdown>
