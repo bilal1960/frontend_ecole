@@ -4,12 +4,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import { format, parseISO } from 'date-fns';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 function VacanceProfForm({ setVacances }) {
   const { getAccessTokenSilently } = useAuth0();
   const datePattern = /^(\d{2})\/(\d{2})\/(\d{4})$/;
   const { t } = useTranslation();
   const [personnelsss, setPersonnes] = useState([]);
+  
 
   useEffect(() => {
     const fetchPersonnesDisponibles = async () => {
@@ -63,6 +66,8 @@ function VacanceProfForm({ setVacances }) {
 
     const accessToken = await getAccessTokenSilently();
 
+    try{
+
     const response = await fetch('/add/vacance', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -79,9 +84,14 @@ function VacanceProfForm({ setVacances }) {
       
       
     } else {
-      alert("Une erreur s'est produite lors de l'enregistrement de la vacance.");
+      const errorData = await response.json();
+      toastr.error(errorData.erreur || "Une erreur s'est produite lors de l'enregistrement de la vacance.");
     }
+  }catch(error){
+    console.error(error);
+    toastr.error("Erreur lors de la communication avec le serveur");
   }
+}
 
   return (
     <Form onSubmit={handleSubmit}>

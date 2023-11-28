@@ -31,7 +31,8 @@
     "react-paginate": "^8.2.0",
     "react-rating-stars-component": "^2.2.0",
     "react-router-dom": "^6.20.0",
-    "swr": "^2.1.5"
+    "swr": "^2.1.5",
+    "toastr": "^2.1.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",

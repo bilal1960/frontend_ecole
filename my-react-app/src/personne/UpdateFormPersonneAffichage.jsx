@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useTranslation } from 'react-i18next';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 const UpdateForm = ({ item, onUpdatepersonne }) => {
     const [adresse, setAdresse] = useState('');
@@ -14,7 +16,7 @@ const UpdateForm = ({ item, onUpdatepersonne }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!adressevalided.test(adresse)) {
-            alert("saississez une adresse à un format normal")
+            toastr.error("saississez une adresse à un format normal")
             return;
         }
         const updatedPersonne = {

@@ -12,8 +12,6 @@ const UpdateForm = ({ item, onUpdate }) => {
     const [newLocal, setNewLocal] = useState('');
     const [newJour, setNewJour] = useState('');
     const [newSecondaire, setNewSecondaire] = useState('');
-    const localPattern = /^[\s]*[a-zA-Z][a-zA-Z0-9\s]*$/;
-    const joursAutorises = ["lundi", "mardi", "mercredi", "jeudi", "vendredi"];
     const secondairePattern = /^[1-6] secondaire$/;
     const {t } = useTranslation();
 
@@ -63,48 +61,27 @@ const UpdateForm = ({ item, onUpdate }) => {
             if (!isNaN(parsedDatefin)) {
                 updatedMatiere.fin = format(parsedDatefin, 'dd/MM/yyyy');
             }
-        }
-
-        const debutYear = new Date(newDebut).getFullYear();
-        const finYear = new Date(newFin).getFullYear();
-        if(newDebut !== ''  && newFin !== ''){
-            
-            if(finYear > debutYear+1){
-                alert("La date de fin scolaire ne peut pas dépasser 1 ans de différence avec datedebut.");
-                return; 
-            }
-    
-           
-        }
+        }  
         
         if (newDebutime !== '') {
-            if(newDebutime < "09:00"){
-                alert("L'heure de début doit être 09:00 ");
-                return;
+                
+                updatedMatiere.debutime = newDebutime;
+
             }
-            updatedMatiere.debutime = newDebutime;
-        }
+        
 
         if (newFintime !== '') {
             updatedMatiere.fintime = newFintime;
         }
 
         if (newLocal !== '') {
-            if (!localPattern.test(newLocal)) {
-                alert("Le local doit commencer par une lettre de l'alphabet ensuite elle peut contenir des lettres ou chiffres positif");
-                return; 
-            }
+            
             updatedMatiere.local = newLocal;
         }
 
-        if (newJour !== '') {
-            const jourEnMinuscules = newJour.trim().toLowerCase();
-            if (!joursAutorises.includes(jourEnMinuscules)) {
-                alert("Le jour de la semaine doit être du lundi au vendredi.");
-                return;
-            }
+         if(newJour !== ''){
             updatedMatiere.jour = newJour;
-        }
+         }
 
         if (newSecondaire !== '') {
             if (!secondairePattern.test(newSecondaire)) {

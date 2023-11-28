@@ -5,6 +5,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import { format, parseISO } from 'date-fns';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+
 
 
 function InscriptionForm({ setinscrits }) {
@@ -83,38 +86,46 @@ function InscriptionForm({ setinscrits }) {
 
     const personneAssociee = personnels.find((personnel) => personnel.id === inscrits.personne);
     if (personneAssociee.statut === "professeur") {
-
+        
     }
 
     if (inscrits.minerval <= 0) {
-      alert("le prix du minerval doit être positif et supérieur à 0")
+      toastr.error("Le prix du minerval doit être positif et supérieur à 0");
       return;
     }
-
-    
 
     if (!communeRegex.test(inscrits.commune)) {
-      alert("entrer une commune valide uniquement des lettres et aucun espace")
+      toastr.error("Entrer une commune valide uniquement des lettres et aucun espace");
       return;
     }
 
-    const response = await fetch('/add/inscriptions', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-type': 'application/json',
-      },
-      method: 'POST',
-      body: JSON.stringify(inscritToSubmit),
-    });
+    try {
+        const response = await fetch('/add/inscriptions', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-type': 'application/json',
+          },
+          method: 'POST',
+          body: JSON.stringify(inscritToSubmit),
+        });
 
-    if (response.ok) {
-      setinscrits((inscrit) => [...inscrit, inscrits]);
-      setinscritss(initialState);
-    } else {
-      return 'error';
+        if (!response.ok) {
+            const errorData = await response.json();
+            toastr.error(errorData.erreur || "Une erreur s'est produite lors de la soumission");
+            return;
+        }
+
+        
+        const inscritData = await response.json();
+        setinscrits((inscrit) => [...inscrit, inscritData]);
+        setinscritss(initialState);
+        toastr.success("Inscription réussie!");
+    } catch (error) {
+        console.error('Erreur lors de la soumission du formulaire', error);
+        toastr.error("Erreur lors de la communication avec le serveur");
     }
-    return '';
-  }
+}
+
 
   return (
     <Form onSubmit={handleForsubmit}>

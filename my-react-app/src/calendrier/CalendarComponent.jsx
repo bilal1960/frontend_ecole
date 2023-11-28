@@ -33,14 +33,26 @@ const CalendarComponent = () => {
   
 
   const events = [{
-    start: new Date('2023-07-01'), 
-      end: new Date('2023-07-12'),  
+    start: new Date('2023-07-03'), 
+      end: new Date('2023-07-07'),  
       title: t("julyRegistrationSession"),
       type: 'inscription'
     },
     {
-      start: new Date('2023-08-05'), 
-      end: new Date('2023-08-16'),  
+      start: new Date('2023-07-10'), 
+        end: new Date('2023-07-14'),  
+        title: t("julyRegistrationSession"),
+        type: 'inscription'
+    },
+    {
+      start: new Date('2023-08-14'), 
+      end: new Date('2023-08-18'),  
+      title: t("augustRegistrationSession"),
+      type: 'inscription'
+    },
+    {
+      start: new Date('2023-08-21'), 
+      end: new Date('2023-08-25'),  
       title: t("augustRegistrationSession"),
       type: 'inscription'
     },

@@ -40,7 +40,6 @@ const UpdateVacance = ({ vac, onUpdateVacance }) => {
             const parsedDatedebut = parse(datedebut, 'yyyy-MM-dd', new Date());
             if (!isNaN(parsedDatedebut)) {
                 updatedVacance.datedebut = format(parsedDatedebut, 'dd/MM/yyyy');
-                console.log("Datedebut formaté:", updatedVacance.datedebut);
 
 
         }

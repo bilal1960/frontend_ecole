@@ -4,6 +4,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import ReactPaginate from 'react-paginate';
 import { useTranslation } from 'react-i18next';
 import UpdateVacance from './UpdateVacance';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 function AffichageVacance() {
     const [currentPage, setCurrentPage] = useState(0);
@@ -75,7 +77,10 @@ function AffichageVacance() {
             });
 
             if (!updateResponse.ok) {
-                throw new Error("Une erreur s'est produite lors de la mise à jour des données.");
+            const errorData = await updateResponse.json();
+            toastr.error(errorData.erreur || "Une erreur s'est produite lors de la mise à jour de la vacance.");
+            return; 
+                
             }
 
             setData((prevData) => {
@@ -83,8 +88,10 @@ function AffichageVacance() {
                 updatedData[index] = updatedvacance;
                 return updatedData;
             });
+            toastr.success("Vacance mise à jour avec succès !");
         } catch (error) {
             console.error(error);
+            toastr.error("Erreur lors de la communication avec le serveur");
         }
     };
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
+
 function UpdateFormInscription({ inscription, onUpdateinscrit }) {
     const [rembourser, setRembourser] = useState(''); 
     const [section, setSection] = useState(''); 
@@ -21,10 +22,7 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
     function handleSubmit(event) {
         event.preventDefault();
 
-        if(updatedRembourser < 0){
-            alert("aucune valeur négatif autorisé")
-            return;
-        }
+       
 
         if(updatedSection !== ''){
             if(updatedSection.toLocaleLowerCase() != "general" && updatedSection.toLocaleLowerCase() != "technique" && updatedSection.toLocaleLowerCase() != "professionnel" ){
@@ -47,12 +45,7 @@ function UpdateFormInscription({ inscription, onUpdateinscrit }) {
             }
         }
 
-        if(updatedMinerval !== ''){
-            if(updatedMinerval <=0){
-                alert("le minerval ne peut pas être null ou négatif")
-                return;
-            }
-        }
+        
 
         const updatedInscription = {
             ...inscription,

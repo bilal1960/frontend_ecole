@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import { format, parseISO } from 'date-fns';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 
 function PersonnelForm({ setPersonnelss }) {
@@ -102,70 +104,70 @@ function PersonnelForm({ setPersonnelss }) {
   async function handleForsubmit(event) {
     event.preventDefault();
 
-
+    const accessToken = await getAccessTokenSilently();
 
     if (!regex.test(personnelss.nom)) {
-      alert("Le nom doit contenir uniquement des lettres et espace");
+      toastr.error("Le nom doit contenir uniquement des lettres et espace");
       return;
     }
 
     if (!regex.test(personnelss.prenom)) {
-      alert("Le prénom doit contenir uniquement des lettres et espace");
+      toastr.error("Le prénom doit contenir uniquement des lettres et espace");
       return;
     }
     if (!datePattern.test(formattedNaissance)) {
-      alert("Le format de la date de naissance doit être dd/MM/yyyy.");
-      return;
-    }
-
-    if (personnelss.sexe != "homme" && personnelss.sexe != "femme") {
-      alert("Le champ sexe doit être complété par homme ou femme");
-      return;
-    }
-    if (personnelss.statut != "etudiant" && personnelss.statut != "professeur") {
-      alert("Le champ statut doit être complété par etudiant ou professeur");
+      toastr.error("Le format de la date de naissance doit être dd/MM/yyyy.");
       return;
     }
 
     if (!adresseRegexp.test(personnelss.adresse)) {
-      alert("Entrer une adresse valide");
+      toastr.error("Entrer une adresse valide");
       return;
     }
 
     if (!nationalitechamp.test(personnelss.nationalite)) {
-      alert("Entrer une nationalité sans espace ni chiffre");
+      toastr.error("Entrer une nationalité sans espace ni chiffre");
       return;
     }
 
-    const accessToken = await getAccessTokenSilently();
+    try {
+        const response = await fetch('/add/perso/pagi', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify(personnelToSubmit),
+        });
 
-    const response = await fetch('/add/perso/pagi', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-type': 'application/json',
-      },
-      method: 'POST',
-      body: JSON.stringify(personnelToSubmit),
-    });
+        if (!response.ok) {
+            const errorData = await response.json();
+            toastr.error(errorData.erreur || "Une erreur s'est produite lors de la soumission");
+            return;
+        }
 
-    if (response.ok) {
-      setPersonnelss((personnels) => [...personnels, personnelss]);
+        // Gestion de la réponse réussie
+        const newPersonnel = await response.json();
+        setPersonnelss((personnels) => [...personnels, newPersonnel]);
 
-      setPersonnels({
-        nom: '',
-        prenom: '',
-        naissance: '',
-        nationalite: '',
-        sexe: '',
-        adresse: '',
-        statut: '',
-        mail: '',
-      });
-    } else {
-      return 'error';
+        // Réinitialiser le formulaire
+        setPersonnels({
+            nom: '',
+            prenom: '',
+            naissance: '',
+            nationalite: '',
+            sexe: '',
+            adresse: '',
+            statut: '',
+            mail: '',
+        });
+        toastr.success("Personne ajoutée avec succès!");
+    } catch (error) {
+        console.error('Erreur lors de la soumission du formulaire', error);
+        toastr.error("Erreur lors de la communication avec le serveur");
     }
-    return '';
-  }
+}
+
 
   return (
     <Form onSubmit={handleForsubmit}>

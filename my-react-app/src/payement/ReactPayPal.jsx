@@ -1,8 +1,6 @@
 import React from 'react';
 import emailjs from 'emailjs-com';
 
-// Assurez-vous de remplacer 'YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', et 'YOUR_USER_ID'
-// avec les valeurs réelles fournies par EmailJS.
 const SERVICE_ID = 'service_okssxjr';
 const TEMPLATE_ID = 'template_vdmyx4e';
 const USER_ID = 'QqdfUtDMtJus6pH4c';
@@ -41,7 +39,7 @@ export default function ReactPayPal() {
               description: 'Your description',
               amount: {
                 currency_code: 'EUR',
-                value: '500.00', 
+                value: '300.00', 
               },
             }],
           });
@@ -72,7 +70,7 @@ export default function ReactPayPal() {
   
   return (
     <div>
-      <h4>Acheter l'application</h4>
+      <h4>frais scolaire à l'année</h4>
       <div className='payment-div' ref={paypalRef} />
     </div>
   );

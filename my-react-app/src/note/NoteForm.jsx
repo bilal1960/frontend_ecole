@@ -3,6 +3,8 @@ import { Form, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import { format, parseISO } from 'date-fns';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 function NoteForm({ setNotes }) {
     const { getAccessTokenSilently } = useAuth0();
@@ -74,8 +76,7 @@ function NoteForm({ setNotes }) {
         event.preventDefault();
         const accessToken = await getAccessTokenSilently();
 
-        console.log("Données soumises : ", personnelToSubmit);
-
+        try{
 
         const response = await fetch('/add/note', {
             headers: {
@@ -89,11 +90,17 @@ function NoteForm({ setNotes }) {
         if (response.ok) {
             setNotes(notes => [...notes, noteData]);
             setNoteData(initialState);
-        } else {
-            console.error('Erreur lors de la soumission des données de note');
-        }
-    }
+            toastr.success("Note ajoutée avec succès!");
 
+        } else {
+          const errorData = await response.json();
+          toastr.error(errorData.erreur || "Une erreur s'est produite lors de la soumission des données de note.");
+        }
+    } catch(error){
+      console.error(error);
+      toastr.error("Erreur lors de la communication avec le serveur");
+    }
+  }
     return (
         <Form onSubmit={handleSubmit}>
 

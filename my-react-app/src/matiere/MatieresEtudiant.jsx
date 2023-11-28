@@ -4,6 +4,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Pagination } from 'react-bootstrap';
 import UpdateForm from './UpdateFormMatiereEtudiant'; 
 import { useTranslation } from 'react-i18next';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 function MatieresEtudiant() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -72,7 +74,9 @@ function MatieresEtudiant() {
             });
 
             if (!updateResponse.ok) {
-                throw new Error("Une erreur s'est produite lors de la mise à jour des données.");
+                const errorData = await updateResponse.json();
+                toastr.error(errorData.erreur || "Une erreur s'est produite lors de la mise à jour de l'inscription.");
+                return;
             }
 
             setData((prevData) => {
@@ -80,8 +84,12 @@ function MatieresEtudiant() {
                 updatedData[index] = updatedMatiere;
                 return updatedData;
             });
+            toastr.success("Inscription mise à jour avec succès!");
+
         } catch (error) {
             console.error(error);
+            toastr.error("Erreur lors de la communication avec le serveur");
+
         }
     };
 

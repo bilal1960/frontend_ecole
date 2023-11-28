@@ -7,6 +7,7 @@ import Header from '../header_menu/Header';
 import LoginButton from '../connexion/LoginButton';
 import AppRoutes from '../route/AppRoutes'; 
 import Footer from '../footer/Footer';
+import Lang from '../langue/Lang';
 
 function App() {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -20,6 +21,7 @@ function App() {
       {isAuthenticated ? (
         <div className="App">
           <Header/>
+          <Lang />
           <Container>
             <AppRoutes /> 
             <Footer />

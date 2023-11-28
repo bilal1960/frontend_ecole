@@ -3,6 +3,8 @@ import { Form, Button } from 'react-bootstrap';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import { format, parseISO } from 'date-fns';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 
 function AbsenceForm({ setAbsences }) {
@@ -71,6 +73,8 @@ function AbsenceForm({ setAbsences }) {
         event.preventDefault();
         const accessToken = await getAccessTokenSilently();
 
+        try{
+
         const response = await fetch('/add/absence', {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -83,11 +87,17 @@ function AbsenceForm({ setAbsences }) {
         if (response.ok) {
             setAbsences(absence => [...absence, absenceData]);
             setAbsenceData(initialState);
-        } else {
-            console.error('Error while submitting absence data');
-        }
-    }
+            toastr.success("Absence ajoutée avec succès!");
 
+        } else {
+          const errorData = await response.json();
+          toastr.error(errorData.erreur || "Une erreur s'est produite lors de la soumission des données de note.");
+        }
+    } catch(error){
+        console.error(error);
+        toastr.error("Erreur lors de la communication avec le serveur");
+    }
+  }
     return (
         <Form onSubmit={handleSubmit}>
 

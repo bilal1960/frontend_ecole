@@ -4,11 +4,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import { format, parseISO } from 'date-fns';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
+
 
 function MatiereForm({ setmatieres }) {
   const [personnelss, setPersonnes] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
-  const currentYear = new Date().getFullYear();
   const localPattern = /^[\s]*[a-zA-Z][a-zA-Z0-9\s]*$/;
   const {t } = useTranslation();
   const matieresList = [
@@ -91,47 +93,40 @@ function MatiereForm({ setmatieres }) {
   async function handleForsubmit(event) {
     event.preventDefault();
 
-    const debutYear = new Date(matieres.debut).getFullYear();
-    const finYear = new Date(matieres.fin).getFullYear();
-
-    if(matieres.debutime < "09:00"){
-      alert("L'heure de début doit être 09:00 ou ultérieure.");
-      return; 
-    }
-
-   
-
-    if (debutYear !== currentYear && debutYear !== currentYear -1 || finYear !== currentYear && finYear !== currentYear+1 || finYear > debutYear+1) {
-      alert("L'année de début doit être l'année en cours ou l'année précédente ou inférieur à la fin d'année. max 1 année écart entre debut et fin");
-      return; 
-    }
-
-    if (!localPattern.test(matieres.local)) {
-      alert("Le local doit commencer par une lettre de l'alphabet ensuite elle peut contenir des lettres ou chiffres positif");
-      return; 
-    }
-
     const accessToken = await getAccessTokenSilently();
 
-    const response = await fetch('/add/matiere/matieress', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-type': 'application/json',
-      },
-      method: 'POST',
-      body: JSON.stringify(formattedMatiere),
-    });
-
-    if (response.ok) {
-      setmatieres((matiere) => [...matiere, matieres]);
-      setmatieress(initialState);
-    } else {
-      const data = await response.text();
-      console.error('Erreur lors de l\'ajout de la matière:', data);
+    if (!localPattern.test(matieres.local)) {
+      toastr.error("Le local doit commencer par une lettre de l'alphabet ensuite elle peut contenir des lettres ou chiffres positif");
+      return;
     }
 
-    return '';
-  }
+    try {
+        const response = await fetch('/add/matiere/matieress', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-type': 'application/json',
+            },
+            method: 'POST',
+            body: JSON.stringify(formattedMatiere),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.log(errorData)
+            toastr.error(errorData.erreur || "Une erreur s'est produite lors de l'ajout de la matière.");
+            return;
+        }
+
+        // Gestion de la réponse réussie
+        const newMatiere = await response.json();
+        setmatieres((matiere) => [...matiere, newMatiere]);
+        setmatieress(initialState);
+        toastr.success("Matière ajoutée avec succès!");
+    } catch (error) {
+        console.error('Erreur lors de la communication avec le serveur', error);
+        toastr.error("Erreur lors de la communication avec le serveur");
+    }
+}
 
   return (
     <Form onSubmit={handleForsubmit}>
