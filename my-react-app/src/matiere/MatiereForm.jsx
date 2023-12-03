@@ -10,7 +10,7 @@ import 'toastr/build/toastr.min.css';
 
 function MatiereForm({ setmatieres }) {
   const [personnelss, setPersonnes] = useState([]);
-  const { getAccessTokenSilently } = useAuth0();
+  const { user,getAccessTokenSilently } = useAuth0();
   const localPattern = /^[\s]*[a-zA-Z][a-zA-Z0-9\s]*$/;
   const {t } = useTranslation();
   const matieresList = [
@@ -79,6 +79,7 @@ function MatiereForm({ setmatieres }) {
     fin: matieres.fin ? format(parseISO(matieres.fin), 'dd/MM/yyyy') : '',
 
     personne: matieres.personne ? { id: matieres.personne } : null,
+    professeurAuth0Id: user.sub,
   };
 
   function handleChange(event) {
@@ -99,6 +100,7 @@ function MatiereForm({ setmatieres }) {
       toastr.error("Le local doit commencer par une lettre de l'alphabet ensuite elle peut contenir des lettres ou chiffres positif");
       return;
     }
+    console.log("Soumission de la matière avec formattedMatiere:", formattedMatiere);
 
     try {
         const response = await fetch('/add/matiere/matieress', {

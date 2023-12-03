@@ -18,6 +18,7 @@ import AffichageNotes from "../note/AffichageNotes";
 import MapComponent from '../map/MapComponent';
 import CalendarComponent from "../calendrier/CalendarComponent";
 import ReactPayPal from "../payement/ReactPayPal";
+import MatiereTeacher from '../matiere/MatiereTeacher';
 
 function AppRoutes() {
   return (
@@ -40,9 +41,8 @@ function AppRoutes() {
       <Route path="/map" element={<MapComponent />} />
       <Route path="/calendrier" element={<CalendarComponent />} />
       <Route path="/payer" element={<ReactPayPal />} />
-
-      
-
+      <Route path="/teachermatiere" element={<MatiereTeacher />} />
+     
     </Routes>
   );
 }

@@ -36,6 +36,8 @@ function DropdownGroup({ activeMenu, onMenuChange }) {
         <PermissionGuard permission="read:personne">
         <Dropdown.Item as={NavLink}to="/notes">{t("List of note")}</Dropdown.Item>
         </PermissionGuard>
+        <Dropdown.Item as={NavLink}to="/teachermatiere">teacherMatiere</Dropdown.Item>
+
       </Dropdown.Menu>
     </Dropdown>
   );
