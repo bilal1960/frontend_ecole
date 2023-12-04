@@ -3,8 +3,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import PermissionGuard from '../permission/PermissionGuard';
 import UpdateEcole from './UpdateEcole';
 import { useTranslation } from 'react-i18next';
-import Rating from 'react-rating-stars-component'; 
-import EcoleCommentaire from './EcoleCommentaire';
 
 
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import emailjs from 'emailjs-com';
+import { useTranslation } from 'react-i18next';
 
 const SERVICE_ID = 'service_okssxjr';
 const TEMPLATE_ID = 'template_vdmyx4e';
@@ -9,6 +10,8 @@ export default function ReactPayPal() {
   const [paid, setPaid] = React.useState(false);
   const [error, setError] = React.useState(null);
   const paypalRef = React.useRef();
+  const {t} = useTranslation();
+
 
   const sendEmail = (order) => {
 
@@ -70,7 +73,7 @@ export default function ReactPayPal() {
   
   return (
     <div>
-      <h4>frais scolaire à l'année</h4>
+      <h4>{t("annual school fees")}</h4>
       <div className='payment-div' ref={paypalRef} />
     </div>
   );

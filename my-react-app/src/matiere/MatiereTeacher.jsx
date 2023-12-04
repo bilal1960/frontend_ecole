@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Card, Container, Row, Col, Pagination } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+
 
 function MatiereTeacher() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -8,6 +10,8 @@ function MatiereTeacher() {
     const itemsPerPage = 1;
     const [matieres, setMatieres] = useState([]);
     const { getAccessTokenSilently } = useAuth0();
+    const {t } = useTranslation();
+
 
     useEffect(() => {
         const fetchMatieres = async () => {
@@ -43,7 +47,7 @@ function MatiereTeacher() {
 
     return (
         <Container>
-            <h2>Mes Matières</h2>
+            <h2>{t("My Subjects")}</h2>
             <Row>
                 {matieres && matieres.length > 0 ?    (
                     matieres.map(matiere => (
@@ -63,7 +67,7 @@ function MatiereTeacher() {
                         </Col>
                     ))
                 ) : (
-                    <p>Aucune matière n'a été trouvée.</p>
+                    <p>{t("no subjects found")}</p>
                 )}
             </Row>
             {matieres && matieres.length > 0 && totalPages >0  && (

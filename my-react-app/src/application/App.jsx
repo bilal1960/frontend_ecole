@@ -8,6 +8,8 @@ import LoginButton from '../connexion/LoginButton';
 import AppRoutes from '../route/AppRoutes'; 
 import Footer from '../footer/Footer';
 import Lang from '../langue/Lang';
+import template from '../components/template';
+import Template from '../components/template';
 
 function App() {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -26,6 +28,8 @@ function App() {
             <AppRoutes /> 
             <Footer />
           </Container>
+              
+          
         </div>
       ) : (
         <LoginButton />

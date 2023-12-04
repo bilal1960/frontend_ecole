@@ -11,8 +11,6 @@ import { NavLink } from 'react-router-dom';
 function Header({ activeMenu, onMenuChange }) {
   const { t } = useTranslation();
   
-
-
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -20,7 +18,7 @@ function Header({ activeMenu, onMenuChange }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav activeKey={activeMenu} className="me-auto" onSelect={onMenuChange}>
-            <Nav.Link eventKey="Accueil">{t('home')}</Nav.Link>
+            <Nav.Link as={NavLink}to="/">{t('home')}</Nav.Link>
             <PermissionGuard permission="write:personne">
             <Nav.Item>
                 <Nav.Link as={NavLink} to="/personne">{t('person')}</Nav.Link>
