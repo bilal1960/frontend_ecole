@@ -43,7 +43,9 @@ function Header({ activeMenu, onMenuChange }) {
             </PermissionGuard>
             <Nav.Link as={NavLink}to="/map">Map</Nav.Link>
             <Nav.Link as={NavLink}to="/calendrier">{t("calendar")}</Nav.Link>
+            <PermissionGuard permission="read:payement">
             <Nav.Link as={NavLink}to="/payer">Paypal</Nav.Link>
+            </PermissionGuard>
             <PermissionGuard permission="read:vacance">
             <Nav.Link as={NavLink}to= "/vacance">{t("Holiday")}</Nav.Link>
             </PermissionGuard>

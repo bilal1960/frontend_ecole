@@ -6,16 +6,6 @@ import '../stylecss/index.css'
 import '../langue/i18n.js';
 
 
-
-(function(d, s, id){
-   var js, fjs = d.getElementsByTagName(s)[0];
-   if (d.getElementById(id)) {return;}
-   js = d.createElement(s); js.id = id;
-   js.src = "https://connect.facebook.net/en_US/sdk.js";
-   fjs.parentNode.insertBefore(js, fjs);
- }(document, 'script', 'facebook-jssdk'));
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Auth0Provider
     domain={import.meta.env.VITE_AUTH0_DOMAIN}
@@ -24,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     authorizationParams={{
       redirect_uri: window.location.origin,
       audience: import.meta.env.VITE_AUTH0_AUDIENCE,
-      scope: 'read:matiere write:matiere read:all-matiere read:inscrit write:inscrit read:personne write:personne write:ecole read:presence write:presence write:profabsent write:canDeleteEvent write:vacance read:vacance read:note write:note',
+      scope: 'read:matiere write:matiere read:all-matiere read:inscrit write:inscrit read:personne write:personne write:ecole read:presence write:presence write:profabsent write:canDeleteEvent write:vacance read:vacance read:note write:note read:cours read:payement',
     }}
   >
   <React.StrictMode>
