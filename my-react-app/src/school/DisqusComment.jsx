@@ -14,12 +14,15 @@ export default class extends Component {
       <div className="article-container">
 
         <h1>Avis sur l'école</h1>
+        <div className="disqus-container">
 
         <Disqus.DiscussionEmbed
           shortname={disqusShortname}
           config={disqusConfig}
         />
       </div>
+      </div>
+
     )
   }
 }

@@ -130,4 +130,10 @@ body, #root {
 
 }
 
+.disqus-container {
+  max-width: 300px; /* Ajustez la valeur selon vos besoins pour une taille plus petite */
+  margin: 20px; /* Ajustez les marges selon vos préférences */
+ 
+}
+
 
