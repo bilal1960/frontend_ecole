@@ -10,7 +10,7 @@ import 'toastr/build/toastr.min.css';
 function MatieresEtudiant() {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const itemsPerPage = 4;
+    const itemsPerPage = 1;
     const [data, setData] = useState([]);
     const { getAccessTokenSilently } = useAuth0();
     const [personnes, setPersonnes] = useState([]);

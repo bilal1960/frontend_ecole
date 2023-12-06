@@ -124,15 +124,15 @@ body, #root {
 
 .map-container {
   padding-top: 20px;
-  height: 300px;
-  width: 300px;
+  height: 350px;
+  width: 350px;
   border-radius: 20px;
 
 }
 
 .disqus-container {
-  max-width: 300px; /* Ajustez la valeur selon vos besoins pour une taille plus petite */
-  margin: 20px; /* Ajustez les marges selon vos préférences */
+  max-width: 400px; 
+  margin: 20px; 
  
 }
 

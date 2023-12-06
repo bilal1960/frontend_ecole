@@ -1,8 +1,12 @@
 import React, { Component } from "react"
 import Disqus from "disqus-react"
 
+
+
 export default class extends Component {
+
   render() {
+
     const disqusShortname = "gestion-ecole"
     const disqusConfig = {
       url: "http://localhost:5173",
@@ -13,7 +17,7 @@ export default class extends Component {
     return (
       <div className="article-container">
 
-        <h1>Avis sur l'école</h1>
+
         <div className="disqus-container">
 
         <Disqus.DiscussionEmbed
@@ -25,4 +29,6 @@ export default class extends Component {
 
     )
   }
+
+
 }
